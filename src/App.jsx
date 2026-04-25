@@ -1,3 +1,5 @@
+import { db } from "./firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useState, useEffect, useCallback, createContext, useContext, useRef } from "react";
 import BookingPage from "./BookingPage";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
@@ -5,12 +7,15 @@ import * as XLSX from "xlsx";
 import { TRANSLATIONS, LANG_FLAGS, LANG_NAMES } from './translations';
 
 // ── STORAGE ──────────────────────────────────────────────────────
-async function sget(k, shared = true) {
-  try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : null; }
-  catch { return null; }
+
+async function sget(k) {
+  try {
+    const r = await getDoc(doc(db, "hotelpro", k));
+    return r.exists() ? r.data().val : null;
+  } catch { return null; }
 }
-async function sset(k, d, shared = true) {
-  try { localStorage.setItem(k, JSON.stringify(d)); } catch {}
+async function sset(k, d) {
+  try { await setDoc(doc(db, "hotelpro", k), { val: d }); } catch {}
 }
 
 // ── SIMPLE HASH ──────────────────────────────────────────────────
@@ -21,9 +26,9 @@ function hashPwd(pw) {
 }
 
 // ── CONSTANTS ────────────────────────────────────────────────────
-const GOLD = "#c9a84c", DARK = "#080c10", CARD = "#0f1623", CARD2 = "#131d2e", BORDER = "rgba(201,168,76,0.13)";
-const FONT_DISPLAY = "'Playfair Display', Georgia, serif";
-const FONT_BODY    = "'DM Sans', 'Segoe UI', sans-serif";
+const GOLD = "#cc0000", DARK = "#ffffff", CARD = "#ffffff", CARD2 = "#f5f5f5", BORDER = "rgba(0,0,0,0.1)";
+const FONT_DISPLAY = "'Inter', 'Segoe UI', sans-serif";
+const FONT_BODY    = "'Inter', 'Segoe UI', sans-serif";
 
 // ── LANGUAGE CONTEXT ─────────────────────────────────────────────
 const LangCtx = createContext('fr');
@@ -101,8 +106,8 @@ function LangSwitcher({ lang, setLang }) {
   return (
     <div style={{position:"relative"}}>
       <button onClick={()=>setOpen(o=>!o)}
-        style={{background:"rgba(255,255,255,0.04)",border:`1px solid ${BORDER}`,borderRadius:8,
-          padding:"6px 10px",color:GOLD,cursor:"pointer",fontSize:13,fontFamily:FONT_BODY,
+        style={{background:"rgba(255,255,255,0.15)",border:`1px solid rgba(255,255,255,0.3)`,borderRadius:8,
+          padding:"6px 10px",color:"#ffffff",cursor:"pointer",fontSize:13,fontFamily:FONT_BODY,
           display:"flex",alignItems:"center",gap:6,transition:"all 0.2s"}}>
         {LANG_FLAGS[lang]} {LANG_NAMES[lang]}
         <span style={{fontSize:10,color:"#475569"}}>▼</span>
@@ -134,13 +139,13 @@ function Inp({ label, error, ...p }) {
   const [focus, setFocus] = useState(false);
   return (
     <div style={{display:"flex",flexDirection:"column",gap:5}}>
-      {label && <label style={{fontSize:10,color:"#64748b",letterSpacing:1.5,textTransform:"uppercase",fontFamily:FONT_BODY,fontWeight:600}}>{label}</label>}
+      {label && <label style={{fontSize:10,color:"#1e293b",letterSpacing:1.5,textTransform:"uppercase",fontFamily:FONT_BODY,fontWeight:600}}>{label}</label>}
       <input {...p}
         onFocus={e=>{setFocus(true);p.onFocus&&p.onFocus(e);}}
         onBlur={e=>{setFocus(false);p.onBlur&&p.onBlur(e);}}
-        style={{background:focus?"rgba(201,168,76,0.04)":"rgba(255,255,255,0.03)",
-          border:`1px solid ${focus?GOLD:error?"#ef4444":"rgba(255,255,255,0.08)"}`,
-          borderRadius:9,padding:"11px 14px",color:"#e2e8f0",fontSize:13,outline:"none",
+        style={{background:focus?"#eff6ff":"#f8fafc",
+          border:`1px solid ${focus?GOLD:error?"#ef4444":"#cbd5e1"}`,
+          borderRadius:9,padding:"11px 14px",color:"#1e293b",fontSize:13,outline:"none",
           width:"100%",boxSizing:"border-box",fontFamily:FONT_BODY,
           transition:"all 0.2s",boxShadow:focus?`0 0 0 3px rgba(201,168,76,0.1)`:"none",...p.style}} />
       {error && <span style={{fontSize:11,color:"#ef4444",fontFamily:FONT_BODY}}>{error}</span>}
@@ -151,9 +156,9 @@ function Inp({ label, error, ...p }) {
 function Sel({ label, children, ...p }) {
   return (
     <div style={{display:"flex",flexDirection:"column",gap:5}}>
-      {label && <label style={{fontSize:10,color:"#64748b",letterSpacing:1.5,textTransform:"uppercase",fontFamily:FONT_BODY,fontWeight:600}}>{label}</label>}
-      <select {...p} style={{background:"rgba(255,255,255,0.03)",border:`1px solid rgba(255,255,255,0.08)`,borderRadius:9,
-        padding:"11px 14px",color:"#e2e8f0",fontSize:13,outline:"none",cursor:"pointer",fontFamily:FONT_BODY,
+      {label && <label style={{fontSize:10,color:"#1e293b",letterSpacing:1.5,textTransform:"uppercase",fontFamily:FONT_BODY,fontWeight:600}}>{label}</label>}
+      <select {...p} style={{background:"#f8fafc",border:`1px solid #cbd5e1`,borderRadius:9,
+        padding:"11px 14px",color:"#1e293b",fontSize:13,outline:"none",cursor:"pointer",fontFamily:FONT_BODY,
         width:"100%",boxSizing:"border-box",transition:"border 0.2s",...p.style}}
         onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,0.08)"}>
         {children}
@@ -164,7 +169,7 @@ function Sel({ label, children, ...p }) {
 
 function Btn({ children, variant="primary", loading, ...p }) {
   const styles = {
-    primary:{bg:`linear-gradient(135deg,${GOLD} 0%,#d4a832 50%,#b8922a 100%)`,color:"#080c10",border:"none",shadow:"0 4px 15px rgba(201,168,76,0.3)"},
+    primary:{bg:`linear-gradient(135deg,#16a34a 0%,#15803d 100%)`,color:"#ffffff",textShadow:"0 1px 2px rgba(0,0,0,0.3)",border:"none",shadow:"0 4px 15px rgba(22,163,74,0.3)"},
     ghost:  {bg:"rgba(201,168,76,0.07)",color:GOLD,border:`1px solid rgba(201,168,76,0.25)`,shadow:"none"},
     danger: {bg:"rgba(239,68,68,0.08)",color:"#ef4444",border:"1px solid rgba(239,68,68,0.2)",shadow:"none"},
     dark:   {bg:"rgba(255,255,255,0.04)",color:"#94a3b8",border:"1px solid rgba(255,255,255,0.07)",shadow:"none"},
@@ -209,7 +214,7 @@ function Modal({ title, onClose, children, maxWidth=500 }) {
       display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:16,
       animation:"fadeIn 0.2s ease"}}
       onClick={e=>e.target===e.currentTarget&&onClose()}>
-      <div style={{background:`linear-gradient(145deg,${CARD} 0%,#0d1520 100%)`,
+      <div style={{background:"#ffffff",
         border:`1px solid rgba(201,168,76,0.2)`,borderRadius:16,padding:26,
         width:"100%",maxWidth,maxHeight:"90vh",overflowY:"auto",
         boxShadow:`0 25px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(201,168,76,0.05)`,
@@ -430,13 +435,13 @@ function InvoicePrint({ res, client, room, settings, cur }) {
   };
   return (
     <div style={{display:"flex",flexDirection:"column",gap:14}}>
-      <div style={{background:"rgba(255,255,255,0.03)",border:`1px solid ${BORDER}`,borderRadius:10,padding:18,display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+      <div style={{background:"#f8fafc",border:`1px solid ${BORDER}`,borderRadius:10,padding:18,display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
         {[[t.invoiceClient,client?.name||"—"],[t.invoiceRoom,`${res.roomId}·${room?.type||""}`],
           [t.invoiceArrival,res.checkIn],[t.invoiceDeparture,res.checkOut],
           [t.invoiceNights,res.nights],[t.invoiceTotal,`${cur.symbol}${total}`],
           [t.invoicePaid,`${cur.symbol}${paid}`],[t.invoiceRemaining,`${cur.symbol}${due.toFixed(2)}`]
         ].map(([k,v])=>(
-          <div key={k}><div style={{fontSize:10,color:"#6b7280"}}>{k}</div><div style={{color:"#e5e7eb",fontWeight:600,fontSize:13}}>{v}</div></div>
+          <div key={k}><div style={{fontSize:10,color:"#6b7280"}}>{k}</div><div style={{color:"#1e293b",fontWeight:600,fontSize:13}}>{v}</div></div>
         ))}
       </div>
       <Btn onClick={handle} style={{alignSelf:"center",padding:"11px 30px",fontSize:14}}>{t.printInvoice}</Btn>
@@ -634,7 +639,7 @@ function ResPage({ reservations, clients, rooms, settings, onAdd, onEdit, onDele
       </div>
       <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
         <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.search}
-          style={{flex:1,minWidth:160,background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 12px",color:"#e5e7eb",fontSize:13,outline:"none"}}/>
+          style={{flex:1,minWidth:160,background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 12px",color:"#1e293b",fontSize:13,outline:"none"}}/>
         <select value={fSt} onChange={e=>setFSt(e.target.value)}
           style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 10px",color:"#e5e7eb",fontSize:12,outline:"none",cursor:"pointer"}}>
           <option value="all">{t.allStatuses}</option>
@@ -665,7 +670,7 @@ function ResPage({ reservations, clients, rooms, settings, onAdd, onEdit, onDele
                 {cl?.name?.[0]||"?"}
               </div>
               <div style={{flex:1,minWidth:130}}>
-                <div style={{color:"#e5e7eb",fontWeight:600,fontSize:13}}>{cl?.name||"—"}</div>
+                <div style={{color:"#1e293b",fontWeight:600,fontSize:13}}>{cl?.name||"—"}</div>
                 <div style={{color:"#6b7280",fontSize:11}}>{r.roomId}({rm?.type})·{r.checkIn}→{r.checkOut}·{r.nights}n</div>
               </div>
               <div style={{textAlign:"right",minWidth:65}}>
@@ -719,7 +724,7 @@ function ClientsPage({ clients, reservations, settings, onAdd, onEdit, onDelete 
         <div style={{display:"flex",gap:8}}><Btn variant="ghost" onClick={exportXLSX}>{t.excel}</Btn><Btn onClick={()=>setModal("add")}>{t.newClient}</Btn></div>
       </div>
       <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.search}
-        style={{width:"100%",boxSizing:"border-box",background:CARD2,border:`1px solid ${BORDER}`,borderRadius:8,padding:"8px 13px",color:"#e5e7eb",fontSize:13,outline:"none",marginBottom:14}}/>
+        style={{width:"100%",boxSizing:"border-box",background:CARD2,border:`1px solid ${BORDER}`,borderRadius:8,padding:"8px 13px",color:"#1e293b",fontSize:13,outline:"none",marginBottom:14}}/>
       {filtered.length===0?<div style={{color:"#6b7280",textAlign:"center",padding:50,fontSize:13}}>{t.noClients}</div>:
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:10}}>
         {filtered.map(c=>{
@@ -807,7 +812,7 @@ function RoomEditModal({ room, onSave, onClose }) {
           </div>
         ) : (
           <label style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
-            height:140,background:"rgba(255,255,255,0.03)",border:`2px dashed ${BORDER}`,borderRadius:10,
+            height:140,background:"#f8fafc",border:`2px dashed ${BORDER}`,borderRadius:10,
             cursor:"pointer",gap:8,transition:"border-color 0.2s"}}
             onMouseEnter={e=>e.currentTarget.style.borderColor=GOLD}
             onMouseLeave={e=>e.currentTarget.style.borderColor=BORDER}>
@@ -819,7 +824,9 @@ function RoomEditModal({ room, onSave, onClose }) {
         )}
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-        <Inp label={t.roomNumber} value={f.id} onChange={set("id")} placeholder="R01"/>
+        <Sel label={t.roomNumber} value={f.id} onChange={set("id")}>
+  {Array.from({length:30},(_,i)=>`R${String(i+1).padStart(2,"0")}`).map(r=><option key={r} value={r}>{r}</option>)}
+</Sel>
         <Sel label={t.type} value={f.type} onChange={set("type")}>
           <option value="Single">Single</option>
           <option value="Double">Double</option>
@@ -918,8 +925,11 @@ function RoomsPage({ rooms, reservations, onUpdateRoom, onAddRoom, onDeleteRoom 
                     </div>
                     <div style={{padding:"10px 12px"}}>
                       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
-                        <div style={{color:"#e5e7eb",fontWeight:700,fontSize:15}}>{r.id}</div>
-                        <div style={{color:GOLD,fontWeight:700,fontSize:12}}>${r.price}<span style={{color:"#6b7280",fontWeight:400}}>/n</span></div>
+                        <div style={{color:"#1e293b",fontWeight:700,fontSize:15}}>{r.id}</div>
+                        <div style={{display:"flex",alignItems:"center",gap:6}}>
+                          <div style={{color:GOLD,fontWeight:700,fontSize:12}}>${r.price}<span style={{color:"#6b7280",fontWeight:400}}>/n</span></div>
+                          <button onClick={e=>{e.stopPropagation();if(confirm("Supprimer cette chambre?"))onDeleteRoom(r.id);}} style={{background:"rgba(239,68,68,0.15)",border:"1px solid rgba(239,68,68,0.3)",borderRadius:6,padding:"4px 8px",color:"#ef4444",fontSize:14,cursor:"pointer"}}>🗑</button>
+                        </div>
                       </div>
                       <div style={{fontSize:10,color:tCol,fontWeight:600,marginBottom:8}}>{r.type}</div>
                       <select value={r.cleanStatus||"clean"} onClick={e=>e.stopPropagation()}
@@ -1002,7 +1012,7 @@ function RevenuePage({ reservations, settings }) {
             <tr key={i} style={{borderBottom:`1px solid ${BORDER}`}}
               onMouseEnter={e=>e.currentTarget.style.background="rgba(201,168,76,0.04)"}
               onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
-              <td style={{padding:"8px 14px",color:"#e5e7eb",fontWeight:600}}>{m.month}</td>
+              <td style={{padding:"8px 14px",color:"#1e293b",fontWeight:600}}>{m.month}</td>
               <td style={{padding:"8px 14px",color:"#6b7280"}}>{m.count}</td>
               <td style={{padding:"8px 14px",color:GOLD}}>{cur.symbol}{m.total.toLocaleString()}</td>
               <td style={{padding:"8px 14px",color:"#10b981"}}>{cur.symbol}{m.paid.toLocaleString()}</td>
@@ -1058,7 +1068,7 @@ function SettingsPage({ settings, onSave, user, onLogout }) {
               [t.registeredOn,new Date(user.createdAt).toLocaleDateString()]].map(([k,v])=>(
               <div key={k} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:`1px solid ${BORDER}`}}>
                 <span style={{fontSize:12,color:"#6b7280"}}>{k}</span>
-                <span style={{fontSize:12,color:"#e5e7eb",fontWeight:600}}>{v}</span>
+                <span style={{fontSize:12,color:"#1e293b",fontWeight:600}}>{v}</span>
               </div>
             ))}
           </div>
@@ -1117,7 +1127,7 @@ function StaffForm({ existing, onSave, onClose }) {
     <div style={{display:"flex",flexDirection:"column",gap:14}}>
       <div style={{display:"flex",alignItems:"center",gap:16}}>
         <label style={{cursor:"pointer",flexShrink:0}}>
-          <div style={{width:72,height:72,borderRadius:"50%",overflow:"hidden",background:`linear-gradient(135deg,${GOLD},#a8832a)`,border:`2px solid ${BORDER}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:prev?"":26,position:"relative"}}>
+          <div style={{width:72,height:72,borderRadius:"50%",overflow:"hidden",background:`linear-gradient(135deg,#16a34a,#15803d)`,border:`2px solid #cbd5e1`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:prev?"":26,position:"relative"}}>
             {prev ? <img src={prev} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/> : <span>{f.name?.[0]?.toUpperCase()||"👤"}</span>}
           </div>
           <input type="file" accept="image/*" onChange={handlePhoto} style={{display:"none"}}/>
@@ -1255,12 +1265,12 @@ function StaffPage({ staff, onAdd, onEdit, onDelete, onStatus }) {
         <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.search}
           style={{flex:1,minWidth:180,background:CARD2,border:`1px solid rgba(255,255,255,0.07)`,borderRadius:9,padding:"9px 13px",color:"#e2e8f0",fontSize:13,outline:"none",fontFamily:FONT_BODY}}/>
         <select value={fDept} onChange={e=>setFDept(e.target.value)}
-          style={{background:CARD2,border:`1px solid rgba(255,255,255,0.07)`,borderRadius:9,padding:"9px 12px",color:"#94a3b8",fontSize:12,outline:"none",cursor:"pointer",fontFamily:FONT_BODY}}>
+          style={{background:CARD2,border:`1px solid rgba(255,255,255,0.07)`,borderRadius:9,padding:"9px 12px",color:"#1e293b",fontSize:12,outline:"none",cursor:"pointer",fontFamily:FONT_BODY}}>
           <option value="all">{t.allDepartments}</option>
           {DEPARTMENTS.map(d=><option key={d} value={d}>{DEPT_ICONS[d]} {d}</option>)}
         </select>
         <select value={fStatus} onChange={e=>setFStatus(e.target.value)}
-          style={{background:CARD2,border:`1px solid rgba(255,255,255,0.07)`,borderRadius:9,padding:"9px 12px",color:"#94a3b8",fontSize:12,outline:"none",cursor:"pointer",fontFamily:FONT_BODY}}>
+          style={{background:CARD2,border:`1px solid rgba(255,255,255,0.07)`,borderRadius:9,padding:"9px 12px",color:"#1e293b",fontSize:12,outline:"none",cursor:"pointer",fontFamily:FONT_BODY}}>
           <option value="all">{t.allStatuses2}</option>
           {Object.entries(STAFF_STATUS).map(([k,v])=><option key={k} value={k}>{v.label}</option>)}
         </select>
@@ -1377,7 +1387,7 @@ function BookingCalendar({ reservations, rooms, clients, settings }) {
         <div style={{display:"flex",gap:4,alignItems:"center"}}>
           <button onClick={()=>{if(month===0){setMonth(11);setYear(y=>y-1);}else setMonth(m=>m-1);}}
             style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 12px",color:GOLD,cursor:"pointer",fontSize:16,fontFamily:FONT_BODY}}>‹</button>
-          <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 18px",color:"#e2e8f0",fontSize:13,fontWeight:600,fontFamily:FONT_DISPLAY,minWidth:160,textAlign:"center"}}>
+          <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 18px",color:"#1e293b",fontSize:13,fontWeight:600,fontFamily:FONT_DISPLAY,minWidth:160,textAlign:"center"}}>
             {t.monthsFull[month]} {year}
           </div>
           <button onClick={()=>{if(month===11){setMonth(0);setYear(y=>y+1);}else setMonth(m=>m+1);}}
@@ -1388,7 +1398,7 @@ function BookingCalendar({ reservations, rooms, clients, settings }) {
           {t.todayBtn}
         </button>
         <select value={selRoom} onChange={e=>setSelRoom(e.target.value)}
-          style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 12px",color:"#94a3b8",fontSize:12,outline:"none",cursor:"pointer",fontFamily:FONT_BODY}}>
+          style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 12px",color:"#1e293b",fontSize:12,outline:"none",cursor:"pointer",fontFamily:FONT_BODY}}>
           <option value="all">{t.allRooms}</option>
           {rooms.map(r=><option key={r.id} value={r.id}>{r.id} — {r.type}</option>)}
         </select>
@@ -1422,7 +1432,7 @@ function BookingCalendar({ reservations, rooms, clients, settings }) {
                   <div style={{width:180,flexShrink:0,padding:"8px 14px",borderRight:`1px solid rgba(255,255,255,0.06)`,display:"flex",alignItems:"center",gap:8}}>
                     <div style={{width:8,height:8,borderRadius:"50%",background:tCol,flexShrink:0}}/>
                     <div>
-                      <div style={{color:"#e2e8f0",fontWeight:600,fontSize:12}}>{room.id}</div>
+                      <div style={{color:"#1e293b",fontWeight:600,fontSize:12}}>{room.id}</div>
                       <div style={{color:tCol,fontSize:10}}>{room.type} · ${room.price}/n</div>
                     </div>
                   </div>
@@ -1459,7 +1469,7 @@ function BookingCalendar({ reservations, rooms, clients, settings }) {
       </div>
 
       {tooltip && (
-        <div style={{position:"fixed",top:tooltip.rect.top-120,left:tooltip.rect.left,background:`linear-gradient(135deg,${CARD},#0d1520)`,border:`1px solid rgba(201,168,76,0.3)`,borderRadius:10,padding:"12px 16px",zIndex:9000,minWidth:220,boxShadow:`0 12px 40px rgba(0,0,0,0.6)`,pointerEvents:"none"}}>
+        <div style={{position:"fixed",top:tooltip.rect.top-120,left:tooltip.rect.left,background:`linear-gradient(135deg,${CARD},#0d1520)`,border:`1px solid rgba(201,168,76,0.3)`,borderRadius:10,padding:"12px 16px",zIndex:9000,minwidth:260,boxShadow:`0 12px 40px rgba(0,0,0,0.6)`,pointerEvents:"none"}}>
           <div style={{color:GOLD,fontWeight:700,fontSize:13,fontFamily:FONT_DISPLAY,marginBottom:8}}>
             🛏️ {tooltip.room.id} — {tooltip.room.type}
           </div>
@@ -1554,7 +1564,7 @@ function AIAssistant({ reservations, clients, rooms, staff, settings }) {
     try {
       const systemCtx = buildContext({ reservations, clients, rooms, staff, settings, today });
       const apiMessages = history.filter(m => m.role === "user" || m.role === "assistant").map(m => ({ role: m.role, content: m.content }));
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("http://localhost:3001/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemCtx, messages: apiMessages }),
@@ -1594,14 +1604,14 @@ function AIAssistant({ reservations, clients, rooms, staff, settings }) {
         </div>
       </div>
 
-      <div style={{flex:1,overflowY:"auto",display:"flex",flexDirection:"column",gap:16,padding:"20px",background:CARD2,border:`1px solid ${BORDER}`,borderRadius:14,marginBottom:12}}>
+      <div style={{flex:1,overflowY:"scroll",display:"flex",flexDirection:"column",gap:16,padding:"20px",background:CARD2,border:`1px solid ${BORDER}`,borderRadius:14,marginBottom:12}}>
         {messages.map((m,i)=>(
           <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",flexDirection:m.role==="user"?"row-reverse":"row"}}>
             <div style={{width:34,height:34,borderRadius:"50%",flexShrink:0,background:m.role==="user"?`linear-gradient(135deg,${GOLD},#a8832a)`:"linear-gradient(135deg,#1e3a5f,#0f2440)",border:m.role==="assistant"?`1px solid rgba(201,168,76,0.3)`:"none",display:"flex",alignItems:"center",justifyContent:"center",fontSize:m.role==="user"?14:18,fontWeight:700,color:m.role==="user"?"#080c10":"#fff"}}>
               {m.role==="user"?"👤":"🤖"}
             </div>
             <div style={{maxWidth:"75%",display:"flex",flexDirection:"column",alignItems:m.role==="user"?"flex-end":"flex-start",gap:4}}>
-              <div style={{background:m.role==="user"?`linear-gradient(135deg,${GOLD},#b8922a)`:"rgba(255,255,255,0.04)",border:m.role==="assistant"?`1px solid rgba(255,255,255,0.07)`:"none",borderRadius:m.role==="user"?"14px 14px 4px 14px":"14px 14px 14px 4px",padding:"12px 16px",color:m.role==="user"?"#080c10":"#d1d5db",fontSize:13,lineHeight:1.7,fontFamily:FONT_BODY}}>
+              <div style={{background:m.role==="user"?`linear-gradient(135deg,${GOLD},#b8922a)`:"rgba(255,255,255,0.04)",border:m.role==="assistant"?`1px solid rgba(255,255,255,0.07)`:"none",borderRadius:m.role==="user"?"14px 14px 4px 14px":"14px 14px 14px 4px",padding:"12px 16px",color:m.role==="user"?"#ffffff":"#1e293b",fontSize:13,lineHeight:1.7,fontFamily:FONT_BODY}}>
                 {m.role==="assistant" ? <div dangerouslySetInnerHTML={{__html:fmt(m.content)}}/> : m.content}
               </div>
               {m.time&&<div style={{fontSize:10,color:"#334155",letterSpacing:0.3}}>{m.time}</div>}
@@ -1620,9 +1630,9 @@ function AIAssistant({ reservations, clients, rooms, staff, settings }) {
       <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:10}}>
         {QUICK_PROMPTS.map((p,i)=>(
           <button key={i} onClick={()=>send(p.text)} disabled={loading}
-            style={{background:"rgba(255,255,255,0.03)",border:`1px solid rgba(255,255,255,0.08)`,borderRadius:20,padding:"5px 12px",color:"#64748b",fontSize:11,cursor:"pointer",fontFamily:FONT_BODY,transition:"all 0.15s",display:"flex",alignItems:"center",gap:4}}
+            style={{background:"#f8fafc",border:`1px solid #cbd5e1`,borderRadius:20,padding:"5px 12px",color:"#64748b",fontSize:11,cursor:"pointer",fontFamily:FONT_BODY,transition:"all 0.15s",display:"flex",alignItems:"center",gap:4}}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=BORDER;e.currentTarget.style.color=GOLD;}}
-            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,0.08)";e.currentTarget.style.color="#64748b";}}>
+            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,0.08)";e.currentTarget.style.color="#ffffff";}}>
             {p.icon} {p.text.length>30?p.text.slice(0,30)+"...":p.text}
           </button>
         ))}
@@ -1632,7 +1642,7 @@ function AIAssistant({ reservations, clients, rooms, staff, settings }) {
         <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value)}
           onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&send()}
           placeholder={t.askPlaceholder} disabled={loading}
-          style={{flex:1,background:CARD2,border:`1px solid ${loading?"rgba(255,255,255,0.05)":BORDER}`,borderRadius:11,padding:"13px 18px",color:"#e2e8f0",fontSize:13,outline:"none",fontFamily:FONT_BODY,transition:"all 0.2s"}}/>
+          style={{flex:1,background:CARD2,border:`1px solid ${loading?"rgba(255,255,255,0.05)":BORDER}`,borderRadius:11,padding:"13px 18px",color:"#1e293b",fontSize:13,outline:"none",fontFamily:FONT_BODY,transition:"all 0.2s"}}/>
         <button onClick={()=>send()} disabled={loading||!input.trim()}
           style={{background:loading||!input.trim()?CARD2:`linear-gradient(135deg,${GOLD},#b8922a)`,border:`1px solid ${loading||!input.trim()?"rgba(255,255,255,0.07)":"transparent"}`,borderRadius:11,padding:"13px 20px",color:loading||!input.trim()?"#334155":"#080c10",fontWeight:700,fontSize:18,cursor:loading||!input.trim()?"not-allowed":"pointer",transition:"all 0.2s"}}>
           {loading?"⏳":"➤"}
@@ -1706,14 +1716,14 @@ function HotelApp({ user, onLogout, lang, setLang }) {
 
   return (
     <LangCtx.Provider value={lang}>
-      <div style={{display:"flex",height:"100vh",background:DARK,fontFamily:FONT_BODY,overflow:"hidden"}}>
+      <div style={{display:"flex",height:"100vh",width:"100vw",background:DARK,fontFamily:FONT_BODY,overflow:"hidden",position:"fixed",top:0,left:0}}>
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
           *{box-sizing:border-box;margin:0;padding:0}
           ::-webkit-scrollbar{width:5px}
           ::-webkit-scrollbar-track{background:transparent}
           ::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.25);border-radius:10px}
-          select option{background:#0f1623}
+          select option{background:#ffffff;color:#1e293b}
           input::placeholder{color:rgba(100,116,139,0.6)}
           button{font-family:'DM Sans','Segoe UI',sans-serif}
           button:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
@@ -1726,16 +1736,16 @@ function HotelApp({ user, onLogout, lang, setLang }) {
         `}</style>
 
         {/* ── SIDEBAR ── */}
-        <div style={{width:220,background:`linear-gradient(180deg,#0b1118 0%,${DARK} 100%)`,borderRight:`1px solid rgba(201,168,76,0.1)`,display:"flex",flexDirection:"column",flexShrink:0,position:"relative"}}>
+        <div style={{width:260,background:`linear-gradient(180deg,#1e3a8a 0%,#1d4ed8 100%)`,borderRight:`1px solid rgba(201,168,76,0.1)`,display:"flex",flexDirection:"column",flexShrink:0,position:"relative"}}>
           <div style={{position:"absolute",top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,transparent,${GOLD},transparent)`}}/>
 
           {/* Logo */}
           <div style={{padding:"26px 18px 20px",borderBottom:`1px solid rgba(255,255,255,0.05)`}}>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
-              <div style={{width:38,height:38,borderRadius:10,background:`linear-gradient(135deg,${GOLD},#a8832a)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>🏨</div>
+              <div style={{width:38,height:38,borderRadius:10,background:`linear-gradient(135deg,#f59e0b,#d97706)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0,boxShadow:"0 4px 12px rgba(245,158,11,0.4)"}}>🏨</div>
               <div>
                 <div style={{color:"#f1f5f9",fontFamily:FONT_DISPLAY,fontSize:15,fontWeight:700,letterSpacing:0.5}}>{settings.hotelName}</div>
-                <div style={{color:"#475569",fontSize:9,letterSpacing:2,marginTop:1}}>MANAGEMENT</div>
+                <div style={{color:"#bfdbfe",fontSize:9,letterSpacing:2,marginTop:1}}>MANAGEMENT</div>
               </div>
             </div>
             <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:8,padding:"7px 11px",display:"flex",alignItems:"center",gap:8}}>
@@ -1743,22 +1753,26 @@ function HotelApp({ user, onLogout, lang, setLang }) {
                 {user.username[0].toUpperCase()}
               </div>
               <div style={{minWidth:0}}>
-                <div style={{color:"#94a3b8",fontSize:11,fontWeight:500,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user.username}</div>
+                <div style={{color:"#ffffff",textShadow:"0 1px 2px rgba(0,0,0,0.3)",fontSize:11,fontWeight:500,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user.username}</div>
                 <div style={{color:"#10b981",fontSize:9,letterSpacing:1}}>● ACTIF</div>
               </div>
             </div>
           </div>
 
+          {/* Lang fo9 */}
+          <div style={{padding:"12px 14px",borderBottom:`1px solid rgba(255,255,255,0.1)`}}>
+            <LangSwitcher lang={lang} setLang={setLang}/>
+          </div>
           {/* Nav */}
-          <nav style={{flex:1,padding:"14px 10px",display:"flex",flexDirection:"column",gap:2}}>
+          <nav style={{flex:1,padding:"14px 10px",display:"flex",flexDirection:"column",gap:2,overflowY:"auto",minHeight:0}}>
             {NAV.map(n=>{
               const active=page===n.id;
               return (
-                <button key={n.id} onClick={()=>setPage(n.id)} style={{width:"100%",background:active?`linear-gradient(135deg,rgba(201,168,76,0.16),rgba(201,168,76,0.06))`:"transparent",border:active?`1px solid rgba(201,168,76,0.2)`:"1px solid transparent",borderRadius:10,padding:"10px 13px",color:active?"#f1f5f9":"#64748b",display:"flex",alignItems:"center",gap:10,fontSize:13,fontWeight:active?600:400,cursor:"pointer",transition:"all 0.18s",textAlign:"left",position:"relative",letterSpacing:0.2}}
+                <button key={n.id} onClick={()=>setPage(n.id)} style={{width:"100%",background:active?`linear-gradient(135deg,rgba(201,168,76,0.16),rgba(201,168,76,0.06))`:"transparent",border:active?`1px solid rgba(201,168,76,0.2)`:"1px solid transparent",borderRadius:10,padding:"10px 13px",color:"#ffffff",textShadow:"0 1px 2px rgba(0,0,0,0.3)",display:"flex",alignItems:"center",gap:10,fontSize:13,fontWeight:active?600:400,cursor:"pointer",transition:"all 0.18s",textAlign:"left",position:"relative",letterSpacing:0.2}}
                   onMouseEnter={e=>{if(!active){e.currentTarget.style.background="rgba(255,255,255,0.04)";e.currentTarget.style.color="#94a3b8";}}}
-                  onMouseLeave={e=>{if(!active){e.currentTarget.style.background="transparent";e.currentTarget.style.color="#64748b";}}}>
+                  onMouseLeave={e=>{if(!active){e.currentTarget.style.background="transparent";e.currentTarget.style.color="#ffffff";}}}>
                   {active && <div style={{position:"absolute",left:-10,top:"50%",transform:"translateY(-50%)",width:3,height:22,background:GOLD,borderRadius:2}}/>}
-                  <span style={{fontSize:16,opacity:active?1:0.7}}>{n.icon}</span>
+                  <span style={{fontSize:16,opacity:1,filter:"brightness(2)"}}>{n.icon}</span>
                   {n.label}
                   {n.id==="reservations"&&notifCount>0&&(
                     <span style={{marginLeft:"auto",background:"#ef4444",color:"#fff",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700}}>
@@ -1771,22 +1785,16 @@ function HotelApp({ user, onLogout, lang, setLang }) {
           </nav>
 
           {/* Language switcher + date */}
-          <div style={{padding:"0 12px 18px",display:"flex",flexDirection:"column",gap:8}}>
-            <LangSwitcher lang={lang} setLang={setLang}/>
-            <div style={{background:"rgba(255,255,255,0.02)",border:"1px solid rgba(255,255,255,0.05)",borderRadius:9,padding:"9px 12px",textAlign:"center"}}>
-              <div style={{fontSize:10,color:"#334155",letterSpacing:1,marginBottom:2}}>{t.today}</div>
-              <div style={{fontSize:12,color:"#64748b",fontWeight:500}}>
-                {new Date().toLocaleDateString(lang==="ar"?"ar-MA":lang==="es"?"es-ES":lang==="en"?"en-GB":"fr-FR",{day:"numeric",month:"short",year:"numeric"})}
-              </div>
-            </div>
+          <div style={{padding:"0 12px 18px",display:"flex",flexDirection:"column",gap:8,marginTop:"auto"}}>
+            
           </div>
         </div>
 
         {/* ── MAIN CONTENT ── */}
-        <div style={{flex:1,overflowY:"auto",background:DARK,display:"flex",flexDirection:"column"}}>
+        <div style={{flex:1,overflowY:"scroll",background:DARK,display:"flex",flexDirection:"column",width:"100%"}}>
           <div style={{padding:"18px 28px 0",borderBottom:`1px solid rgba(255,255,255,0.04)`,background:`linear-gradient(180deg,rgba(201,168,76,0.02) 0%,transparent 100%)`,display:"flex",alignItems:"center",justifyContent:"space-between",paddingBottom:16,flexShrink:0}}>
             <div>
-              <h1 style={{color:"#f1f5f9",fontFamily:FONT_DISPLAY,fontSize:22,fontWeight:700,letterSpacing:0.5}}>
+              <h1 style={{color:"#1e293b",fontFamily:FONT_DISPLAY,fontSize:22,fontWeight:700,letterSpacing:0.5}}>
                 {NAV.find(n=>n.id===page)?.icon} {NAV.find(n=>n.id===page)?.label}
               </h1>
             </div>
@@ -1835,6 +1843,15 @@ export default function App() {
   const [user,setUser]=useState(null);
   const [checking,setChecking]=useState(true);
   const [lang,setLang]=useState("fr");
+  useEffect(()=>{
+    fetch("https://ipapi.co/json/")
+      .then(r=>r.json())
+      .then(d=>{
+        const map={"US":"en","CA":"en","GB":"en","AU":"en","IE":"en","NZ":"en","FR":"fr","BE":"fr","MA":"fr","DZ":"fr","TN":"fr","ES":"es","MX":"es","AR":"es","CO":"es","SA":"ar","AE":"ar","EG":"ar","QA":"ar"};
+        const detected=map[d.country_code];
+        if(detected&&!localStorage.getItem("langOverride"))setLang(detected);
+      }).catch(()=>{});
+  },[]);
 
   useEffect(()=>{
     sget("saas:session",false).then(s=>{ if(s){setUser(s);if(s.lang)setLang(s.lang);} setChecking(false); });
@@ -1860,7 +1877,8 @@ export default function App() {
 if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
   return (
     <ToastProvider>
-      <HotelApp user={user} onLogout={handleLogout} lang={lang} setLang={setLang}/>
+      <HotelApp user={user} onLogout={handleLogout} lang={lang} setLang={setLang={c=>{setLang(c);localStorage.setItem("langOverride",c);}}/>
     </ToastProvider>
   );
 }
+
