@@ -292,7 +292,7 @@ function AuthScreen({ onLogin }) {
   };
 
   return (
-    <div style={{minHeight:"100vh",background:DARK,display:"flex",alignItems:"stretch"}}>
+    <div style={{minHeight:"100vh",height:"100vh",background:DARK,display:"flex",alignItems:"stretch",overflow:"hidden",position:"fixed",inset:0}}>
       <style>{`*{box-sizing:border-box} input::placeholder{color:rgba(107,114,128,0.6)} button:hover:not(:disabled){filter:brightness(1.1)}`}</style>
 
       {/* LEFT */}
