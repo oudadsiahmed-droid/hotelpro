@@ -252,36 +252,41 @@ export default function BookingPage({ hotelId }) {
                 <div style={{ fontSize: 13 }}>Essayez d'autres dates ou un autre type de chambre</div>
               </div>
             ) : (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {filteredRooms.map(r => {
                   const available = isRoomAvailable(r.id);
                   const tCol = typeColors[r.type] || "#1d4ed8";
                   return (
                     <div key={r.id} className="room-card"
-                      style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 18, overflow: "hidden", cursor: available ? "pointer" : "default", transition: "all 0.25s", boxShadow: "0 4px 16px rgba(0,0,0,0.06)", opacity: available ? 1 : 0.6 }}
+                      style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, overflow: "hidden", cursor: available ? "pointer" : "default", transition: "all 0.25s", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", opacity: available ? 1 : 0.6, display:"flex" }}
                       onClick={() => { if (!available) return; setSelected(r); setStep(2); }}>
-                      <div style={{ height: 160, background: `linear-gradient(135deg,${tCol}22,${tCol}44)`, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+                      <div style={{ width:240, flexShrink:0, background: `linear-gradient(135deg,${tCol}22,${tCol}44)`, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
                         {r.image ? <img src={r.image} alt={r.id} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> :
                           <div style={{ fontSize: 56 }}>🛏️</div>}
-                        <div style={{ position: "absolute", top: 12, right: 12, background: available ? "#10b981" : "#ef4444", borderRadius: 20, padding: "4px 12px", fontSize: 11, color: "#fff", fontWeight: 700 }}>
-                          {available ? "● Disponible" : "● Occupée"}
-                        </div>
                         <div style={{ position: "absolute", top: 12, left: 12, background: tCol, borderRadius: 20, padding: "4px 12px", fontSize: 11, color: "#fff", fontWeight: 700 }}>
                           {r.type}
                         </div>
                       </div>
-                      <div style={{ padding: 20 }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                          <span style={{ color: "#1e293b", fontWeight: 700, fontSize: 17 }}>Chambre {r.id}</span>
-                          <span style={{ color: tCol, fontWeight: 700, fontSize: 18 }}>${r.price}<span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>/nuit</span></span>
+                      <div style={{ padding: 24, flex:1, display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
+                        <div>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                            <span style={{ color: "#1e293b", fontWeight: 700, fontSize: 20 }}>Chambre {r.id}</span>
+                            <div style={{textAlign:"right"}}>
+                              <div style={{ color: tCol, fontWeight: 700, fontSize: 22 }}>${r.price}<span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 13 }}>/nuit</span></div>
+                            </div>
+                          </div>
+                          <div style={{ color: "#64748b", fontSize: 13, marginBottom: 8 }}>Étage {r.floor}</div>
+                          <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:12}}>
+                            <span style={{background:`${tCol}15`,color:tCol,borderRadius:20,padding:"3px 10px",fontSize:11,fontWeight:600}}>{r.type}</span>
+                            <span style={{background:available?"rgba(16,185,129,0.1)":"rgba(239,68,68,0.1)",color:available?"#10b981":"#ef4444",borderRadius:20,padding:"3px 10px",fontSize:11,fontWeight:600}}>● {available?"Disponible":"Occupée"}</span>
+                          </div>
                         </div>
-                        <div style={{ color: "#64748b", fontSize: 12, marginBottom: 16 }}>Étage {r.floor}</div>
                         {available ? (
-                          <button style={{ width: "100%", background: `linear-gradient(135deg,#1e3a8a,#1d4ed8)`, border: "none", borderRadius: 10, padding: "11px", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 13, transition: "all 0.2s" }}>
-                            Réserver →
+                          <button style={{ background: `linear-gradient(135deg,#1e3a8a,#1d4ed8)`, border: "none", borderRadius: 10, padding: "12px 28px", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 14, alignSelf:"flex-start" }}>
+                            Détails & réserver →
                           </button>
                         ) : (
-                          <div style={{ width: "100%", background: "#f1f5f9", borderRadius: 10, padding: "11px", color: "#94a3b8", fontWeight: 600, fontSize: 13, textAlign: "center" }}>
+                          <div style={{ background: "#f1f5f9", borderRadius: 10, padding: "12px 28px", color: "#94a3b8", fontWeight: 600, fontSize: 13, display:"inline-block" }}>
                             Non disponible
                           </div>
                         )}
