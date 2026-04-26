@@ -276,6 +276,13 @@ export default function BookingPage({ hotelId }) {
                             </div>
                           </div>
                           <div style={{ color: "#64748b", fontSize: 13, marginBottom: 8 }}>Étage {r.floor}</div>
+                        {r.amenities&&r.amenities.length>0&&(
+                          <div style={{display:"flex",gap:6,flexWrap:"wrap",margin:"8px 0"}}>
+                            {r.amenities.map(a=>(
+                              <span key={a} style={{background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:20,padding:"3px 10px",fontSize:11,color:"#475569"}}>{a}</span>
+                            ))}
+                          </div>
+                        )}
                           <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:12}}>
                             <span style={{background:`${tCol}15`,color:tCol,borderRadius:20,padding:"3px 10px",fontSize:11,fontWeight:600}}>{r.type}</span>
                             <span style={{background:available?"rgba(16,185,129,0.1)":"rgba(239,68,68,0.1)",color:available?"#10b981":"#ef4444",borderRadius:20,padding:"3px 10px",fontSize:11,fontWeight:600}}>● {available?"Disponible":"Occupée"}</span>
