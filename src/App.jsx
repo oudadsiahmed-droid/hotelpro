@@ -26,7 +26,7 @@ function hashPwd(pw) {
 }
 
 // ── CONSTANTS ────────────────────────────────────────────────────
-const GOLD = "#cc0000", DARK = "#ffffff", CARD = "#ffffff", CARD2 = "#f5f5f5", BORDER = "rgba(0,0,0,0.1)";
+const GOLD = "#cc0000", DARK = "#fafbff", CARD = "#ffffff", CARD2 = "#f0f4ff", BORDER = "rgba(99,102,241,0.15)";
 const FONT_DISPLAY = "'Inter', 'Segoe UI', sans-serif";
 const FONT_BODY    = "'Inter', 'Segoe UI', sans-serif";
 
@@ -1772,7 +1772,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
         `}</style>
 
         {/* ── SIDEBAR ── */}
-        <div style={{width:260,background:`linear-gradient(180deg,#1e3a8a 0%,#1d4ed8 100%)`,borderRight:`1px solid rgba(201,168,76,0.1)`,display:"flex",flexDirection:"column",flexShrink:0,position:"relative"}}>
+        <div style={{width:260,background:`linear-gradient(180deg,#0f0c29 0%,#302b63 50%,#24243e 100%)`,borderRight:`1px solid rgba(201,168,76,0.1)`,display:"flex",flexDirection:"column",flexShrink:0,position:"relative"}}>
           <div style={{position:"absolute",top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,transparent,${GOLD},transparent)`}}/>
 
           {/* Logo */}
@@ -1829,7 +1829,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
         </div>
 
         {/* ── MAIN CONTENT ── */}
-        <div style={{flex:1,overflowY:"scroll",background:DARK,display:"flex",flexDirection:"column",width:"100%"}}>
+        <div style={{flex:1,overflowY:"scroll",background:"linear-gradient(135deg,#fafbff 0%,#f0f4ff 50%,#faf0ff 100%)",display:"flex",flexDirection:"column",width:"100%"}}>
           <div style={{padding:"18px 28px 0",borderBottom:`1px solid rgba(255,255,255,0.04)`,background:`linear-gradient(180deg,rgba(201,168,76,0.02) 0%,transparent 100%)`,display:"flex",alignItems:"center",justifyContent:"space-between",paddingBottom:16,flexShrink:0}}>
             <div>
               <h1 style={{color:"#1e293b",fontFamily:FONT_DISPLAY,fontSize:22,fontWeight:700,letterSpacing:0.5}}>
