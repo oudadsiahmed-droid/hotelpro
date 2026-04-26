@@ -38,7 +38,7 @@ function Template1({ hotel, rooms, onBook }) {
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(10,10,10,0.3),rgba(10,10,10,0.7))"}}/>
         <div className="t1-anim" style={{textAlign:"center",position:"relative",zIndex:2,padding:"0 20px"}}>
           <div style={{fontSize:11,letterSpacing:8,color:"#c9a84c",marginBottom:24,fontFamily:"'Montserrat',sans-serif"}}>BIENVENUE AU</div>
-          <h1 style={{fontSize:"clamp(60px,10vw,120px)",fontWeight:300,letterSpacing:6,margin:"0 0 24px",lineHeight:1.1,textShadow:"0 4px 30px rgba(0,0,0,0.8)"}}>{hotel?.hotelName||"Grand Hôtel"}</h1>
+          <h1 style={{fontSize:"clamp(60px,10vw,120px)",fontWeight:300,letterSpacing:6,margin:"0 0 24px",lineHeight:1.1,color:"#ffffff",textShadow:"0 4px 30px rgba(0,0,0,0.9)",WebkitTextStroke:"1px rgba(255,255,255,0.3)"}}>{hotel?.hotelName||"Grand Hôtel"}</h1>
           <div style={{width:60,height:1,background:"#c9a84c",margin:"0 auto 28px"}}/>
           {hotel?.description&&<p style={{fontSize:16,color:"rgba(245,240,232,0.8)",maxWidth:560,margin:"0 auto 40px",lineHeight:1.8,fontFamily:"'Montserrat',sans-serif"}}>{hotel.description}</p>}
           <button className="t1-btn" onClick={onBook} style={{background:"#c9a84c",border:"none",color:"#0a0a0a",padding:"16px 48px",fontSize:12,letterSpacing:3,cursor:"pointer",fontFamily:"'Montserrat',sans-serif",fontWeight:600,transition:"all 0.3s"}}>RÉSERVER MAINTENANT</button>
