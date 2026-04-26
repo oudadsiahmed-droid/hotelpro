@@ -1,4 +1,4 @@
-import { db } from "./firebase";
+﻿import { db } from "./firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useState, useEffect, useCallback, createContext, useContext, useRef } from "react";
 import BookingPage from "./BookingPage";
@@ -1735,6 +1735,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
     {id:"staff",       icon:"👔", label:t.staff},
     {id:"assistant",   icon:"🤖", label:t.assistant},
     {id:"revenue",     icon:"📈", label:t.revenue},
+    {id:"integrations",icon:"🔗", label:"Intégrations"},
     {id:"settings",    icon:"⚙️", label:t.settings},
   ];
 
@@ -1868,11 +1869,63 @@ function HotelApp({ user, onLogout, lang, setLang }) {
               onStatus={(id,status)=>saveStaff(staff.map(x=>x.id===id?{...x,status}:x))}/>}
             {page==="assistant"    &&<AIAssistant reservations={res} clients={clients} rooms={rooms} staff={staff} settings={settings}/>}
             {page==="revenue"      &&<RevenuePage reservations={res} settings={settings}/>}
+            {page==="integrations" &&<IntegrationsPage settings={settings} onSave={saveSettings} syncIcal={syncIcal} toast={toast}/>}
             {page==="settings"     &&<SettingsPage settings={settings} user={user} onSave={s=>{saveSettings(s);toast(t.settingsSaved);}} onLogout={onLogout}/>}
           </div>
         </div>
       </div>
     </LangCtx.Provider>
+  );
+}
+
+// ── INTEGRATIONS PAGE ────────────────────────────────────────────
+function IntegrationsPage({ settings, onSave, syncIcal, toast }) {
+  const [icalUrl, setIcalUrl] = useState(settings.icalUrl||"");
+  const [syncing, setSyncing] = useState(false);
+
+  const save = async () => {
+    await onSave({...settings, icalUrl});
+    toast("iCal URL sauvegarde!", "success");
+  };
+
+  const sync = async () => {
+    setSyncing(true);
+    await syncIcal();
+    setSyncing(false);
+  };
+
+  return (
+    <div>
+      <h2 style={{margin:"0 0 20px",color:GOLD,fontFamily:"Georgia,serif",fontSize:22}}>Integrations</h2>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))",gap:16}}>
+        <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:12,padding:22}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
+            <div style={{fontSize:28}}>📅</div>
+            <div>
+              <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,fontWeight:700}}>Booking.com iCal</div>
+              <div style={{color:"#6b7280",fontSize:12}}>Sync reservations automatiquement</div>
+            </div>
+          </div>
+          <div style={{display:"flex",flexDirection:"column",gap:12}}>
+            <div>
+              <label style={{fontSize:10,color:"#1e293b",letterSpacing:1.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:6}}>ICAL URL</label>
+              <input value={icalUrl} onChange={e=>setIcalUrl(e.target.value)}
+                placeholder="https://admin.booking.com/hotel/hoteladmin/ical.ics?..."
+                style={{width:"100%",background:"#f8fafc",border:"1px solid #cbd5e1",borderRadius:9,padding:"11px 14px",color:"#1e293b",fontSize:12,outline:"none",boxSizing:"border-box"}}/>
+            </div>
+            {icalUrl && (
+              <div style={{background:"rgba(16,185,129,0.08)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:8,padding:"10px 14px",fontSize:12,color:"#10b981"}}>
+                iCal connecte - sync automatique kol 30 min
+              </div>
+            )}
+            <div style={{display:"flex",gap:8}}>
+              <Btn onClick={save} style={{flex:1}}>Sauvegarder</Btn>
+              {icalUrl && <Btn variant="ghost" onClick={sync} loading={syncing} style={{flex:1}}>Sync maintenant</Btn>}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
