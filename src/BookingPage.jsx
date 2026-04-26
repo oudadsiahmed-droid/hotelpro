@@ -162,6 +162,21 @@ export default function BookingPage({ hotelId }) {
         .animate{animation:fadeIn 0.4s ease}
       `}</style>
 
+      {/* HERO */}
+      <div style={{position:"relative",height:320,overflow:"hidden",background:"linear-gradient(135deg,#1e3a8a,#0f172a)"}}>
+        {hotel?.logoUrl && <img src={hotel.logoUrl} alt="hotel" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.3}}/>}
+        <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 100%)"}}/>
+        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"40px 40px 32px"}}>
+          <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",letterSpacing:4,marginBottom:10}}>RÉSERVATION EN LIGNE</div>
+          <h1 style={{color:"#fff",fontFamily:"'Playfair Display',serif",fontSize:42,fontWeight:700,marginBottom:10,textShadow:"0 2px 20px rgba(0,0,0,0.5)"}}>{hotel?.hotelName||"HotelPro"}</h1>
+          {hotel?.address&&<div style={{color:"rgba(255,255,255,0.7)",fontSize:14}}>📍 {hotel.address}</div>}
+          <div style={{display:"flex",gap:16,marginTop:16,flexWrap:"wrap"}}>
+            {hotel?.phone&&<div style={{color:"rgba(255,255,255,0.8)",fontSize:13}}>📞 {hotel.phone}</div>}
+            {hotel?.email&&<div style={{color:"rgba(255,255,255,0.8)",fontSize:13}}>📧 {hotel.email}</div>}
+          </div>
+        </div>
+      </div>
+
       {/* HEADER */}
       <div style={{ background: "linear-gradient(135deg,#1e3a8a 0%,#1d4ed8 100%)", padding: "0 0 0 0", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 4px 20px rgba(30,58,138,0.3)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
