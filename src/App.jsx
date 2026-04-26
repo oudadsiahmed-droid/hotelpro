@@ -592,7 +592,7 @@ function Dashboard({ reservations, clients, rooms, settings }) {
                 {cl?.name?.[0]||"?"}
               </div>
               <div style={{flex:1,minWidth:120}}>
-                <div style={{color:"#e5e7eb",fontSize:13,fontWeight:600}}>{cl?.name||"—"}</div>
+                <div style={{color:"#1e293b",fontSize:13,fontWeight:600}}>{cl?.name||"—"}</div>
                 <div style={{color:"#6b7280",fontSize:11}}>{r.roomId}·{r.checkIn}→{r.checkOut}</div>
               </div>
               <div style={{color:GOLD,fontWeight:700,fontSize:13}}>{cur.symbol}{((r.total||0)*cur.rate).toFixed(0)}</div>
