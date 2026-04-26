@@ -1379,7 +1379,7 @@ function BookingCalendar({ reservations, rooms, clients, settings }) {
     return ci <= me && co >= ms;
   }).reduce((a,r) => a + (r.total||0), 0);
 
-  const CELL_W = 30;
+  const CELL_W = 40;
 
   return (
     <div>
