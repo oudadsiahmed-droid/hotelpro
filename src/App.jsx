@@ -1068,7 +1068,17 @@ function SettingsPage({ settings, onSave, user, onLogout }) {
                 }}/>
               </label>
             </div>
-            <Sel label={t.currency} value={f.currency} onChange={set("currency")}>
+            <Inp label="🔗 iCal Booking.com URL" value={f.icalUrl||""} onChange={set("icalUrl")} placeholder="https://admin.booking.com/hotel/hoteladmin/ical.ics?..."/>
+            {f.icalUrl && (
+              <div style={{display:"flex",alignItems:"center",gap:8}}>
+                <div style={{background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:8,padding:"8px 14px",fontSize:12,color:"#10b981",flex:1}}>
+                  ✅ iCal connecté — sync automatique kol 30 min
+                </div>
+                <Btn variant="ghost" style={{padding:"8px 14px",fontSize:12}} onClick={()=>syncIcal()}>
+                  🔄 Sync maintenant
+                </Btn>
+              </div>
+            )}
               <option value="USD">USD ($) · Dollar</option>
               <option value="MAD">MAD · Dirham Marocain</option>
               <option value="EUR">EUR (€) · Euro</option>
@@ -1718,6 +1728,66 @@ function HotelApp({ user, onLogout, lang, setLang }) {
   const saveRooms=useCallback(d=>{setRooms(d);sset(`saas:d:${user.username}:rooms`,d);},[user.username]);
   const saveStaff=useCallback(d=>{setStaff(d);sset(`saas:d:${user.username}:staff`,d);},[user.username]);
   const saveSettings=useCallback(d=>{setSettings(d);sset(`saas:d:${user.username}:settings`,d);},[user.username]);
+
+  const syncIcal = useCallback(async () => {
+    if (!settings.icalUrl) return;
+    try {
+      const r = await fetch(`http://localhost:3001/api/ical?url=${encodeURIComponent(settings.icalUrl)}`);
+      const { data } = await r.json();
+      if (!data) return;
+
+      // Parse iCal
+      const events = data.split("BEGIN:VEVENT").slice(1).map(e => {
+        const get = k => { const m = e.match(new RegExp(k+":([^\\r\\n]*)"));return m?m[1].trim():""; };
+        const dtstart = get("DTSTART").replace(/T.*|[^0-9]/g,"");
+        const dtend   = get("DTEND").replace(/T.*|[^0-9]/g,"");
+        const fmt = d => d?`${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)}`:"";
+        return {
+          uid:    get("UID"),
+          summary:get("SUMMARY"),
+          checkIn: fmt(dtstart),
+          checkOut:fmt(dtend),
+        };
+      }).filter(e => e.checkIn && e.checkOut);
+
+      // Zid reservations jdad ghir
+      const existing = res.map(r => r.icalUid).filter(Boolean);
+      const newRes = events
+        .filter(e => !existing.includes(e.uid))
+        .map(e => ({
+          id: Date.now().toString() + Math.random(),
+          icalUid: e.uid,
+          clientId: "",
+          roomId: "",
+          checkIn: e.checkIn,
+          checkOut: e.checkOut,
+          nights: Math.max(1, Math.round((new Date(e.checkOut)-new Date(e.checkIn))/86400000)),
+          status: "confirmed",
+          paymentStatus: "unpaid",
+          amountPaid: 0,
+          total: 0,
+          notes: `📅 Booking.com: ${e.summary}`,
+          source: "booking.com",
+        }));
+
+      if (newRes.length > 0) {
+        saveRes([...newRes, ...res]);
+        toast(`✅ ${newRes.length} réservation(s) importée(s) de Booking.com`);
+      } else {
+        toast("ℹ️ Aucune nouvelle réservation", "info");
+      }
+    } catch(e) {
+      toast("❌ Erreur sync iCal", "error");
+    }
+  }, [settings.icalUrl, res, saveRes, toast]);
+
+  useEffect(() => {
+    if (settings.icalUrl) {
+      syncIcal();
+      const interval = setInterval(syncIcal, 30 * 60 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [settings.icalUrl]);
 
   const today=new Date().toISOString().split("T")[0];
   const notifCount=[
