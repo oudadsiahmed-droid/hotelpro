@@ -845,9 +845,10 @@ function RoomEditModal({ room, onSave, onClose }) {
         <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
           {(t.amenities||["❄️ Climatisation","📶 Wi-Fi","🏊 Vue piscine","🌿 Vue jardin","🛁 Baignoire","🍳 Kitchenette","🏔️ Vue montagne","🅿️ Parking"]).map(eq=>(
             <button key={eq} type="button" onClick={()=>{
+              const idx = (t.amenities||[]).indexOf(eq);
               const list = f.amenities||[];
-              setF(p=>({...p,amenities:list.includes(eq)?list.filter(x=>x!==eq):[...list,eq]}));
-            }} style={{padding:"6px 12px",borderRadius:20,border:`1px solid ${(f.amenities||[]).includes(eq)?"#1d4ed8":"#cbd5e1"}`,background:(f.amenities||[]).includes(eq)?"rgba(29,78,216,0.1)":"#f8fafc",color:(f.amenities||[]).includes(eq)?"#1d4ed8":"#64748b",fontSize:12,cursor:"pointer"}}>
+              setF(p=>({...p,amenities:list.includes(idx)?list.filter(x=>x!==idx):[...list,idx]}));
+            }} style={{padding:"6px 12px",borderRadius:20,border:`1px solid ${(f.amenities||[]).includes((t.amenities||[]).indexOf(eq))?"#1d4ed8":"#cbd5e1"}`,background:(f.amenities||[]).includes((t.amenities||[]).indexOf(eq))?"rgba(29,78,216,0.1)":"#f8fafc",color:(f.amenities||[]).includes((t.amenities||[]).indexOf(eq))?"#1d4ed8":"#64748b",fontSize:12,cursor:"pointer"}}>
               {eq}
             </button>
           ))}

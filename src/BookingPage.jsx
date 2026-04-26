@@ -279,7 +279,7 @@ export default function BookingPage({ hotelId }) {
                         {r.amenities&&r.amenities.length>0&&(
                           <div style={{display:"flex",gap:6,flexWrap:"wrap",margin:"8px 0"}}>
                             {r.amenities.map(a=>(
-                              <span key={a} style={{background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:20,padding:"3px 10px",fontSize:11,color:"#475569"}}>{a}</span>
+                              <span key={a} style={{background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:20,padding:"3px 10px",fontSize:11,color:"#475569"}}>{typeof a === "number" ? ["❄️ Climatisation","📶 Wi-Fi","🏊 Vue piscine","🌿 Vue jardin","🛁 Baignoire","🍳 Kitchenette","🏔️ Vue montagne","🅿️ Parking"][a] : a}</span>
                             ))}
                           </div>
                         )}
