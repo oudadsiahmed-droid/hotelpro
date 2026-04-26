@@ -843,7 +843,7 @@ function RoomEditModal({ room, onSave, onClose }) {
       <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:8}}>
         <label style={{fontSize:10,color:"#1e293b",letterSpacing:1.5,textTransform:"uppercase",fontWeight:600}}>ÉQUIPEMENTS</label>
         <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-          {["❄️ Climatisation","📶 Wi-Fi","🏊 Vue piscine","🌿 Vue jardin","🛁 Baignoire","🍳 Kitchenette","🏔️ Vue montagne","🅿️ Parking"].map(eq=>(
+          {(t.amenities||["❄️ Climatisation","📶 Wi-Fi","🏊 Vue piscine","🌿 Vue jardin","🛁 Baignoire","🍳 Kitchenette","🏔️ Vue montagne","🅿️ Parking"]).map(eq=>(
             <button key={eq} type="button" onClick={()=>{
               const list = f.amenities||[];
               setF(p=>({...p,amenities:list.includes(eq)?list.filter(x=>x!==eq):[...list,eq]}));
@@ -852,6 +852,8 @@ function RoomEditModal({ room, onSave, onClose }) {
             </button>
           ))}
         </div>
+
+
       </div>
       <div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:4}}>
         <Btn variant="ghost" onClick={onClose}>{t.cancel}</Btn>
