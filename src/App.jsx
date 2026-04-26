@@ -1778,7 +1778,9 @@ function HotelApp({ user, onLogout, lang, setLang }) {
           {/* Logo */}
           <div style={{padding:"26px 18px 20px",borderBottom:`1px solid rgba(255,255,255,0.05)`}}>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
-              <div style={{width:38,height:38,borderRadius:10,background:`linear-gradient(135deg,#f59e0b,#d97706)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0,boxShadow:"0 4px 12px rgba(245,158,11,0.4)"}}>🏨</div>
+              <div style={{width:38,height:38,borderRadius:10,overflow:"hidden",flexShrink:0}}>
+                {settings.logoUrl ? <img src={settings.logoUrl} alt="logo" style={{width:"100%",height:"100%",objectFit:"contain"}}/> : <div style={{width:"100%",height:"100%",background:`linear-gradient(135deg,#f59e0b,#d97706)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🏨</div>}
+              </div>
               <div>
                 <div style={{color:"#f1f5f9",fontFamily:FONT_DISPLAY,fontSize:15,fontWeight:700,letterSpacing:0.5}}>{settings.hotelName}</div>
                 <div style={{color:"#bfdbfe",fontSize:9,letterSpacing:2,marginTop:1}}>MANAGEMENT</div>
