@@ -1838,6 +1838,83 @@ function HotelApp({ user, onLogout, lang, setLang }) {
   );
 }
 
+// ── ADMIN PANEL ──────────────────────────────────────────────────
+function AdminPanel() {
+  const [pwd, setPwd] = useState("");
+  const [auth, setAuth] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const ADMIN_PWD = "hotelpro2024admin";
+
+  const login = async () => {
+    if (pwd !== ADMIN_PWD) return alert("Mot de passe incorrect!");
+    setAuth(true);
+    setLoading(true);
+    const u = await sget("saas:users") || [];
+    setUsers(u);
+    setLoading(false);
+  };
+
+  if (!auth) return (
+    <div style={{minHeight:"100vh",background:"#0a0a0a",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Inter',sans-serif"}}>
+      <div style={{background:"#111",border:"1px solid #333",borderRadius:16,padding:40,width:360,textAlign:"center"}}>
+        <div style={{fontSize:48,marginBottom:16}}>🔐</div>
+        <h2 style={{color:"#fff",marginBottom:8,fontSize:22}}>Admin Panel</h2>
+        <p style={{color:"#666",fontSize:13,marginBottom:24}}>HotelPro Super Admin</p>
+        <input type="password" placeholder="Mot de passe admin" value={pwd} onChange={e=>setPwd(e.target.value)}
+          onKeyDown={e=>e.key==="Enter"&&login()}
+          style={{width:"100%",background:"#1a1a1a",border:"1px solid #333",borderRadius:8,padding:"12px 14px",color:"#fff",fontSize:14,outline:"none",marginBottom:12,boxSizing:"border-box"}}/>
+        <button onClick={login} style={{width:"100%",background:"linear-gradient(135deg,#1e3a8a,#1d4ed8)",border:"none",borderRadius:8,padding:"12px",color:"#fff",fontWeight:700,fontSize:14,cursor:"pointer"}}>
+          Connexion
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{minHeight:"100vh",background:"#0a0a0a",fontFamily:"'Inter',sans-serif",padding:32}}>
+      <div style={{maxWidth:1000,margin:"0 auto"}}>
+        <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:32}}>
+          <div style={{fontSize:32}}>🔐</div>
+          <div>
+            <h1 style={{color:"#fff",margin:0,fontSize:24}}>Admin Panel</h1>
+            <p style={{color:"#666",margin:0,fontSize:13}}>HotelPro · {users.length} hôtel(s) enregistré(s)</p>
+          </div>
+        </div>
+        {loading ? <div style={{color:"#666",textAlign:"center",padding:60}}>Chargement...</div> :
+        <div style={{display:"grid",gap:16}}>
+          {users.map((u,i)=>(
+            <div key={i} style={{background:"#111",border:"1px solid #222",borderRadius:12,padding:20}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+                <div style={{display:"flex",alignItems:"center",gap:10}}>
+                  <div style={{width:40,height:40,borderRadius:"50%",background:"linear-gradient(135deg,#1e3a8a,#1d4ed8)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:16}}>
+                    {u.username[0].toUpperCase()}
+                  </div>
+                  <div>
+                    <div style={{color:"#fff",fontWeight:700,fontSize:15}}>@{u.username}</div>
+                    <div style={{color:"#666",fontSize:12}}>🏨 {u.hotelName}</div>
+                  </div>
+                </div>
+                <div style={{background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:20,padding:"4px 12px",color:"#10b981",fontSize:11,fontWeight:600}}>
+                  ● {u.plan||"pro"}
+                </div>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,fontSize:12}}>
+                {[["📧 Email",u.email||"—"],["📅 Inscrit",new Date(u.createdAt).toLocaleDateString("fr-FR")],["🔗 Booking",`/book/${u.username}`]].map(([k,v])=>(
+                  <div key={k} style={{background:"#1a1a1a",borderRadius:8,padding:"8px 12px"}}>
+                    <div style={{color:"#666",marginBottom:2}}>{k}</div>
+                    <div style={{color:"#ccc"}}>{v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>}
+      </div>
+    </div>
+  );
+}
+
 // ── ROOT ─────────────────────────────────────────────────────────
 export default function App() {
   const [user,setUser]=useState(null);
@@ -1870,6 +1947,7 @@ export default function App() {
     </div>
   );
 
+  if(window.location.pathname === "/admin") return <AdminPanel/>;
   if(window.location.pathname.startsWith("/book/")) {
   const hotelId = window.location.pathname.split("/")[2];
   return <BookingPage hotelId={hotelId}/>;
