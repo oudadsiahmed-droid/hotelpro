@@ -278,7 +278,7 @@ export default function BookingPage({ hotelId }) {
                         </div>
                         <div style={{ color: "#64748b", fontSize: 12, marginBottom: 16 }}>Étage {r.floor}</div>
                         {available ? (
-                          <button style={{ width: "100%", background: `linear-gradient(135deg,${tCol},${tCol}cc)`, border: "none", borderRadius: 10, padding: "11px", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 13, transition: "all 0.2s" }}>
+                          <button style={{ width: "100%", background: `linear-gradient(135deg,#1e3a8a,#1d4ed8)`, border: "none", borderRadius: 10, padding: "11px", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 13, transition: "all 0.2s" }}>
                             Réserver →
                           </button>
                         ) : (
