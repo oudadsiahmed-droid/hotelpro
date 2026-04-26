@@ -840,6 +840,19 @@ function RoomEditModal({ room, onSave, onClose }) {
           {[1,2,3,4,5,6,7,8].map(fl=><option key={fl} value={fl}>Étage {fl}</option>)}
         </Sel>
       </div>
+      <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:8}}>
+        <label style={{fontSize:10,color:"#1e293b",letterSpacing:1.5,textTransform:"uppercase",fontWeight:600}}>ÉQUIPEMENTS</label>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+          {["❄️ Climatisation","📶 Wi-Fi","🏊 Vue piscine","🌿 Vue jardin","🛁 Baignoire","🍳 Kitchenette","🏔️ Vue montagne","🅿️ Parking"].map(eq=>(
+            <button key={eq} type="button" onClick={()=>{
+              const list = f.amenities||[];
+              setF(p=>({...p,amenities:list.includes(eq)?list.filter(x=>x!==eq):[...list,eq]}));
+            }} style={{padding:"6px 12px",borderRadius:20,border:`1px solid ${(f.amenities||[]).includes(eq)?"#1d4ed8":"#cbd5e1"}`,background:(f.amenities||[]).includes(eq)?"rgba(29,78,216,0.1)":"#f8fafc",color:(f.amenities||[]).includes(eq)?"#1d4ed8":"#64748b",fontSize:12,cursor:"pointer"}}>
+              {eq}
+            </button>
+          ))}
+        </div>
+      </div>
       <div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:4}}>
         <Btn variant="ghost" onClick={onClose}>{t.cancel}</Btn>
         <Btn onClick={()=>{
