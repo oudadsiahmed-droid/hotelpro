@@ -1484,7 +1484,7 @@ function BookingCalendar({ reservations, rooms, clients, settings }) {
       </div>
 
       {tooltip && (
-        <div style={{position:"fixed",top:tooltip.rect.top-120,left:tooltip.rect.left,background:`linear-gradient(135deg,#1e3a8a,#1d4ed8)`,border:`1px solid rgba(201,168,76,0.3)`,borderRadius:10,padding:"12px 16px",zIndex:9000,minwidth:260,boxShadow:`0 12px 40px rgba(0,0,0,0.6)`,pointerEvents:"none"}}>
+        <div style={{position:"fixed",top:tooltip.rect.top-140,left:tooltip.rect.left,background:"linear-gradient(135deg,#0f172a,#1e293b)",border:"1px solid rgba(99,102,241,0.4)",borderRadius:14,padding:"16px 20px",zIndex:9000,minWidth:220,boxShadow:"0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(99,102,241,0.1)",pointerEvents:"none",backdropFilter:"blur(12px)"}}>
           <div style={{color:GOLD,fontWeight:700,fontSize:13,fontFamily:FONT_DISPLAY,marginBottom:8}}>
             🛏️ {tooltip.room.id} — {tooltip.room.type}
           </div>
