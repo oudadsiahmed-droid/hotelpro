@@ -385,9 +385,22 @@ export default function BookingPage({ hotelId }) {
               ))}
             </div>
 
-            <div style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 10, padding: "12px 16px", marginBottom: 16, color: "#92400e", fontSize: 13 }}>
-              ℹ️ Le paiement s'effectue à l'hôtel. Votre réservation sera confirmée par téléphone.
-            </div>
+            {hotel?.paypalEmail ? (
+              <div style={{marginBottom:16}}>
+                <div style={{background:"rgba(0,112,240,0.06)",border:"1px solid rgba(0,112,240,0.2)",borderRadius:10,padding:"12px 16px",marginBottom:10,color:"#0070f0",fontSize:13}}>
+                  💳 Paiement sécurisé via PayPal
+                </div>
+                <a href={`https://www.paypal.com/paypalme/${hotel.paypalEmail.split("@")[0]}/${total}`} target="_blank" rel="noreferrer"
+                  style={{display:"block",width:"100%",background:"#0070ba",border:"none",borderRadius:12,padding:"14px",color:"#fff",fontWeight:700,fontSize:15,cursor:"pointer",textAlign:"center",textDecoration:"none",marginBottom:10}}>
+                  💳 Payer ${total} avec PayPal
+                </a>
+                <div style={{textAlign:"center",color:"#94a3b8",fontSize:12,marginBottom:10}}>— ou —</div>
+              </div>
+            ) : (
+              <div style={{background:"rgba(245,158,11,0.08)",border:"1px solid rgba(245,158,11,0.3)",borderRadius:10,padding:"12px 16px",marginBottom:16,color:"#92400e",fontSize:13}}>
+                ℹ️ Le paiement s'effectue à l'hôtel. Votre réservation sera confirmée par téléphone.
+              </div>
+            )}
 
             <button onClick={handleBook} disabled={loading}
               style={{ width: "100%", background: loading ? "#94a3b8" : "linear-gradient(135deg,#10b981,#059669)", border: "none", borderRadius: 12, padding: "15px", color: "#fff", fontWeight: 700, fontSize: 16, cursor: loading ? "not-allowed" : "pointer", transition: "all 0.2s" }}>
