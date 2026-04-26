@@ -3,6 +3,7 @@ export const TRANSLATIONS = {
   en: {
     // NAV
     dashboard: "Dashboard",
+    integrations: "Integrations",
     calendar: "Calendar",
     reservations: "Reservations",
     clients: "Clients",
@@ -246,6 +247,7 @@ export const TRANSLATIONS = {
   fr: {
     // NAV
     dashboard: "Dashboard",
+    integrations: "Integrations",
     calendar: "Calendrier",
     reservations: "Réservations",
     clients: "Clients",
@@ -489,6 +491,7 @@ export const TRANSLATIONS = {
   ar: {
     // NAV
     dashboard: "لوحة القيادة",
+    integrations: "التكاملات",
     calendar: "التقويم",
     reservations: "الحجوزات",
     clients: "الزبناء",
@@ -732,6 +735,7 @@ export const TRANSLATIONS = {
   es: {
     // NAV
     dashboard: "Panel",
+    integrations: "Integraciones",
     calendar: "Calendario",
     reservations: "Reservas",
     clients: "Clientes",
