@@ -1869,7 +1869,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
               onStatus={(id,status)=>saveStaff(staff.map(x=>x.id===id?{...x,status}:x))}/>}
             {page==="assistant"    &&<AIAssistant reservations={res} clients={clients} rooms={rooms} staff={staff} settings={settings}/>}
             {page==="revenue"      &&<RevenuePage reservations={res} settings={settings}/>}
-            {page==="integrations" &&<IntegrationsPage settings={settings} onSave={saveSettings} syncIcal={syncIcal} toast={toast}/>}
+            {page==="integrations" &&<IntegrationsPage settings={settings} onSave={saveSettings}/>}
             {page==="settings"     &&<SettingsPage settings={settings} user={user} onSave={s=>{saveSettings(s);toast(t.settingsSaved);}} onLogout={onLogout}/>}
           </div>
         </div>
@@ -1879,7 +1879,8 @@ function HotelApp({ user, onLogout, lang, setLang }) {
 }
 
 // ── INTEGRATIONS PAGE ────────────────────────────────────────────
-function IntegrationsPage({ settings, onSave, syncIcal, toast }) {
+function IntegrationsPage({ settings, onSave }) {
+  const toast = useToast();
   const [icalUrl, setIcalUrl] = useState(settings.icalUrl||"");
   const [syncing, setSyncing] = useState(false);
 
