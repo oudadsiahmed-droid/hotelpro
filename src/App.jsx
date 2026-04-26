@@ -651,7 +651,7 @@ function ResPage({ reservations, clients, rooms, settings, onAdd, onEdit, onDele
           <option value="cancelled">{t.cancelled}</option>
         </select>
         <select value={fPay} onChange={e=>setFPay(e.target.value)}
-          style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 10px",color:"#e5e7eb",fontSize:12,outline:"none",cursor:"pointer"}}>
+          style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 10px",color:"#1e293b",fontSize:12,outline:"none",cursor:"pointer"}}>
           <option value="all">{t.allPayments}</option>
           <option value="paid">{t.paid}</option>
           <option value="unpaid">{t.unpaidLabel}</option>
