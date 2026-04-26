@@ -32,8 +32,9 @@ function Template1({ hotel, rooms, onBook }) {
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,fontWeight:600,letterSpacing:3,color:"#c9a84c"}}>{hotel?.hotelName||"HOTEL"}</div>
         <button className="t1-btn" onClick={onBook} style={{background:"transparent",border:"1px solid #c9a84c",color:"#c9a84c",padding:"10px 28px",fontSize:11,letterSpacing:2,cursor:"pointer",fontFamily:"'Montserrat',sans-serif",transition:"all 0.3s"}}>RÉSERVER</button>
       </nav>
-      <div style={{height:"100vh",position:"relative",overflow:"hidden",display:"flex",alignItems:"center",justifyContent:"center"}}>
-        {hotel?.heroUrl && <img src={hotel.heroUrl} alt="hotel" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.4}}/>}
+      <div style={{height:"100vh",position:"relative",overflow:"hidden",display:"flex",alignItems:"center",justifyContent:"center",background:"#111"}}>
+        {hotel?.heroUrl && <img src={hotel.heroUrl} alt="hotel" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.5}}/>}
+        {!hotel?.heroUrl && <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#1a1a1a,#2a2a2a)"}}/>}
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(10,10,10,0.3),rgba(10,10,10,0.7))"}}/>
         <div className="t1-anim" style={{textAlign:"center",position:"relative",zIndex:2,padding:"0 20px"}}>
           <div style={{fontSize:11,letterSpacing:8,color:"#c9a84c",marginBottom:24,fontFamily:"'Montserrat',sans-serif"}}>BIENVENUE AU</div>
