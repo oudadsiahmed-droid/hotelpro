@@ -737,8 +737,8 @@ function ClientsPage({ clients, reservations, settings, onAdd, onEdit, onDelete 
               onMouseLeave={e=>e.currentTarget.style.borderColor=BORDER}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
                 <div style={{display:"flex",alignItems:"center",gap:10}}>
-                  <div style={{width:40,height:40,borderRadius:"50%",background:`linear-gradient(135deg,${GOLD},#b8922a)`,
-                    display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,fontWeight:700,color:DARK}}>
+                  <div style={{width:40,height:40,borderRadius:"50%",background:`linear-gradient(135deg,#1e3a8a,#1d4ed8)`,
+                    display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,fontWeight:700,color:"#fff"}}>
                     {c.name[0]}
                   </div>
                   <div>
