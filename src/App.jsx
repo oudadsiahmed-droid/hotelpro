@@ -1877,7 +1877,7 @@ export default function App() {
 if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
   return (
     <ToastProvider>
-      <HotelApp user={user} onLogout={handleLogout} lang={lang} setLang={setLang={c=>{setLang(c);localStorage.setItem("langOverride",c);}}/>
+      <HotelApp user={user} onLogout={handleLogout} lang={lang} setLang={c=>{setLang(c);localStorage.setItem("langOverride",c);}}/>
     </ToastProvider>
   );
 }
