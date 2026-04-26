@@ -2,6 +2,7 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useState, useEffect, useCallback, createContext, useContext, useRef } from "react";
 import BookingPage from "./BookingPage";
+import LandingPage from "./LandingPage";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import * as XLSX from "xlsx";
 import { TRANSLATIONS, LANG_FLAGS, LANG_NAMES } from './translations';
@@ -2077,9 +2078,13 @@ export default function App() {
 
   if(window.location.pathname === "/admin") return <AdminPanel/>;
   if(window.location.pathname.startsWith("/book/")) {
-  const hotelId = window.location.pathname.split("/")[2];
-  return <BookingPage hotelId={hotelId}/>;
-}
+    const hotelId = window.location.pathname.split("/")[2];
+    return <BookingPage hotelId={hotelId}/>;
+  }
+  if(window.location.pathname.startsWith("/hotel/")) {
+    const hotelId = window.location.pathname.split("/")[2];
+    return <LandingPage hotelId={hotelId}/>;
+  }
 if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
   if(user && user.expiresAt && new Date(user.expiresAt) < new Date() && user.plan==="trial") return <ExpiredPage onLogout={handleLogout}/>;
   return (
