@@ -163,7 +163,7 @@ export default function BookingPage({ hotelId }) {
       `}</style>
 
       {/* HERO */}
-      <div style={{position:"relative",height:320,overflow:"hidden",background:"linear-gradient(135deg,#1e3a8a,#0f172a)"}}>
+      <div style={{position:"relative",height:"100vh",overflow:"hidden",background:"linear-gradient(135deg,#1e3a8a,#0f172a)"}}>
         {hotel?.heroUrl && <img src={hotel.heroUrl} alt="hotel" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.5}}/>}
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 100%)"}}/>
         <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"40px 40px 32px"}}>
@@ -173,6 +173,10 @@ export default function BookingPage({ hotelId }) {
           <div style={{display:"flex",gap:16,marginTop:16,flexWrap:"wrap"}}>
             {hotel?.phone&&<div style={{color:"rgba(255,255,255,0.8)",fontSize:13}}>📞 {hotel.phone}</div>}
             {hotel?.email&&<div style={{color:"rgba(255,255,255,0.8)",fontSize:13}}>📧 {hotel.email}</div>}
+          </div>
+        <div style={{position:"absolute",bottom:20,left:"50%",transform:"translateX(-50%)",display:"flex",flexDirection:"column",alignItems:"center",gap:6,cursor:"pointer"}} onClick={()=>window.scrollTo({top:window.innerHeight,behavior:"smooth"})}>
+            <div style={{color:"rgba(255,255,255,0.6)",fontSize:12,letterSpacing:2}}>DÉCOUVRIR</div>
+            <div style={{color:"rgba(255,255,255,0.6)",fontSize:20,animation:"bounce 1.5s infinite"}}>↓</div>
           </div>
         </div>
       </div>
