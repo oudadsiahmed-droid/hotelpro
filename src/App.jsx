@@ -1934,10 +1934,10 @@ function IntegrationsPage({ settings, onSave }) {
           </div>
           <div style={{background:"#f8fafc",border:"1px solid #cbd5e1",borderRadius:9,padding:"11px 14px",fontSize:12,color:"#1e293b",marginBottom:12,wordBreak:"break-all"}}>{bookingLink}</div>
           <div style={{display:"flex",gap:8,marginBottom:12}}>
-            <Btn onClick={copyLink} style={{flex:1}}>Kopyi lien</Btn>
-            <Btn variant="ghost" onClick={copyIframe} style={{flex:1}}>Kopyi iframe</Btn>
+            <Btn onClick={copyLink} style={{flex:1}}>{t.copyLink||"Copy link"}</Btn>
+            <Btn variant="ghost" onClick={copyIframe} style={{flex:1}}>{t.copyIframe||"Copy iframe"}</Btn>
           </div>
-          <Btn onClick={copyBtn} style={{width:"100%"}}>Kopyi bouton HTML</Btn>
+          <Btn onClick={copyBtn} style={{width:"100%"}}>{t.copyBtn||"Copy HTML button"}</Btn>
           <div style={{marginTop:12,background:"rgba(16,185,129,0.08)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:8,padding:"10px 14px",fontSize:11,color:"#10b981"}}>
             {t.btnHtmlDesc||"Paste this button in your site — clients can book directly!"}
           </div>
