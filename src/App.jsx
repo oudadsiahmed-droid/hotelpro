@@ -283,7 +283,8 @@ function AuthScreen({ onLogin }) {
       hotelName: form.hotelName.trim(),
       pwHash: hashPwd(form.password),
       createdAt: new Date().toISOString(),
-      plan: "pro",
+      plan: "trial",
+      expiresAt: new Date(Date.now() + 14*24*60*60*1000).toISOString(),
     };
     await sset("saas:users", [...users, newUser]);
     setLoading(false);
@@ -1653,6 +1654,48 @@ function AIAssistant({ reservations, clients, rooms, staff, settings }) {
 }
 
 // ── HOTEL APP ─────────────────────────────────────────────────────
+function ExpiredPage({ onLogout }) {
+  return (
+    <div style={{minHeight:"100vh",background:"#0f141c",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Inter',sans-serif"}}>
+      <div style={{textAlign:"center",padding:40,maxWidth:480}}>
+        <div style={{fontSize:64,marginBottom:20}}>⏰</div>
+        <h2 style={{color:"#fff",fontSize:26,fontWeight:700,marginBottom:12}}>Période d'essai terminée</h2>
+        <p style={{color:"#6b7280",fontSize:15,marginBottom:8}}>Votre essai gratuit de 14 jours est expiré.</p>
+        <p style={{color:"#6b7280",fontSize:14,marginBottom:32}}>Contactez-nous pour continuer à utiliser HotelPro.</p>
+        <div style={{background:"#111",border:"1px solid #222",borderRadius:12,padding:24,marginBottom:24}}>
+          <div style={{color:"#10b981",fontSize:14,fontWeight:600,marginBottom:8}}>📞 Contactez-nous</div>
+          <div style={{color:"#ccc",fontSize:13}}>WhatsApp: +212 6XX XXX XXX</div>
+          <div style={{color:"#ccc",fontSize:13,marginTop:4}}>Email: contact@hotelpro.ma</div>
+        </div>
+        <button onClick={onLogout} style={{background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.3)",borderRadius:8,padding:"10px 24px",color:"#ef4444",cursor:"pointer",fontSize:13,fontWeight:600}}>
+          Se déconnecter
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ExpiredPage({ onLogout }) {
+  return (
+    <div style={{minHeight:"100vh",background:"#0f141c",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Inter',sans-serif"}}>
+      <div style={{textAlign:"center",padding:40,maxWidth:480}}>
+        <div style={{fontSize:64,marginBottom:20}}>⏰</div>
+        <h2 style={{color:"#fff",fontSize:26,fontWeight:700,marginBottom:12}}>Période d'essai terminée</h2>
+        <p style={{color:"#6b7280",fontSize:15,marginBottom:8}}>Votre essai gratuit de 14 jours est expiré.</p>
+        <p style={{color:"#6b7280",fontSize:14,marginBottom:32}}>Contactez-nous pour continuer à utiliser HotelPro.</p>
+        <div style={{background:"#111",border:"1px solid #222",borderRadius:12,padding:24,marginBottom:24}}>
+          <div style={{color:"#10b981",fontSize:14,fontWeight:600,marginBottom:8}}>📞 Contactez-nous</div>
+          <div style={{color:"#ccc",fontSize:13}}>WhatsApp: +212 6XX XXX XXX</div>
+          <div style={{color:"#ccc",fontSize:13,marginTop:4}}>Email: contact@hotelpro.ma</div>
+        </div>
+        <button onClick={onLogout} style={{background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.3)",borderRadius:8,padding:"10px 24px",color:"#ef4444",cursor:"pointer",fontSize:13,fontWeight:600}}>
+          Se déconnecter
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function HotelApp({ user, onLogout, lang, setLang }) {
   const uid=user.id;
   const t = TRANSLATIONS[lang] || TRANSLATIONS.fr;
@@ -1953,6 +1996,7 @@ export default function App() {
   return <BookingPage hotelId={hotelId}/>;
 }
 if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
+  if(user && user.expiresAt && new Date(user.expiresAt) < new Date() && user.plan==="trial") return <ExpiredPage onLogout={handleLogout}/>;
   return (
     <ToastProvider>
       <HotelApp user={user} onLogout={handleLogout} lang={lang} setLang={c=>{setLang(c);localStorage.setItem("langOverride",c);}}/>
