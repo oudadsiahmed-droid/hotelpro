@@ -1943,7 +1943,7 @@ function AdminPanel() {
                 </div>
               </div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,fontSize:12}}>
-                {[["📧 Email",u.email||"—"],["📅 Inscrit",new Date(u.createdAt).toLocaleDateString("fr-FR")],["🔗 Booking",`/book/${u.username}`]].map(([k,v])=>(
+                {[["📧 Email",u.email||"—"],["📅 Inscrit",new Date(u.createdAt).toLocaleDateString("fr-FR")],["⏰ Expire",u.expiresAt?new Date(u.expiresAt).toLocaleDateString("fr-FR"):"∞"],["🔗 Booking",`/book/${u.username}`]].map(([k,v])=>(
                   <div key={k} style={{background:"#1a1a1a",borderRadius:8,padding:"8px 12px"}}>
                     <div style={{color:"#666",marginBottom:2}}>{k}</div>
                     <div style={{color:"#ccc"}}>{v}</div>
