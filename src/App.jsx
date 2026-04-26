@@ -1054,8 +1054,20 @@ function SettingsPage({ settings, onSave, user, onLogout }) {
           <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,marginBottom:16}}>{t.myHotel}</div>
           <div style={{display:"flex",flexDirection:"column",gap:13}}>
             <Inp label={t.hotelNameLabel} value={f.hotelName} onChange={set("hotelName")} placeholder="Grand Hôtel Atlas"/>
-            <Inp label="Logo URL" value={f.logoUrl||""} onChange={set("logoUrl")} placeholder="https://..."/>
-            {f.logoUrl&&<img src={f.logoUrl} alt="logo" style={{height:60,objectFit:"contain",borderRadius:8}}/>}
+            <div>
+              <label style={{fontSize:10,color:"#1e293b",letterSpacing:1.5,textTransform:"uppercase",fontFamily:"'Inter',sans-serif",fontWeight:600,display:"block",marginBottom:6}}>LOGO</label>
+              {f.logoUrl&&<img src={f.logoUrl} alt="logo" style={{height:60,objectFit:"contain",borderRadius:8,marginBottom:8,display:"block"}}/>}
+              <label style={{display:"flex",alignItems:"center",gap:8,background:"#f8fafc",border:"1px solid #cbd5e1",borderRadius:9,padding:"10px 14px",cursor:"pointer",fontSize:13,color:"#1e293b"}}>
+                📷 {f.logoUrl?"Changer le logo":"Ajouter un logo"}
+                <input type="file" accept="image/*" style={{display:"none"}} onChange={e=>{
+                  const file=e.target.files[0]; if(!file) return;
+                  if(file.size>2*1024*1024){alert("Max 2MB");return;}
+                  const r=new FileReader();
+                  r.onload=ev=>setF(p=>({...p,logoUrl:ev.target.result}));
+                  r.readAsDataURL(file);
+                }}/>
+              </label>
+            </div>
             <Sel label={t.currency} value={f.currency} onChange={set("currency")}>
               <option value="USD">USD ($) · Dollar</option>
               <option value="MAD">MAD · Dirham Marocain</option>
