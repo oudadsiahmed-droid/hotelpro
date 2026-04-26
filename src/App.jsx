@@ -640,9 +640,9 @@ function ResPage({ reservations, clients, rooms, settings, onAdd, onEdit, onDele
       </div>
       <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
         <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.search}
-          style={{flex:1,minWidth:160,background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 12px",color:"#1e293b",fontSize:13,outline:"none"}}/>
+          style={{flex:1,minWidth:160,background:"#fff",border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 12px",color:"#1e293b",fontSize:13,outline:"none"}}/>
         <select value={fSt} onChange={e=>setFSt(e.target.value)}
-          style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 10px",color:"#e5e7eb",fontSize:12,outline:"none",cursor:"pointer"}}>
+          style={{background:"#fff",border:`1px solid ${BORDER}`,borderRadius:7,padding:"7px 10px",color:"#1e293b",fontSize:12,outline:"none",cursor:"pointer"}}>
           <option value="all">{t.allStatuses}</option>
           <option value="confirmed">{t.confirmed}</option>
           <option value="checkin">{t.checkin}</option>
