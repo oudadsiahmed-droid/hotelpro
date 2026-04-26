@@ -1810,7 +1810,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
                   onMouseEnter={e=>{if(!active){e.currentTarget.style.background="rgba(255,255,255,0.04)";e.currentTarget.style.color="#94a3b8";}}}
                   onMouseLeave={e=>{if(!active){e.currentTarget.style.background="transparent";e.currentTarget.style.color="#ffffff";}}}>
                   {active && <div style={{position:"absolute",left:-10,top:"50%",transform:"translateY(-50%)",width:3,height:22,background:GOLD,borderRadius:2}}/>}
-                  <span style={{fontSize:16,opacity:1,filter:"brightness(2)"}}>{n.icon}</span>
+                  <span style={{fontSize:15,width:20,textAlign:"center",flexShrink:0}}>{n.icon}</span>
                   {n.label}
                   {n.id==="reservations"&&notifCount>0&&(
                     <span style={{marginLeft:"auto",background:"#ef4444",color:"#fff",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700}}>
