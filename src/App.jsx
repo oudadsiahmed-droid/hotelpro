@@ -1732,7 +1732,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
     {id:"reservations",icon:"📋", label:t.reservations},
     {id:"clients",     icon:"👥", label:t.clients},
     {id:"rooms",       icon:"🏨", label:t.rooms},
-    {id:"staff",       icon:"🧑‍💼", label:t.staff},
+    {id:"staff",       icon:"👔", label:t.staff},
     {id:"assistant",   icon:"🤖", label:t.assistant},
     {id:"revenue",     icon:"📈", label:t.revenue},
     {id:"settings",    icon:"⚙️", label:t.settings},
