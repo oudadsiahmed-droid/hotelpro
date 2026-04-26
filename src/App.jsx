@@ -407,7 +407,7 @@ function InvoicePrint({ res, client, room, settings, cur }) {
     .footer{text-align:center;color:#aaa;font-size:11px;margin-top:30px;border-top:1px solid #eee;padding-top:16px}
     </style></head><body>
     <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #c9a84c;padding-bottom:20px;margin-bottom:30px">
-      <div><h1>FACTURE</h1><div style="font-size:18px;color:#555">${settings.hotelName}</div></div>
+      <div><div style="font-size:36px">🏨</div><h1>FACTURE</h1><div style="font-size:18px;color:#555">${settings.hotelName}</div></div>
       <div style="text-align:right;color:#888;font-size:12px"><div>#${res.id}</div><div>${new Date().toLocaleDateString("fr-FR")}</div></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:30px">
