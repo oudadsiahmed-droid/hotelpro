@@ -1897,7 +1897,7 @@ function IntegrationsPage({ settings, onSave }) {
 
   return (
     <div>
-      <h2 style={{margin:"0 0 20px",color:GOLD,fontFamily:"Georgia,serif",fontSize:22}}>🔗 {t.integrations||"Intégrations"}</h2>
+      
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))",gap:16}}>
         <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:12,padding:22}}>
           <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
