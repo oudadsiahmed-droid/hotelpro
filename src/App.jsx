@@ -1883,17 +1883,16 @@ function IntegrationsPage({ settings, onSave }) {
   const toast = useToast();
   const [icalUrl, setIcalUrl] = useState(settings.icalUrl||"");
   const [syncing, setSyncing] = useState(false);
+  const bookingLink = `${window.location.origin}/book/${settings.username||"hotel"}`;
 
   const save = async () => {
     await onSave({...settings, icalUrl});
     toast("iCal URL sauvegarde!", "success");
   };
 
-  const sync = async () => {
-    setSyncing(true);
-    await syncIcal();
-    setSyncing(false);
-  };
+  const copyLink = () => { navigator.clipboard.writeText(bookingLink); toast("Lien copie!", "success"); };
+  const copyIframe = () => { navigator.clipboard.writeText(`<iframe src="${bookingLink}" width="100%" height="700px" frameborder="0" style="border-radius:12px"></iframe>`); toast("Code iframe copie!", "success"); };
+  const copyBtn = () => { navigator.clipboard.writeText(`<a href="${bookingLink}" target="_blank" style="background:#c9a84c;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">Reserver maintenant</a>`); toast("Code bouton copie!", "success"); };
 
   return (
     <div>
@@ -1921,8 +1920,25 @@ function IntegrationsPage({ settings, onSave }) {
             )}
             <div style={{display:"flex",gap:8}}>
               <Btn onClick={save} style={{flex:1}}>Sauvegarder</Btn>
-              {icalUrl && <Btn variant="ghost" onClick={sync} loading={syncing} style={{flex:1}}>Sync maintenant</Btn>}
             </div>
+          </div>
+        </div>
+        <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:12,padding:22}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
+            <div style={{fontSize:28}}>🌐</div>
+            <div>
+              <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,fontWeight:700}}>Lien de reservation</div>
+              <div style={{color:"#6b7280",fontSize:12}}>Partage ou integre dans ton site</div>
+            </div>
+          </div>
+          <div style={{background:"#f8fafc",border:"1px solid #cbd5e1",borderRadius:9,padding:"11px 14px",fontSize:12,color:"#1e293b",marginBottom:12,wordBreak:"break-all"}}>{bookingLink}</div>
+          <div style={{display:"flex",gap:8,marginBottom:12}}>
+            <Btn onClick={copyLink} style={{flex:1}}>Kopyi lien</Btn>
+            <Btn variant="ghost" onClick={copyIframe} style={{flex:1}}>Kopyi iframe</Btn>
+          </div>
+          <Btn onClick={copyBtn} style={{width:"100%"}}>Kopyi bouton HTML</Btn>
+          <div style={{marginTop:12,background:"rgba(16,185,129,0.08)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:8,padding:"10px 14px",fontSize:11,color:"#10b981"}}>
+            Paste "bouton HTML" f site dyalek — clients ydirow reservation directly f app dyalek!
           </div>
         </div>
       </div>
