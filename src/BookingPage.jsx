@@ -166,9 +166,9 @@ export default function BookingPage({ hotelId }) {
       <div style={{position:"relative",height:500,overflow:"hidden",background:"linear-gradient(135deg,#1e3a8a,#0f172a)",width:"100vw",marginLeft:"calc(-50vw + 50%)"}}>
         {hotel?.heroUrl && <img src={hotel.heroUrl} alt="hotel" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.5}}/>}
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 100%)"}}/>
-        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"40px 40px 32px"}}>
-          <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",letterSpacing:4,marginBottom:10}}>RÉSERVATION EN LIGNE</div>
-          <h1 style={{color:"#fff",fontFamily:"'Playfair Display',serif",fontSize:42,fontWeight:700,marginBottom:10,textShadow:"0 2px 20px rgba(0,0,0,0.5)"}}>{hotel?.hotelName||"HotelPro"}</h1>
+        <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center"}}>
+          <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",letterSpacing:4,marginBottom:16}}>RÉSERVATION EN LIGNE</div>
+          <h1 style={{color:"#fff",fontFamily:"'Playfair Display',serif",fontSize:72,fontWeight:700,textShadow:"0 4px 30px rgba(0,0,0,0.8)",letterSpacing:2}}>{hotel?.hotelName||"HotelPro"}</h1>
           {hotel?.address&&<div style={{color:"rgba(255,255,255,0.7)",fontSize:14}}>📍 {hotel.address}</div>}
           <div style={{display:"flex",gap:16,marginTop:16,flexWrap:"wrap"}}>
             {hotel?.phone&&<div style={{color:"rgba(255,255,255,0.8)",fontSize:13}}>📞 {hotel.phone}</div>}
