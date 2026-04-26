@@ -1735,7 +1735,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
     {id:"staff",       icon:"👔", label:t.staff},
     {id:"assistant",   icon:"🤖", label:t.assistant},
     {id:"revenue",     icon:"📈", label:t.revenue},
-    {id:"integrations",icon:"🔗", label:"Intégrations"},
+    {id:"integrations",icon:"🔗", label:t.integrations||"Intégrations"},
     {id:"settings",    icon:"⚙️", label:t.settings},
   ];
 
@@ -1881,6 +1881,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
 // ── INTEGRATIONS PAGE ────────────────────────────────────────────
 function IntegrationsPage({ settings, onSave }) {
   const toast = useToast();
+  const t = useLang();
   const [icalUrl, setIcalUrl] = useState(settings.icalUrl||"");
   const [syncing, setSyncing] = useState(false);
   const bookingLink = `${window.location.origin}/book/${settings.username||"hotel"}`;
@@ -1896,7 +1897,7 @@ function IntegrationsPage({ settings, onSave }) {
 
   return (
     <div>
-      <h2 style={{margin:"0 0 20px",color:GOLD,fontFamily:"Georgia,serif",fontSize:22}}>Integrations</h2>
+      <h2 style={{margin:"0 0 20px",color:GOLD,fontFamily:"Georgia,serif",fontSize:22}}>🔗 {t.integrations||"Intégrations"}</h2>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))",gap:16}}>
         <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:12,padding:22}}>
           <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
