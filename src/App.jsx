@@ -1054,6 +1054,8 @@ function SettingsPage({ settings, onSave, user, onLogout }) {
           <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,marginBottom:16}}>{t.myHotel}</div>
           <div style={{display:"flex",flexDirection:"column",gap:13}}>
             <Inp label={t.hotelNameLabel} value={f.hotelName} onChange={set("hotelName")} placeholder="Grand Hôtel Atlas"/>
+            <Inp label="Logo URL" value={f.logoUrl||""} onChange={set("logoUrl")} placeholder="https://..."/>
+            {f.logoUrl&&<img src={f.logoUrl} alt="logo" style={{height:60,objectFit:"contain",borderRadius:8}}/>}
             <Sel label={t.currency} value={f.currency} onChange={set("currency")}>
               <option value="USD">USD ($) · Dollar</option>
               <option value="MAD">MAD · Dirham Marocain</option>
