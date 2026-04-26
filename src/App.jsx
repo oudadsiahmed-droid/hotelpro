@@ -742,8 +742,8 @@ function ClientsPage({ clients, reservations, settings, onAdd, onEdit, onDelete 
                     {c.name[0]}
                   </div>
                   <div>
-                    <div style={{color:"#e5e7eb",fontWeight:600,fontSize:13}}>{c.name}</div>
-                    <div style={{color:"#6b7280",fontSize:11}}>{c.nationality||"—"}</div>
+                    <div style={{color:"#1e293b",fontWeight:700,fontSize:14}}>{c.name}</div>
+                    <div style={{color:"#64748b",fontSize:11}}>{c.nationality||"—"}</div>
                   </div>
                 </div>
                 <div style={{display:"flex",gap:4}}>
