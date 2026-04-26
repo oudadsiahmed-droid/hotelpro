@@ -1268,7 +1268,7 @@ function StaffPage({ staff, onAdd, onEdit, onDelete, onStatus }) {
           {icon:"💰",label:t.payroll,val:`${totalSalary.toLocaleString()} MAD`,col:"#8b5cf6"},
           {icon:"🏢",label:t.departments,val:byDept.length,col:"#3b82f6"},
         ].map((s,i)=>(
-          <div key={i} style={{background:CARD2,border:`1px solid rgba(255,255,255,0.05)`,borderRadius:11,padding:"13px 15px",borderLeft:`3px solid ${s.col}`}}>
+          <div key={i} style={{background:"#ffffff",border:`1px solid rgba(0,0,0,0.06)`,borderRadius:12,padding:"16px 18px",borderLeft:`4px solid ${s.col}`,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
             <div style={{fontSize:18,marginBottom:4}}>{s.icon}</div>
             <div style={{fontSize:20,fontWeight:700,color:s.col,fontFamily:FONT_DISPLAY}}>{s.val}</div>
             <div style={{fontSize:10,color:"#475569",marginTop:2,letterSpacing:0.5}}>{s.label}</div>
