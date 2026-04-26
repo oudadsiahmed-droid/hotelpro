@@ -666,8 +666,8 @@ function ResPage({ reservations, clients, rooms, settings, onAdd, onEdit, onDele
           return (
             <div key={r.id} style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:10,
               padding:"12px 16px",display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
-              <div style={{width:36,height:36,borderRadius:"50%",background:`linear-gradient(135deg,${GOLD},#b8922a)`,
-                display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:DARK,flexShrink:0}}>
+              <div style={{width:36,height:36,borderRadius:"50%",background:`linear-gradient(135deg,#1e3a8a,#1d4ed8)`,
+                display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"#fff",flexShrink:0}}>
                 {cl?.name?.[0]||"?"}
               </div>
               <div style={{flex:1,minWidth:130}}>
