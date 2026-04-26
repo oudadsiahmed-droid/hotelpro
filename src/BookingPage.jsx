@@ -174,9 +174,8 @@ export default function BookingPage({ hotelId }) {
             {hotel?.phone&&<div style={{color:"rgba(255,255,255,0.8)",fontSize:13}}>📞 {hotel.phone}</div>}
             {hotel?.email&&<div style={{color:"rgba(255,255,255,0.8)",fontSize:13}}>📧 {hotel.email}</div>}
           </div>
-        <div style={{position:"absolute",bottom:20,left:"50%",transform:"translateX(-50%)",display:"flex",flexDirection:"column",alignItems:"center",gap:6,cursor:"pointer"}} onClick={()=>window.scrollTo({top:window.innerHeight,behavior:"smooth"})}>
-            <div style={{color:"rgba(255,255,255,0.6)",fontSize:12,letterSpacing:2}}>DÉCOUVRIR</div>
-            <div style={{color:"rgba(255,255,255,0.6)",fontSize:20,animation:"bounce 1.5s infinite"}}>↓</div>
+        <div style={{position:"absolute",bottom:30,left:"50%",transform:"translateX(-50%)",cursor:"pointer"}} onClick={()=>window.scrollTo({top:500,behavior:"smooth"})}>
+            <div style={{color:"rgba(255,255,255,0.5)",fontSize:24,animation:"bounce 1.5s infinite"}}>↓</div>
           </div>
         </div>
       </div>
