@@ -1073,6 +1073,7 @@ function SettingsPage({ settings, onSave, user, onLogout }) {
               <option value="MAD">MAD · Dirham Marocain</option>
               <option value="EUR">EUR (€) · Euro</option>
             </Sel>
+            <Inp label="🖼️ Photo Hero (URL)" value={f.heroUrl||""} onChange={set("heroUrl")} placeholder="https://images.unsplash.com/..."/>
             <Inp label="💳 PayPal Email (optionnel)" value={f.paypalEmail||""} onChange={set("paypalEmail")} placeholder="hotel@paypal.com"/>
             <Inp label="💳 Stripe Public Key (optionnel)" value={f.stripeKey||""} onChange={set("stripeKey")} placeholder="pk_live_..."/>
             <Btn onClick={()=>onSave(f)} style={{alignSelf:"flex-start"}}>{t.saveSettings}</Btn>

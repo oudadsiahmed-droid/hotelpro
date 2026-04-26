@@ -164,7 +164,7 @@ export default function BookingPage({ hotelId }) {
 
       {/* HERO */}
       <div style={{position:"relative",height:320,overflow:"hidden",background:"linear-gradient(135deg,#1e3a8a,#0f172a)"}}>
-        {hotel?.logoUrl && <img src={hotel.logoUrl} alt="hotel" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.3}}/>}
+        {hotel?.heroUrl && <img src={hotel.heroUrl} alt="hotel" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.5}}/>}
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 100%)"}}/>
         <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"40px 40px 32px"}}>
           <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",letterSpacing:4,marginBottom:10}}>RÉSERVATION EN LIGNE</div>
