@@ -1869,7 +1869,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
               onStatus={(id,status)=>saveStaff(staff.map(x=>x.id===id?{...x,status}:x))}/>}
             {page==="assistant"    &&<AIAssistant reservations={res} clients={clients} rooms={rooms} staff={staff} settings={settings}/>}
             {page==="revenue"      &&<RevenuePage reservations={res} settings={settings}/>}
-            {page==="integrations" &&<IntegrationsPage settings={settings} onSave={saveSettings}/>}
+            {page==="integrations" &&<IntegrationsPage settings={{...settings,username:user.username}} onSave={saveSettings}/>}
             {page==="settings"     &&<SettingsPage settings={settings} user={user} onSave={s=>{saveSettings(s);toast(t.settingsSaved);}} onLogout={onLogout}/>}
           </div>
         </div>
