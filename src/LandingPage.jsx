@@ -20,7 +20,7 @@ function getAmenityLabel(a) {
 // TEMPLATE 1: LUXE
 function Template1({ hotel, rooms, onBook }) {
   return (
-    <div style={{fontFamily:"'Cormorant Garamond','Georgia',serif",background:"#0a0a0a",color:"#f5f0e8",minHeight:"100vh",width:"100%",overflowX:"hidden"}}>
+    <div style={{fontFamily:"'Cormorant Garamond','Georgia',serif",background:"#0a0a0a",color:"#f5f0e8",minHeight:"100vh"}}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
         .t1-room:hover{transform:translateY(-8px)!important;box-shadow:0 20px 60px rgba(201,168,76,0.2)!important}
@@ -32,7 +32,7 @@ function Template1({ hotel, rooms, onBook }) {
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,fontWeight:600,letterSpacing:3,color:"#c9a84c"}}>{hotel?.hotelName||"HOTEL"}</div>
         <button className="t1-btn" onClick={onBook} style={{background:"transparent",border:"1px solid #c9a84c",color:"#c9a84c",padding:"10px 28px",fontSize:11,letterSpacing:2,cursor:"pointer",fontFamily:"'Montserrat',sans-serif",transition:"all 0.3s"}}>RÉSERVER</button>
       </nav>
-      <div style={{height:"100vh",position:"relative",overflow:"hidden",display:"flex",alignItems:"center",justifyContent:"center",background:"#111",width:"100vw",marginLeft:"calc(-50vw + 50%)"}}>
+      <div style={{height:"100vh",position:"relative",overflow:"hidden",display:"flex",alignItems:"center",justifyContent:"center",background:"#111"}}>
         {hotel?.heroUrl && <img src={hotel.heroUrl} alt="hotel" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.5}}/>}
         {!hotel?.heroUrl && <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#1a1a1a,#2a2a2a)"}}/>}
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(10,10,10,0.3),rgba(10,10,10,0.7))"}}/>

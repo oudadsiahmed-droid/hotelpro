@@ -2083,7 +2083,7 @@ export default function App() {
   }
   if(window.location.pathname.startsWith("/hotel/")) {
     const hotelId = window.location.pathname.split("/")[2];
-    return <LandingPage hotelId={hotelId}/>;
+    return <div style={{width:"100%",margin:0,padding:0}}><LandingPage hotelId={hotelId}/></div>;
   }
 if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
   if(user && user.expiresAt && new Date(user.expiresAt) < new Date() && user.plan==="trial") return <ExpiredPage onLogout={handleLogout}/>;
