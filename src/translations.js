@@ -242,6 +242,10 @@ export const TRANSLATIONS = {
     employeeEdited: "Employee edited",
     employeeDeleted: "Employee deleted",
     language: "Language",
+    icalDesc: "Sync reservations automatically",
+    bookingLink: "Booking Link",
+    bookingLinkDesc: "Share or embed in your site",
+    btnHtmlDesc: "Paste this button in your site — clients can book directly!",
   },
 
   fr: {
@@ -486,6 +490,10 @@ export const TRANSLATIONS = {
     employeeEdited: "Employé modifié",
     employeeDeleted: "Employé supprimé",
     language: "Langue",
+    icalDesc: "Synchroniser les réservations automatiquement",
+    bookingLink: "Lien de réservation",
+    bookingLinkDesc: "Partager ou intégrer dans votre site",
+    btnHtmlDesc: "Collez ce bouton dans votre site — les clients peuvent réserver directement!",
   },
 
   ar: {
@@ -730,6 +738,10 @@ export const TRANSLATIONS = {
     employeeEdited: "تم تعديل الموظف",
     employeeDeleted: "تم حذف الموظف",
     language: "اللغة",
+    icalDesc: "مزامنة الحجوزات تلقائياً",
+    bookingLink: "رابط الحجز",
+    bookingLinkDesc: "شارك أو ضمّن في موقعك",
+    btnHtmlDesc: "الصق هذا الزر في موقعك — يمكن للعملاء الحجز مباشرة!",
   },
 
   es: {
@@ -974,6 +986,10 @@ export const TRANSLATIONS = {
     employeeEdited: "Empleado editado",
     employeeDeleted: "Empleado eliminado",
     language: "Idioma",
+    icalDesc: "Sincronizar reservas automáticamente",
+    bookingLink: "Enlace de reserva",
+    bookingLinkDesc: "Comparte o integra en tu sitio",
+    btnHtmlDesc: "Pega este botón en tu sitio — los clientes pueden reservar directamente!",
   },
 };
 

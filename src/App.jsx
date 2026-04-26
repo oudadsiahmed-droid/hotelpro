@@ -1904,7 +1904,7 @@ function IntegrationsPage({ settings, onSave }) {
             <div style={{fontSize:28}}>📅</div>
             <div>
               <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,fontWeight:700}}>Booking.com iCal</div>
-              <div style={{color:"#6b7280",fontSize:12}}>Sync reservations automatiquement</div>
+              <div style={{color:"#6b7280",fontSize:12}}>{t.icalDesc||"Sync reservations automatically"}</div>
             </div>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:12}}>
@@ -1920,7 +1920,7 @@ function IntegrationsPage({ settings, onSave }) {
               </div>
             )}
             <div style={{display:"flex",gap:8}}>
-              <Btn onClick={save} style={{flex:1}}>Sauvegarder</Btn>
+              <Btn onClick={save} style={{flex:1}}>{t.saveSettings}</Btn>
             </div>
           </div>
         </div>
@@ -1928,8 +1928,8 @@ function IntegrationsPage({ settings, onSave }) {
           <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
             <div style={{fontSize:28}}>🌐</div>
             <div>
-              <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,fontWeight:700}}>Lien de reservation</div>
-              <div style={{color:"#6b7280",fontSize:12}}>Partage ou integre dans ton site</div>
+              <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,fontWeight:700}}>{t.bookingLink||"Booking Link"}</div>
+              <div style={{color:"#6b7280",fontSize:12}}>{t.bookingLinkDesc||"Share or embed in your site"}</div>
             </div>
           </div>
           <div style={{background:"#f8fafc",border:"1px solid #cbd5e1",borderRadius:9,padding:"11px 14px",fontSize:12,color:"#1e293b",marginBottom:12,wordBreak:"break-all"}}>{bookingLink}</div>
@@ -1939,7 +1939,7 @@ function IntegrationsPage({ settings, onSave }) {
           </div>
           <Btn onClick={copyBtn} style={{width:"100%"}}>Kopyi bouton HTML</Btn>
           <div style={{marginTop:12,background:"rgba(16,185,129,0.08)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:8,padding:"10px 14px",fontSize:11,color:"#10b981"}}>
-            Paste "bouton HTML" f site dyalek — clients ydirow reservation directly f app dyalek!
+            {t.btnHtmlDesc||"Paste this button in your site — clients can book directly!"}
           </div>
         </div>
       </div>
