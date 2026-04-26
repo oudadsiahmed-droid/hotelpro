@@ -26,7 +26,7 @@ function hashPwd(pw) {
 }
 
 // ── CONSTANTS ────────────────────────────────────────────────────
-const GOLD = "#cc0000", DARK = "#fafbff", CARD = "#ffffff", CARD2 = "#f0f4ff", BORDER = "rgba(99,102,241,0.15)";
+const GOLD = "#cc0000", DARK = "#f8fafc", CARD = "#ffffff", CARD2 = "#ffffff", BORDER = "rgba(0,0,0,0.1)";
 const FONT_DISPLAY = "'Inter', 'Segoe UI', sans-serif";
 const FONT_BODY    = "'Inter', 'Segoe UI', sans-serif";
 
