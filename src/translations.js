@@ -738,6 +738,7 @@ export const TRANSLATIONS = {
     employeeEdited: "تم تعديل الموظف",
     employeeDeleted: "تم حذف الموظف",
     language: "اللغة",
+    copyLink:"نسخ الرابط", copyIframe:"نسخ الإطار", copyBtn:"نسخ زر HTML",
     icalDesc: "مزامنة الحجوزات تلقائياً",
     bookingLink: "رابط الحجز",
     bookingLinkDesc: "شارك أو ضمّن في موقعك",
