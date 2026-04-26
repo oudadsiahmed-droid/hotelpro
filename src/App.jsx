@@ -1278,7 +1278,7 @@ function StaffPage({ staff, onAdd, onEdit, onDelete, onStatus }) {
 
       <div style={{display:"flex",gap:8,marginBottom:16,flexWrap:"wrap",alignItems:"center"}}>
         <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.search}
-          style={{flex:1,minWidth:180,background:CARD2,border:`1px solid rgba(255,255,255,0.07)`,borderRadius:9,padding:"9px 13px",color:"#1e293b",fontSize:13,outline:"none",fontFamily:FONT_BODY,background:"#ffffff",border:"1px solid rgba(0,0,0,0.1)"}}/>
+          style={{flex:1,minWidth:180,background:CARD2,border:`1px solid rgba(255,255,255,0.07)`,borderRadius:9,padding:"9px 13px",color:"#0f172a",fontSize:13,outline:"none",fontFamily:FONT_BODY,background:"#ffffff",border:"1px solid rgba(0,0,0,0.15)",fontWeight:500}}/>
         <select value={fDept} onChange={e=>setFDept(e.target.value)}
           style={{background:CARD2,border:`1px solid rgba(255,255,255,0.07)`,borderRadius:9,padding:"9px 12px",color:"#1e293b",fontSize:12,outline:"none",cursor:"pointer",fontFamily:FONT_BODY}}>
           <option value="all">{t.allDepartments}</option>
