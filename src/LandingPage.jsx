@@ -59,9 +59,9 @@ function Template1({ hotel, rooms, onBook }) {
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))",gap:28}}>
           {rooms.filter(r=>r.cleanStatus!=="maintenance").map(r=>(
-            <div key={r.id} className="t1-room" style={{background:"#1a1508",border:"1px solid rgba(201,168,76,0.25)",borderRadius:2,overflow:"hidden",transition:"all 0.4s",cursor:"pointer"}} onClick={onBook}>
+            <div key={r.id} className="t1-room" style={{background:"#ffffff",border:"1px solid rgba(201,168,76,0.3)",borderRadius:8,overflow:"hidden",transition:"all 0.4s",cursor:"pointer",boxShadow:"0 4px 20px rgba(0,0,0,0.08)"}} onClick={onBook}>
               <div style={{height:220,position:"relative",overflow:"hidden"}}>
-                {r.image?<img src={r.image} alt={r.id} style={{width:"100%",height:"100%",objectFit:"cover"}}/>:<div style={{width:"100%",height:"100%",background:"linear-gradient(135deg,#2a1f0e,#3d2b0f)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:48}}>🛏️</div>}
+                {r.image?<img src={r.image} alt={r.id} style={{width:"100%",height:"100%",objectFit:"cover"}}/>:<div style={{width:"100%",height:"100%",background:"linear-gradient(135deg,#1e3a5f,#2d5a8e)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:48}}>🛏️</div>}
                 <div style={{position:"absolute",top:16,right:16,background:"#c9a84c",color:"#0a0a0a",padding:"4px 12px",fontSize:10,letterSpacing:2,fontFamily:"'Montserrat',sans-serif",fontWeight:600}}>{r.type.toUpperCase()}</div>
               </div>
               <div style={{padding:28}}>
