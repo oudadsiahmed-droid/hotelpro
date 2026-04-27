@@ -20,7 +20,7 @@ function getAmenityLabel(a) {
 // TEMPLATE 1: LUXE
 function Template1({ hotel, rooms, onBook }) {
   return (
-    <div style={{fontFamily:"'Cormorant Garamond','Georgia',serif",background:"#0a0a0a",color:"#f5f0e8",minHeight:"100vh"}}>
+    <div style={{fontFamily:"'Cormorant Garamond','Georgia',serif",background:"#1a1209",color:"#f5f0e8",minHeight:"100vh"}}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
         .t1-room:hover{transform:translateY(-8px)!important;box-shadow:0 20px 60px rgba(201,168,76,0.2)!important}
