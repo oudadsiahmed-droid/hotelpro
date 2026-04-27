@@ -76,8 +76,8 @@ function Template1({ hotel, rooms, onBook }) {
           ))}
         </div>
       </div>
-      <div style={{background:"#111",padding:"80px 60px",textAlign:"center"}}>
-        <h2 style={{fontSize:40,fontWeight:300,letterSpacing:2,margin:"0 0 40px"}}>Réservez votre séjour</h2>
+      <div style={{background:"#f5f0e8",padding:"80px 60px",textAlign:"center"}}>
+        <h2 style={{fontSize:40,fontWeight:300,letterSpacing:2,margin:"0 0 40px",color:"#1a0f00"}}>Réservez votre séjour</h2>
         <button className="t1-btn" onClick={onBook} style={{background:"#c9a84c",border:"none",color:"#0a0a0a",padding:"18px 60px",fontSize:13,letterSpacing:3,cursor:"pointer",fontFamily:"'Montserrat',sans-serif",fontWeight:600,transition:"all 0.3s"}}>RÉSERVER EN LIGNE</button>
       </div>
       <div style={{background:"#0a0a0a",borderTop:"1px solid rgba(201,168,76,0.15)",padding:"24px 60px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
