@@ -1757,6 +1757,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
     {id:"revenue",     icon:"📈", label:t.revenue},
     {id:"integrations",icon:"🔗", label:t.integrations||"Intégrations"},
     {id:"settings",    icon:"⚙️", label:t.settings},
+    {id:"landing",     icon:"🌐", label:"Ma Page Hôtel"},
   ];
 
   if(!ready) return (
@@ -1891,6 +1892,14 @@ function HotelApp({ user, onLogout, lang, setLang }) {
             {page==="revenue"      &&<RevenuePage reservations={res} settings={settings}/>}
             {page==="integrations" &&<IntegrationsPage settings={{...settings,username:user.username}} onSave={saveSettings}/>}
             {page==="settings"     &&<SettingsPage settings={settings} user={user} onSave={s=>{saveSettings(s);toast(t.settingsSaved);}} onLogout={onLogout}/>}
+            {page==="landing"      &&<div style={{textAlign:"center",padding:60}}>
+              <div style={{fontSize:48,marginBottom:20}}>🌐</div>
+              <h2 style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:24,marginBottom:16}}>Ma Page Hôtel</h2>
+              <p style={{color:"#64748b",marginBottom:32,fontSize:15}}>Votre page publique professionnelle avec réservation en ligne</p>
+              <a href={`/hotel/${user.username}`} target="_blank" style={{background:"linear-gradient(135deg,#1e3a8a,#1d4ed8)",color:"#fff",padding:"14px 36px",borderRadius:12,textDecoration:"none",fontWeight:700,fontSize:15,display:"inline-block"}}>
+                🚀 Voir ma page hôtel
+              </a>
+            </div>}
           </div>
         </div>
       </div>
