@@ -1895,13 +1895,76 @@ function HotelApp({ user, onLogout, lang, setLang }) {
             {page==="revenue"      &&<RevenuePage reservations={res} settings={settings}/>}
             {page==="integrations" &&<IntegrationsPage settings={{...settings,username:user.username}} onSave={saveSettings}/>}
             {page==="settings"     &&<SettingsPage settings={settings} user={user} onSave={s=>{saveSettings(s);toast(t.settingsSaved);}} onLogout={onLogout}/>}
-            {page==="landing"      &&<div style={{textAlign:"center",padding:60}}>
-              <div style={{fontSize:48,marginBottom:20}}>🌐</div>
-              <h2 style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:24,marginBottom:16}}>Ma Page Hôtel</h2>
-              <p style={{color:"#64748b",marginBottom:32,fontSize:15}}>Votre page publique professionnelle avec réservation en ligne</p>
-              <a href={`/hotel/${user.username}`} target="_blank" style={{background:"linear-gradient(135deg,#1e3a8a,#1d4ed8)",color:"#fff",padding:"14px 36px",borderRadius:12,textDecoration:"none",fontWeight:700,fontSize:15,display:"inline-block"}}>
-                🚀 Voir ma page hôtel
-              </a>
+            {page==="landing" && <div style={{padding:"40px 20px",maxWidth:700,margin:"0 auto"}}>
+              <h2 style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:24,marginBottom:8}}>🌐 Ma Page Hôtel</h2>
+              <p style={{color:"#64748b",marginBottom:32,fontSize:14}}>Votre page publique professionnelle avec réservation en ligne</p>
+
+              {/* Landing Page */}
+              <div style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:14,padding:24,marginBottom:16,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+                <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+                  <div style={{fontSize:32}}>🏨</div>
+                  <div>
+                    <div style={{fontWeight:700,fontSize:16,color:"#1e293b"}}>Page de réservation</div>
+                    <div style={{fontSize:12,color:"#64748b"}}>Partagez ce lien avec vos clients</div>
+                  </div>
+                </div>
+                <div style={{background:"#f8fafc",border:"1px solid #e2e8f0",borderRadius:8,padding:"10px 14px",fontSize:12,color:"#1e293b",marginBottom:12,wordBreak:"break-all"}}>
+                  {window.location.origin}/hotel/{user.username}
+                </div>
+                <div style={{display:"flex",gap:8}}>
+                  <a href={`/hotel/${user.username}`} target="_blank" style={{flex:1,background:"linear-gradient(135deg,#1e3a8a,#1d4ed8)",color:"#fff",padding:"11px",borderRadius:9,textDecoration:"none",fontWeight:600,fontSize:13,textAlign:"center",display:"block"}}>
+                    👁️ Voir ma page
+                  </a>
+                  <button onClick={()=>{navigator.clipboard.writeText(`${window.location.origin}/hotel/${user.username}`);toast("✅ Lien copié!","success");}} style={{flex:1,background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:9,padding:"11px",color:"#1e293b",fontWeight:600,fontSize:13,cursor:"pointer"}}>
+                    📋 Copier le lien
+                  </button>
+                </div>
+              </div>
+
+              {/* Google My Business */}
+              <div style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:14,padding:24,marginBottom:16,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+                <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+                  <div style={{fontSize:32}}>🗺️</div>
+                  <div>
+                    <div style={{fontWeight:700,fontSize:16,color:"#1e293b"}}>Google My Business</div>
+                    <div style={{fontSize:12,color:"#64748b"}}>Apparaître sur Google Maps et Google Search</div>
+                  </div>
+                </div>
+                <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"12px 14px",fontSize:13,color:"#166534",marginBottom:16}}>
+                  ✅ Gratuit · Apparaît sur Google Maps · Clients peuvent laisser des avis ⭐
+                </div>
+                <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:16}}>
+                  {[
+                    ["1️⃣","Ouvrir Google My Business","https://business.google.com"],
+                    ["2️⃣","Cliquer sur 'Ajouter votre établissement'",null],
+                    ["3️⃣",`Nom: ${settings.hotelName}`,null],
+                    ["4️⃣",`Téléphone: ${settings.phone||"Ajouter dans Paramètres"}`,null],
+                    ["5️⃣",`Site web: ${window.location.origin}/hotel/${user.username}`,null],
+                  ].map(([num,text,link])=>(
+                    <div key={num} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 12px",background:"#f8fafc",borderRadius:8,fontSize:13,color:"#1e293b"}}>
+                      <span>{num}</span>
+                      {link ? <a href={link} target="_blank" style={{color:"#1d4ed8",textDecoration:"none",fontWeight:600}}>{text}</a> : <span>{text}</span>}
+                    </div>
+                  ))}
+                </div>
+                <a href="https://business.google.com" target="_blank" style={{display:"block",background:"linear-gradient(135deg,#16a34a,#15803d)",color:"#fff",padding:"13px",borderRadius:9,textDecoration:"none",fontWeight:600,fontSize:14,textAlign:"center"}}>
+                  🗺️ Ouvrir Google My Business
+                </a>
+              </div>
+
+              {/* WhatsApp Share */}
+              <div style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:14,padding:24,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+                <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+                  <div style={{fontSize:32}}>📱</div>
+                  <div>
+                    <div style={{fontWeight:700,fontSize:16,color:"#1e293b"}}>Partager sur WhatsApp</div>
+                    <div style={{fontSize:12,color:"#64748b"}}>Envoyez votre page à vos clients</div>
+                  </div>
+                </div>
+                <a href={`https://wa.me/?text=Réservez votre chambre à ${settings.hotelName} : ${window.location.origin}/hotel/${user.username}`} target="_blank" style={{display:"block",background:"#25d366",color:"#fff",padding:"13px",borderRadius:9,textDecoration:"none",fontWeight:600,fontSize:14,textAlign:"center"}}>
+                  📱 Partager sur WhatsApp
+                </a>
+              </div>
             </div>}
           </div>
         </div>
