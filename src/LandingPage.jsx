@@ -67,10 +67,10 @@ function Template1({ hotel, rooms, onBook }) {
               <div style={{padding:28}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
                   <h3 style={{fontSize:22,fontWeight:400,margin:0,letterSpacing:1}}>Chambre {r.id}</h3>
-                  <div style={{textAlign:"right"}}><div style={{fontSize:28,color:"#c9a84c",fontWeight:300}}>${r.price}</div><div style={{fontSize:11,color:"rgba(245,240,232,0.5)",fontFamily:"'Montserrat',sans-serif",letterSpacing:1}}>/ NUIT</div></div>
+                  <div style={{textAlign:"right"}}><div style={{fontSize:28,color:"#c9a84c",fontWeight:700}}>${r.price}</div><div style={{fontSize:11,color:"#888",fontFamily:"'Montserrat',sans-serif",letterSpacing:1}}>/ NUIT</div></div>
                 </div>
                 {r.amenities?.length>0&&<div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:20}}>{r.amenities.map((a,i)=><span key={i} style={{fontSize:11,color:"rgba(245,240,232,0.5)",fontFamily:"'Montserrat',sans-serif"}}>{getAmenityLabel(a)}</span>)}</div>}
-                <button className="t1-btn" onClick={onBook} style={{width:"100%",background:"transparent",border:"1px solid rgba(201,168,76,0.4)",color:"#c9a84c",padding:"12px",fontSize:11,letterSpacing:2,cursor:"pointer",fontFamily:"'Montserrat',sans-serif",transition:"all 0.3s"}}>RÉSERVER</button>
+                <button className="t1-btn" onClick={onBook} style={{width:"100%",background:"#c9a84c",border:"none",color:"#0a0a0a",padding:"12px",fontSize:11,letterSpacing:2,cursor:"pointer",fontFamily:"'Montserrat',sans-serif",transition:"all 0.3s",fontWeight:700}}>RÉSERVER</button>
               </div>
             </div>
           ))}
