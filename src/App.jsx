@@ -1071,6 +1071,9 @@ function SettingsPage({ settings, onSave, user, onLogout }) {
           <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,marginBottom:16}}>{t.myHotel}</div>
           <div style={{display:"flex",flexDirection:"column",gap:13}}>
             <Inp label={t.hotelNameLabel} value={f.hotelName} onChange={set("hotelName")} placeholder="Grand Hôtel Atlas"/>
+<Inp label="📝 Description" value={f.description||""} onChange={set("description")} placeholder="Hôtel de luxe au cœur de la ville..."/>
+<Inp label="📞 Téléphone" value={f.phone||""} onChange={set("phone")} placeholder="+212 6XX XXX XXX"/>
+<Inp label="📍 Adresse" value={f.address||""} onChange={set("address")} placeholder="Rue Mohammed V, Casablanca"/>
             <div>
               <label style={{fontSize:10,color:"#1e293b",letterSpacing:1.5,textTransform:"uppercase",fontFamily:"'Inter',sans-serif",fontWeight:600,display:"block",marginBottom:6}}>LOGO</label>
               {f.logoUrl&&<img src={f.logoUrl} alt="logo" style={{height:60,objectFit:"contain",borderRadius:8,marginBottom:8,display:"block"}}/>}
