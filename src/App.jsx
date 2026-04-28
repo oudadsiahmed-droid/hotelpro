@@ -1797,7 +1797,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
         `}</style>
 
         {/* ── SIDEBAR ── */}
-        <div style={{width:260,background:"#faf8f5",borderRight:"1px solid #e8e0d5",display:"flex",flexDirection:"column",flexShrink:0,boxShadow:"2px 0 12px rgba(0,0,0,0.06)"}}>
+        <div style={{width:260,background:"#0d1f3c",borderRight:"1px solid rgba(255,255,255,0.08)",display:"flex",flexDirection:"column",flexShrink:0,boxShadow:"2px 0 12px rgba(0,0,0,0.06)"}}>
 
           {/* Logo */}
           <div style={{padding:"28px 20px 20px",borderBottom:"1px solid #e8e0d5",textAlign:"center"}}>
@@ -1807,7 +1807,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
                 <div style={{width:"100%",height:"100%",background:"linear-gradient(135deg,#2d5a3d,#1e3d2a)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26}}>🏨</div>}
               </div>
             </div>
-            <div style={{color:"#1a2e1a",fontFamily:"Georgia,serif",fontSize:16,fontWeight:700,letterSpacing:2}}>{settings.hotelName?.toUpperCase()}</div>
+            <div style={{color:"#ffffff",fontFamily:"Georgia,serif",fontSize:16,fontWeight:700,letterSpacing:2}}>{settings.hotelName?.toUpperCase()}</div>
             <div style={{color:"#c9a84c",fontSize:9,letterSpacing:4,marginTop:3,fontWeight:500}}>BOUTIQUE HOTEL</div>
             <div style={{width:40,height:1,background:"linear-gradient(90deg,transparent,#c9a84c,transparent)",margin:"10px auto 0"}}/>
           </div>
@@ -1837,8 +1837,8 @@ function HotelApp({ user, onLogout, lang, setLang }) {
               const active=page===n.id;
               return (
                 <button key={n.id} onClick={()=>setPage(n.id)}
-                  style={{width:"100%",background:active?"#2d5a3d":"transparent",border:"none",borderRadius:10,padding:"11px 14px",color:active?"#fff":"#4a5568",display:"flex",alignItems:"center",gap:12,fontSize:13,fontWeight:active?600:400,cursor:"pointer",transition:"all 0.18s",textAlign:"left"}}
-                  onMouseEnter={e=>{if(!active){e.currentTarget.style.background="#f0ebe3";e.currentTarget.style.color="#2d5a3d";}}}
+                  style={{width:"100%",background:active?"#22d3ee":"transparent",border:"none",borderRadius:10,padding:"11px 14px",color:active?"#0d1f3c":"rgba(255,255,255,0.8)",display:"flex",alignItems:"center",gap:12,fontSize:13,fontWeight:active?600:400,cursor:"pointer",transition:"all 0.18s",textAlign:"left"}}
+                  onMouseEnter={e=>{if(!active){e.currentTarget.style.background="rgba(255,255,255,0.08)";e.currentTarget.style.color="#ffffff";}}}
                   onMouseLeave={e=>{if(!active){e.currentTarget.style.background="transparent";e.currentTarget.style.color="#4a5568";}}}>
                   <span style={{fontSize:16,width:22,textAlign:"center",flexShrink:0}}>{n.icon}</span>
                   <span>{n.label}</span>
