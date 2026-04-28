@@ -1837,9 +1837,9 @@ function HotelApp({ user, onLogout, lang, setLang }) {
               const active=page===n.id;
               return (
                 <button key={n.id} onClick={()=>setPage(n.id)}
-                  style={{width:"100%",background:active?"#22d3ee":"transparent",border:"none",borderRadius:10,padding:"11px 14px",color:active?"#0d1f3c":"rgba(255,255,255,0.8)",display:"flex",alignItems:"center",gap:12,fontSize:13,fontWeight:active?600:400,cursor:"pointer",transition:"all 0.18s",textAlign:"left"}}
+                  style={{width:"100%",background:active?"#22d3ee":"transparent",border:"none",borderRadius:10,padding:"11px 14px",color:active?"#0d1f3c":"#ffffff",display:"flex",alignItems:"center",gap:12,fontSize:13,fontWeight:active?600:400,cursor:"pointer",transition:"all 0.18s",textAlign:"left"}}
                   onMouseEnter={e=>{if(!active){e.currentTarget.style.background="rgba(255,255,255,0.08)";e.currentTarget.style.color="#ffffff";}}}
-                  onMouseLeave={e=>{if(!active){e.currentTarget.style.background="transparent";e.currentTarget.style.color="#4a5568";}}}>
+                  onMouseLeave={e=>{if(!active){e.currentTarget.style.background="transparent";e.currentTarget.style.color="rgba(255,255,255,0.8)";}}}>
                   <span style={{fontSize:16,width:22,textAlign:"center",flexShrink:0}}>{n.icon}</span>
                   <span>{n.label}</span>
                   {n.id==="reservations"&&notifCount>0&&(
