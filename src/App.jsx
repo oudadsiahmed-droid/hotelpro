@@ -1797,46 +1797,51 @@ function HotelApp({ user, onLogout, lang, setLang }) {
         `}</style>
 
         {/* ── SIDEBAR ── */}
-        <div style={{width:260,background:`linear-gradient(180deg,#0f0c29 0%,#302b63 50%,#24243e 100%)`,borderRight:`1px solid rgba(201,168,76,0.1)`,display:"flex",flexDirection:"column",flexShrink:0,position:"relative"}}>
-          <div style={{position:"absolute",top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,transparent,${GOLD},transparent)`}}/>
+        <div style={{width:260,background:"#faf8f5",borderRight:"1px solid #e8e0d5",display:"flex",flexDirection:"column",flexShrink:0,boxShadow:"2px 0 12px rgba(0,0,0,0.06)"}}>
 
           {/* Logo */}
-          <div style={{padding:"26px 18px 20px",borderBottom:`1px solid rgba(255,255,255,0.05)`}}>
-            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
-              <div style={{width:38,height:38,borderRadius:10,overflow:"hidden",flexShrink:0}}>
-                {settings.logoUrl ? <img src={settings.logoUrl} alt="logo" style={{width:"100%",height:"100%",objectFit:"contain"}}/> : <div style={{width:"100%",height:"100%",background:`linear-gradient(135deg,#f59e0b,#d97706)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🏨</div>}
-              </div>
-              <div>
-                <div style={{color:"#ffffff",fontFamily:"Georgia,serif",fontSize:16,fontWeight:700,letterSpacing:1,textShadow:"0 2px 8px rgba(0,0,0,0.3)"}}>{settings.hotelName}</div>
-                <div style={{color:"rgba(255,255,255,0.5)",fontSize:9,letterSpacing:3,marginTop:1,fontWeight:300}}>MANAGEMENT</div>
+          <div style={{padding:"28px 20px 20px",borderBottom:"1px solid #e8e0d5",textAlign:"center"}}>
+            <div style={{display:"flex",justifyContent:"center",marginBottom:12}}>
+              <div style={{width:64,height:64,borderRadius:"50%",overflow:"hidden",border:"2px solid #c9a84c",flexShrink:0}}>
+                {settings.logoUrl?<img src={settings.logoUrl} alt="logo" style={{width:"100%",height:"100%",objectFit:"cover"}}/>:
+                <div style={{width:"100%",height:"100%",background:"linear-gradient(135deg,#2d5a3d,#1e3d2a)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26}}>🏨</div>}
               </div>
             </div>
-            <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:8,padding:"7px 11px",display:"flex",alignItems:"center",gap:8}}>
-              <div style={{width:22,height:22,borderRadius:"50%",background:`linear-gradient(135deg,${GOLD},#a8832a)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,color:"#080c10",flexShrink:0}}>
+            <div style={{color:"#1a2e1a",fontFamily:"Georgia,serif",fontSize:16,fontWeight:700,letterSpacing:2}}>{settings.hotelName?.toUpperCase()}</div>
+            <div style={{color:"#c9a84c",fontSize:9,letterSpacing:4,marginTop:3,fontWeight:500}}>BOUTIQUE HOTEL</div>
+            <div style={{width:40,height:1,background:"linear-gradient(90deg,transparent,#c9a84c,transparent)",margin:"10px auto 0"}}/>
+          </div>
+
+          {/* User */}
+          <div style={{padding:"14px 16px",borderBottom:"1px solid #e8e0d5"}}>
+            <div style={{background:"#fff",border:"1px solid #e8e0d5",borderRadius:12,padding:"10px 14px",display:"flex",alignItems:"center",gap:10,boxShadow:"0 1px 4px rgba(0,0,0,0.05)"}}>
+              <div style={{width:38,height:38,borderRadius:"50%",background:"linear-gradient(135deg,#2d5a3d,#1e3d2a)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,fontWeight:700,color:"#fff",flexShrink:0,position:"relative"}}>
                 {user.username[0].toUpperCase()}
+                <div style={{position:"absolute",bottom:1,right:1,width:9,height:9,borderRadius:"50%",background:"#10b981",border:"2px solid #fff"}}/>
               </div>
               <div style={{minWidth:0}}>
-                <div style={{color:"#ffffff",textShadow:"0 1px 2px rgba(0,0,0,0.3)",fontSize:11,fontWeight:500,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user.username}</div>
-                <div style={{color:"#10b981",fontSize:9,letterSpacing:1}}>● ACTIF</div>
+                <div style={{color:"#1a2e1a",fontSize:13,fontWeight:600,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user.username}</div>
+                <div style={{color:"#c9a84c",fontSize:10,fontWeight:500}}>Hotel Manager</div>
               </div>
             </div>
           </div>
 
-          {/* Lang fo9 */}
-          <div style={{padding:"12px 14px",borderBottom:`1px solid rgba(255,255,255,0.1)`}}>
+          {/* Lang */}
+          <div style={{padding:"10px 16px",borderBottom:"1px solid #e8e0d5"}}>
             <LangSwitcher lang={lang} setLang={setLang}/>
           </div>
+
           {/* Nav */}
-          <nav style={{flex:1,padding:"14px 10px",display:"flex",flexDirection:"column",gap:2,overflowY:"auto",minHeight:0}}>
+          <nav style={{flex:1,padding:"10px 10px",display:"flex",flexDirection:"column",gap:2,overflowY:"auto",minHeight:0}}>
             {NAV.map(n=>{
               const active=page===n.id;
               return (
-                <button key={n.id} onClick={()=>setPage(n.id)} style={{width:"100%",background:active?`linear-gradient(135deg,rgba(201,168,76,0.16),rgba(201,168,76,0.06))`:"transparent",border:active?`1px solid rgba(201,168,76,0.2)`:"1px solid transparent",borderRadius:10,padding:"10px 13px",color:"#ffffff",textShadow:"0 1px 2px rgba(0,0,0,0.3)",display:"flex",alignItems:"center",gap:10,fontSize:13,fontWeight:active?600:400,cursor:"pointer",transition:"all 0.18s",textAlign:"left",position:"relative",letterSpacing:0.2}}
-                  onMouseEnter={e=>{if(!active){e.currentTarget.style.background="rgba(255,255,255,0.04)";e.currentTarget.style.color="#94a3b8";}}}
-                  onMouseLeave={e=>{if(!active){e.currentTarget.style.background="transparent";e.currentTarget.style.color="#ffffff";}}}>
-                  {active && <div style={{position:"absolute",left:-10,top:"50%",transform:"translateY(-50%)",width:3,height:22,background:GOLD,borderRadius:2}}/>}
-                  <span style={{fontSize:15,width:20,textAlign:"center",flexShrink:0}}>{n.icon}</span>
-                  {n.label}
+                <button key={n.id} onClick={()=>setPage(n.id)}
+                  style={{width:"100%",background:active?"#2d5a3d":"transparent",border:"none",borderRadius:10,padding:"11px 14px",color:active?"#fff":"#4a5568",display:"flex",alignItems:"center",gap:12,fontSize:13,fontWeight:active?600:400,cursor:"pointer",transition:"all 0.18s",textAlign:"left"}}
+                  onMouseEnter={e=>{if(!active){e.currentTarget.style.background="#f0ebe3";e.currentTarget.style.color="#2d5a3d";}}}
+                  onMouseLeave={e=>{if(!active){e.currentTarget.style.background="transparent";e.currentTarget.style.color="#4a5568";}}}>
+                  <span style={{fontSize:16,width:22,textAlign:"center",flexShrink:0}}>{n.icon}</span>
+                  <span>{n.label}</span>
                   {n.id==="reservations"&&notifCount>0&&(
                     <span style={{marginLeft:"auto",background:"#ef4444",color:"#fff",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700}}>
                       {notifCount}
@@ -1847,9 +1852,8 @@ function HotelApp({ user, onLogout, lang, setLang }) {
             })}
           </nav>
 
-          {/* Language switcher + date */}
-          <div style={{padding:"0 12px 18px",display:"flex",flexDirection:"column",gap:8,marginTop:"auto"}}>
-            
+          <div style={{padding:"12px 16px",borderTop:"1px solid #e8e0d5",textAlign:"center"}}>
+            <div style={{color:"#9ca3af",fontSize:10,letterSpacing:1}}>© {new Date().getFullYear()} HotelPro</div>
           </div>
         </div>
 
