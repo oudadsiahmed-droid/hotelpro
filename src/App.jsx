@@ -2129,12 +2129,14 @@ export default function App() {
   const [checking,setChecking]=useState(true);
   const [lang,setLang]=useState("fr");
   useEffect(()=>{
+    const saved = localStorage.getItem("langOverride");
+    if(saved){ setLang(saved); return; }
     fetch("https://ipapi.co/json/")
       .then(r=>r.json())
       .then(d=>{
         const map={"US":"en","CA":"en","GB":"en","AU":"en","IE":"en","NZ":"en","FR":"fr","BE":"fr","MA":"fr","DZ":"fr","TN":"fr","ES":"es","MX":"es","AR":"es","CO":"es","SA":"ar","AE":"ar","EG":"ar","QA":"ar"};
         const detected=map[d.country_code];
-        if(detected&&!localStorage.getItem("langOverride"))setLang(detected);
+        if(detected)setLang(detected);
       }).catch(()=>{});
   },[]);
 
