@@ -107,9 +107,9 @@ function LangSwitcher({ lang, setLang }) {
   return (
     <div style={{position:"relative"}}>
       <button onClick={()=>setOpen(o=>!o)}
-        style={{background:"rgba(255,255,255,0.15)",border:`1px solid rgba(255,255,255,0.3)`,borderRadius:8,
+        style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,borderRadius:8,
           padding:"6px 10px",color:"#ffffff",cursor:"pointer",fontSize:13,fontFamily:FONT_BODY,
-          display:"flex",alignItems:"center",gap:6,transition:"all 0.2s"}}>
+          display:"flex",alignItems:"center",gap:6,transition:"all 0.2s",width:"100%"}}>
         {LANG_FLAGS[lang]} {LANG_NAMES[lang]}
         <span style={{fontSize:10,color:"#475569"}}>▼</span>
       </button>
@@ -118,7 +118,7 @@ function LangSwitcher({ lang, setLang }) {
           background:CARD,border:`1px solid ${BORDER}`,borderRadius:10,
           overflow:"hidden",zIndex:999,minWidth:140,boxShadow:"0 8px 32px rgba(0,0,0,0.5)"}}>
           {Object.entries(LANG_NAMES).map(([code,name])=>(
-            <button key={code} onClick={()=>{setLang(code);setOpen(false);}}
+            <button key={code} onClick={()=>{setLang(code);localStorage.setItem("langOverride",code);setOpen(false);}}
               style={{width:"100%",background:lang===code?"rgba(201,168,76,0.1)":"transparent",
                 border:"none",padding:"10px 14px",color:lang===code?GOLD:"#94a3b8",
                 cursor:"pointer",fontSize:12,fontFamily:FONT_BODY,
