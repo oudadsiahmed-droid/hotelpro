@@ -1908,19 +1908,12 @@ function HotelApp({ user, onLogout, lang, setLang }) {
 
         {/* ── MAIN CONTENT ── */}
         <div style={{flex:1,overflowY:"scroll",background:"linear-gradient(135deg,#fafbff 0%,#f0f4ff 50%,#faf0ff 100%)",display:"flex",flexDirection:"column",width:"100%"}}>
-          <div style={{padding:"18px 28px 0",borderBottom:`1px solid rgba(255,255,255,0.04)`,background:`linear-gradient(180deg,rgba(201,168,76,0.02) 0%,transparent 100%)`,display:"flex",alignItems:"center",justifyContent:"space-between",paddingBottom:16,flexShrink:0}}>
-            <div>
-              <h1 style={{color:"#1e293b",fontFamily:FONT_DISPLAY,fontSize:22,fontWeight:700,letterSpacing:0.5}}>
-                {NAV.find(n=>n.id===page)?.icon} {NAV.find(n=>n.id===page)?.label}
-              </h1>
-            </div>
-            <div style={{display:"flex",alignItems:"center",gap:8}}>
-              {notifCount>0 && (
-                <div style={{background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.2)",borderRadius:8,padding:"5px 12px",fontSize:11,color:"#ef4444",fontWeight:600}}>
-                  🔔 {notifCount} alerte{notifCount>1?"s":""}
-                </div>
-              )}
-            </div>
+          <div style={{flexShrink:0}}>
+            {notifCount>0 && (
+              <div style={{background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.2)",borderRadius:8,padding:"5px 16px",fontSize:11,color:"#ef4444",fontWeight:600,margin:"10px 28px 0",display:"inline-block"}}>
+                🔔 {notifCount} alerte{notifCount>1?"s":""}
+              </div>
+            )}
           </div>
 
           <div style={{flex:1,padding:"24px 28px",overflowY:"auto",animation:"fadeIn 0.25s ease"}}>
