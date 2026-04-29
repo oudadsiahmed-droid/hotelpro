@@ -838,6 +838,9 @@ function ResPage({ reservations, clients, rooms, settings, onAdd, onEdit, onDele
               <div style={{display:"flex",gap:5,flexWrap:"wrap"}}>
                 <Btn variant="ghost" style={{padding:"4px 8px",fontSize:11}} onClick={()=>setModal({type:"invoice",data:r})}>🖨️</Btn>
                 <Btn variant="ghost" style={{padding:"4px 8px",fontSize:11}} onClick={()=>setModal({type:"edit",data:r})}>✏️</Btn>
+                <Btn variant="ghost" style={{padding:"4px 8px",fontSize:11,color:r.checkinDone?"#10b981":"#1e3a8a"}} onClick={()=>{navigator.clipboard.writeText(`${window.location.origin}/checkin/${r.id}`);alert(`✅ Lien check-in copié!\n\n${window.location.origin}/checkin/${r.id}`);}}>
+                  {r.checkinDone?"✅":"🏁"}
+                </Btn>
                 <Btn variant="danger" style={{padding:"4px 8px",fontSize:11}} onClick={()=>{if(confirm(t.confirmDelete))onDelete(r.id);}}>🗑</Btn>
               </div>
             </div>
