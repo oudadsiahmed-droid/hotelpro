@@ -1918,7 +1918,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
     {id:"assistant",   icon:"🤖", label:t.assistant},
     {id:"revenue",     icon:"📈", label:t.revenue},
     {id:"integrations",icon:"🔗", label:t.integrations||"Intégrations"},
-    {id:"checkins",    icon:"🏁", label:"Check-ins"},
+    
     {id:"settings",    icon:"⚙️", label:t.settings},
     {id:"landing",     icon:"🌐", label:"Ma Page Hôtel"},
   ];
@@ -2051,7 +2051,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
             {page==="assistant"    &&<AIAssistant reservations={res} clients={clients} rooms={rooms} staff={staff} settings={settings}/>}
             {page==="revenue"      &&<RevenuePage reservations={res} settings={settings}/>}
             {page==="integrations" &&<IntegrationsPage settings={{...settings,username:user.username}} onSave={saveSettings}/>}
-            {page==="checkins"     &&<CheckinsPage hotelId={user.username} bookingOrigin={window.location.origin}/>}
+            
             {page==="settings"     &&<SettingsPage settings={settings} user={user} onSave={s=>{saveSettings(s);toast(t.settingsSaved);}} onLogout={onLogout}/>}
             {page==="landing" && <div style={{padding:"40px 20px",maxWidth:700,margin:"0 auto"}}>
               <h2 style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:24,marginBottom:8}}>🌐 Ma Page Hôtel</h2>
@@ -2218,10 +2218,32 @@ function CheckinsPage({ hotelId, bookingOrigin }) {
               </div>
               <div style={{textAlign:"right"}}>
                 <div style={{fontSize:11,color:"#9ca3af"}}>{new Date(c.checkinDate).toLocaleDateString("fr-FR")}</div>
+                {c.status==="pending" && (
+                  <div style={{display:"flex",gap:6,marginTop:6,justifyContent:"flex-end"}}>
+                    <button onClick={async()=>{
+                      const updated=checkins.map(x=>x.id===c.id?{...x,status:"approved"}:x);
+                      setCheckins(updated);
+                      await sset(`saas:d:${hotelId}:checkins`,updated);
+                      toast("✅ Check-in approuvé!","success");
+                    }} style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"5px 12px",color:"#166534",fontWeight:600,fontSize:12,cursor:"pointer"}}>
+                      ✅ Approuver
+                    </button>
+                    <button onClick={async()=>{
+                      const updated=checkins.map(x=>x.id===c.id?{...x,status:"rejected"}:x);
+                      setCheckins(updated);
+                      await sset(`saas:d:${hotelId}:checkins`,updated);
+                      toast("❌ Check-in refusé","error");
+                    }} style={{background:"#fef2f2",border:"1px solid #fecaca",borderRadius:8,padding:"5px 12px",color:"#ef4444",fontWeight:600,fontSize:12,cursor:"pointer"}}>
+                      ❌ Refuser
+                    </button>
+                  </div>
+                )}
                 <div style={{display:"flex",gap:6,marginTop:4,justifyContent:"flex-end"}}>
                   {c.hasCinPhoto && <span style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:20,padding:"2px 8px",fontSize:10,color:"#166534"}}>📷 CIN</span>}
                   {c.hasSignature && <span style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:20,padding:"2px 8px",fontSize:10,color:"#1e3a8a"}}>✍️ Signé</span>}
-                  <span style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:20,padding:"2px 8px",fontSize:10,color:"#166534"}}>✅ Complété</span>
+                  <span style={{background:c.status==="approved"?"#f0fdf4":c.status==="rejected"?"#fef2f2":"#fefce8",border:`1px solid ${c.status==="approved"?"#bbf7d0":c.status==="rejected"?"#fecaca":"#fde68a"}`,borderRadius:20,padding:"2px 8px",fontSize:10,color:c.status==="approved"?"#166534":c.status==="rejected"?"#ef4444":"#92400e"}}>
+                    {c.status==="approved"?"✅ Approuvé":c.status==="rejected"?"❌ Refusé":"⏳ En attente"}
+                  </span>
                 </div>
               </div>
             </div>
