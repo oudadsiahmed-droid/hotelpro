@@ -2173,6 +2173,30 @@ function CheckinsPage({ hotelId, bookingOrigin }) {
         🔗 Lien check-in: <strong>{checkinLink}</strong>
       </div>
 
+      <div style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:16,padding:"24px",marginBottom:24,display:"flex",gap:24,alignItems:"center",flexWrap:"wrap",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+        <div style={{textAlign:"center"}}>
+          <img src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(checkinLink)}&color=1e3a8a&bgcolor=ffffff&qzone=2`} alt="QR Code" style={{borderRadius:12,border:"2px solid #e2e8f0"}}/>
+          <div style={{fontSize:11,color:"#9ca3af",marginTop:6}}>Scanner pour check-in</div>
+        </div>
+        <div style={{flex:1,minWidth:200}}>
+          <div style={{fontWeight:700,color:"#1e3a8a",fontSize:16,marginBottom:8}}>🏁 QR Code Check-in</div>
+          <div style={{color:"#64748b",fontSize:13,lineHeight:1.7,marginBottom:16}}>
+            Imprimez ce QR Code et affichez-le à la réception.<br/>
+            Le client scanne et fait son check-in en ligne en 2 minutes!
+          </div>
+          <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+            <button onClick={()=>{const a=document.createElement("a");a.href=`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(checkinLink)}&color=1e3a8a&bgcolor=ffffff&qzone=2`;a.download="qr-checkin.png";a.click();toast("✅ QR Code téléchargé!","success");}}
+              style={{background:"linear-gradient(135deg,#1e3a8a,#1d4ed8)",border:"none",borderRadius:9,padding:"10px 18px",color:"#fff",fontWeight:600,fontSize:13,cursor:"pointer"}}>
+              ⬇️ Télécharger QR Code
+            </button>
+            <button onClick={()=>window.print()}
+              style={{background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:9,padding:"10px 18px",color:"#1e293b",fontWeight:600,fontSize:13,cursor:"pointer"}}>
+              🖨️ Imprimer
+            </button>
+          </div>
+        </div>
+      </div>
+
       {loading ? <div style={{textAlign:"center",padding:40,color:"#64748b"}}>⏳ Chargement...</div> :
       checkins.length===0 ? (
         <div style={{textAlign:"center",padding:60,color:"#64748b"}}>
