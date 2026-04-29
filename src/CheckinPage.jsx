@@ -92,7 +92,7 @@ export default function CheckinPage({ hotelId, resId }) {
     if(!form.fullName||!form.cin||!form.phone) return alert("Remplissez les champs obligatoires!");
     setLoading(true);
     try {
-    const signature = hasSig ? canvasRef.current.toDataURL("image/jpeg",0.3) : null;
+    const signature = (hasSig && canvasRef.current) ? canvasRef.current.toDataURL("image/jpeg",0.3) : null;
     const checkinData = {
       id: Date.now().toString(),
       resId, hotelId,
