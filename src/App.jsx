@@ -2327,6 +2327,18 @@ export default function App() {
     const hotelId = window.location.pathname.split("/")[2];
     return <ReviewPage hotelId={hotelId}/>;
   }
+  if(window.location.pathname.startsWith("/checkin/")) {
+    const parts = window.location.pathname.split("/");
+    const hotelId = parts[2];
+    const resId = parts[3]||"";
+    return <CheckinPage hotelId={hotelId} resId={resId}/>;
+  }
+  if(window.location.pathname.startsWith("/checkin/")) {
+    const parts = window.location.pathname.split("/");
+    const hotelId = parts[2];
+    const resId = parts[3]||"";
+    return <CheckinPage hotelId={hotelId} resId={resId}/>;
+  }
 if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
   if(user && user.expiresAt && new Date(user.expiresAt) < new Date() && user.plan==="trial") return <ExpiredPage onLogout={handleLogout}/>;
   return (
