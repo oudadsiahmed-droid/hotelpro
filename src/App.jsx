@@ -568,6 +568,38 @@ function Dashboard({ reservations, clients, rooms, settings }) {
     {icon:"📋",label:t.activeReservations,val:reservations.filter(r=>r.status!=="cancelled").length},
   ];
   const ICON_COLORS = ["#1e3a8a","#c9a84c","#1e3a8a","#c9a84c","#1e3a8a","#c9a84c"];
+  const [meteo,setMeteo] = useState(null);
+  useEffect(()=>{
+    if(!settings.city) return;
+    fetch(`https://wttr.in/${encodeURIComponent(settings.city)}?format=j1`)
+      .then(r=>r.json())
+      .then(d=>{
+        const c = d.current_condition?.[0];
+        if(c) setMeteo({
+          temp: c.temp_C,
+          feels: c.FeelsLikeC,
+          desc: c.weatherDesc?.[0]?.value||"",
+          humidity: c.humidity,
+          wind: c.windspeedKmph,
+          icon: c.weatherCode
+        });
+      }).catch(()=>{});
+  },[settings.city]);
+
+  const getWeatherEmoji = (code) => {
+    const n = Number(code);
+    if(n===113) return "☀️";
+    if(n<=116) return "🌤️";
+    if(n<=122) return "☁️";
+    if(n<=200) return "🌫️";
+    if(n<=299) return "🌦️";
+    if(n<=399) return "🌧️";
+    if(n<=499) return "🌨️";
+    if(n<=699) return "❄️";
+    if(n<=799) return "🌫️";
+    return "⛅";
+  };
+
   return (
     <div style={{background:"#faf5ee",minHeight:"100%",margin:"-24px -28px",padding:"0 0 40px"}}>
       <NotifBanner reservations={reservations} clients={clients}/>
@@ -601,6 +633,37 @@ function Dashboard({ reservations, clients, rooms, settings }) {
             <div style={{height:1,width:20,background:"#c9a84c"}}/>
           </div>
         </div>
+
+        {/* Meteo */}
+        {meteo && (
+          <div style={{background:"linear-gradient(135deg,#1e3a8a,#2d4fa8)",borderRadius:16,padding:"16px 24px",marginBottom:20,display:"flex",alignItems:"center",gap:20,flexWrap:"wrap",boxShadow:"0 4px 20px rgba(30,58,138,0.2)"}}>
+            <div style={{fontSize:52}}>{getWeatherEmoji(meteo.icon)}</div>
+            <div style={{flex:1}}>
+              <div style={{color:"#fff",fontSize:13,opacity:0.8,marginBottom:2}}>🏙️ {settings.city}</div>
+              <div style={{color:"#fff",fontSize:36,fontWeight:700,fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1}}>{meteo.temp}°C</div>
+              <div style={{color:"rgba(255,255,255,0.7)",fontSize:12,marginTop:4}}>{meteo.desc}</div>
+            </div>
+            <div style={{display:"flex",gap:16}}>
+              {[["🌡️","Ressenti",`${meteo.feels}°C`],["💧","Humidité",`${meteo.humidity}%`],["💨","Vent",`${meteo.wind} km/h`]].map(([ico,label,val])=>(
+                <div key={label} style={{textAlign:"center"}}>
+                  <div style={{fontSize:18}}>{ico}</div>
+                  <div style={{color:"#fff",fontWeight:700,fontSize:14}}>{val}</div>
+                  <div style={{color:"rgba(255,255,255,0.6)",fontSize:10}}>{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {!meteo && settings.city && (
+          <div style={{background:"#f0f4ff",borderRadius:12,padding:"12px 20px",marginBottom:20,fontSize:13,color:"#64748b"}}>
+            ⏳ Chargement météo...
+          </div>
+        )}
+        {!settings.city && (
+          <div style={{background:"#fef9ec",border:"1px solid #fde68a",borderRadius:12,padding:"12px 20px",marginBottom:20,fontSize:13,color:"#92400e"}}>
+            🏙️ Ajoutez votre ville dans <strong>Paramètres</strong> pour voir la météo
+          </div>
+        )}
 
         {/* Stats */}
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:14,marginBottom:28}}>
@@ -1128,6 +1191,7 @@ function SettingsPage({ settings, onSave, user, onLogout }) {
 <Inp label="📝 Description" value={f.description||""} onChange={set("description")} placeholder="Hôtel de luxe au cœur de la ville..."/>
 <Inp label="📞 Téléphone" value={f.phone||""} onChange={set("phone")} placeholder="+212 6XX XXX XXX"/>
 <Inp label="📍 Adresse" value={f.address||""} onChange={set("address")} placeholder="Rue Mohammed V, Casablanca"/>
+<Inp label="🏙️ Ville (pour météo)" value={f.city||""} onChange={set("city")} placeholder="Casablanca"/>
             <div>
               <label style={{fontSize:10,color:"#1e293b",letterSpacing:1.5,textTransform:"uppercase",fontFamily:"'Inter',sans-serif",fontWeight:600,display:"block",marginBottom:6}}>LOGO</label>
               {f.logoUrl&&<img src={f.logoUrl} alt="logo" style={{height:60,objectFit:"contain",borderRadius:8,marginBottom:8,display:"block"}}/>}
