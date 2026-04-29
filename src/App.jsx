@@ -1915,6 +1915,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
     {id:"assistant",   icon:"🤖", label:t.assistant},
     {id:"revenue",     icon:"📈", label:t.revenue},
     {id:"integrations",icon:"🔗", label:t.integrations||"Intégrations"},
+    {id:"checkins",    icon:"🏁", label:"Check-ins"},
     {id:"settings",    icon:"⚙️", label:t.settings},
     {id:"landing",     icon:"🌐", label:"Ma Page Hôtel"},
   ];
@@ -2047,6 +2048,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
             {page==="assistant"    &&<AIAssistant reservations={res} clients={clients} rooms={rooms} staff={staff} settings={settings}/>}
             {page==="revenue"      &&<RevenuePage reservations={res} settings={settings}/>}
             {page==="integrations" &&<IntegrationsPage settings={{...settings,username:user.username}} onSave={saveSettings}/>}
+            {page==="checkins"     &&<CheckinsPage hotelId={user.username} bookingOrigin={window.location.origin}/>}
             {page==="settings"     &&<SettingsPage settings={settings} user={user} onSave={s=>{saveSettings(s);toast(t.settingsSaved);}} onLogout={onLogout}/>}
             {page==="landing" && <div style={{padding:"40px 20px",maxWidth:700,margin:"0 auto"}}>
               <h2 style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:24,marginBottom:8}}>🌐 Ma Page Hôtel</h2>
@@ -2135,6 +2137,74 @@ function HotelApp({ user, onLogout, lang, setLang }) {
 }
 
 // ── INTEGRATIONS PAGE ────────────────────────────────────────────
+function CheckinsPage({ hotelId, bookingOrigin }) {
+  const toast = useToast();
+  const [checkins, setCheckins] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(()=>{
+    sget(`saas:d:${hotelId}:checkins`).then(d=>{
+      setCheckins(d||[]);
+      setLoading(false);
+    });
+  },[hotelId]);
+
+  const checkinLink = `${bookingOrigin}/checkin/${hotelId}`;
+
+  return (
+    <div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,flexWrap:"wrap",gap:10}}>
+        <h2 style={{margin:0,color:GOLD,fontFamily:"Georgia,serif",fontSize:22}}>🏁 Check-ins en ligne</h2>
+        <div style={{display:"flex",gap:8}}>
+          <button onClick={()=>{navigator.clipboard.writeText(checkinLink);toast("✅ Lien copié!","success");}}
+            style={{background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:9,padding:"9px 16px",color:"#1e293b",fontWeight:600,fontSize:13,cursor:"pointer"}}>
+            📋 Copier lien check-in
+          </button>
+          <a href={checkinLink} target="_blank" style={{background:"linear-gradient(135deg,#1e3a8a,#1d4ed8)",color:"#fff",padding:"9px 16px",borderRadius:9,textDecoration:"none",fontWeight:600,fontSize:13}}>
+            👁️ Voir page check-in
+          </a>
+        </div>
+      </div>
+
+      <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"12px 16px",marginBottom:20,fontSize:13,color:"#166534"}}>
+        🔗 Lien check-in: <strong>{checkinLink}</strong>
+      </div>
+
+      {loading ? <div style={{textAlign:"center",padding:40,color:"#64748b"}}>⏳ Chargement...</div> :
+      checkins.length===0 ? (
+        <div style={{textAlign:"center",padding:60,color:"#64748b"}}>
+          <div style={{fontSize:48,marginBottom:12}}>🏁</div>
+          <div style={{fontSize:14}}>Aucun check-in pour le moment</div>
+          <div style={{fontSize:12,marginTop:8,color:"#9ca3af"}}>Partagez le lien avec vos clients</div>
+        </div>
+      ) : (
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {checkins.map((c,i)=>(
+            <div key={i} style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:14,padding:"16px 20px",display:"flex",alignItems:"center",gap:14,flexWrap:"wrap",boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
+              <div style={{width:44,height:44,borderRadius:"50%",background:"linear-gradient(135deg,#1e3a8a,#2d4fa8)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:16,flexShrink:0}}>
+                {c.fullName?.[0]?.toUpperCase()||"?"}
+              </div>
+              <div style={{flex:1,minWidth:150}}>
+                <div style={{fontWeight:700,color:"#1e293b",fontSize:14}}>{c.fullName}</div>
+                <div style={{color:"#64748b",fontSize:12,marginTop:2}}>🪪 {c.cin} · 📞 {c.phone} · 🌍 {c.nationality}</div>
+                {c.email && <div style={{color:"#64748b",fontSize:11}}>📧 {c.email}</div>}
+              </div>
+              <div style={{textAlign:"right"}}>
+                <div style={{fontSize:11,color:"#9ca3af"}}>{new Date(c.checkinDate).toLocaleDateString("fr-FR")}</div>
+                <div style={{display:"flex",gap:6,marginTop:4,justifyContent:"flex-end"}}>
+                  {c.hasCinPhoto && <span style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:20,padding:"2px 8px",fontSize:10,color:"#166534"}}>📷 CIN</span>}
+                  {c.hasSignature && <span style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:20,padding:"2px 8px",fontSize:10,color:"#1e3a8a"}}>✍️ Signé</span>}
+                  <span style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:20,padding:"2px 8px",fontSize:10,color:"#166534"}}>✅ Complété</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function IntegrationsPage({ settings, onSave }) {
   const toast = useToast();
   const t = useLang();
