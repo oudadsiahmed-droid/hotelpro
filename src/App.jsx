@@ -1962,12 +1962,20 @@ function HotelApp({ user, onLogout, lang, setLang }) {
                 <div style={{background:"#f8fafc",border:"1px solid #e2e8f0",borderRadius:8,padding:"10px 14px",fontSize:12,color:"#1e293b",marginBottom:12,wordBreak:"break-all"}}>
                   {window.location.origin}/hotel/{user.username}
                 </div>
-                <div style={{display:"flex",gap:8}}>
+                <div style={{display:"flex",gap:8,marginBottom:12}}>
                   <a href={`/hotel/${user.username}`} target="_blank" style={{flex:1,background:"linear-gradient(135deg,#1e3a8a,#1d4ed8)",color:"#fff",padding:"11px",borderRadius:9,textDecoration:"none",fontWeight:600,fontSize:13,textAlign:"center",display:"block"}}>
                     👁️ Voir ma page
                   </a>
                   <button onClick={()=>{navigator.clipboard.writeText(`${window.location.origin}/hotel/${user.username}`);toast("✅ Lien copié!","success");}} style={{flex:1,background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:9,padding:"11px",color:"#1e293b",fontWeight:600,fontSize:13,cursor:"pointer"}}>
                     📋 Copier le lien
+                  </button>
+                </div>
+                <div style={{textAlign:"center",padding:"20px 0",borderTop:"1px solid #e2e8f0"}}>
+                  <div style={{fontSize:13,color:"#64748b",marginBottom:12}}>📱 QR Code — Scanner pour réserver</div>
+                  <img src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(`${window.location.origin}/book/${user.username}`)}&color=1e3a8a&bgcolor=ffffff&qzone=2`} alt="QR Code" style={{borderRadius:12,border:"2px solid #e2e8f0",padding:4}}/>
+                  <div style={{fontSize:11,color:"#9ca3af",marginTop:8}}>{window.location.origin}/book/{user.username}</div>
+                  <button onClick={()=>{const a=document.createElement("a");a.href=`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(`${window.location.origin}/book/${user.username}`)}&color=1e3a8a&bgcolor=ffffff&qzone=2`;a.download=`qrcode-${user.username}.png`;a.click();toast("✅ QR Code téléchargé!","success");}} style={{marginTop:12,background:"linear-gradient(135deg,#16a34a,#15803d)",border:"none",borderRadius:9,padding:"10px 24px",color:"#fff",fontWeight:600,fontSize:13,cursor:"pointer",display:"inline-block"}}>
+                    ⬇️ Télécharger QR Code
                   </button>
                 </div>
               </div>
