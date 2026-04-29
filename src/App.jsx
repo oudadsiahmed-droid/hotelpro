@@ -636,16 +636,21 @@ function Dashboard({ reservations, clients, rooms, settings }) {
           recent.map(r=>{
             const cl=clients.find(c=>c.id===r.clientId);
             return (
-              <div key={r.id} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 0",borderBottom:"1px solid #e8ddd0",flexWrap:"wrap"}}>
-                <div style={{width:36,height:36,borderRadius:"50%",background:"#1e3a8a",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"#fff",flexShrink:0}}>
-                  {cl?.name?.[0]||"?"}
+              <div key={r.id} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 16px",marginBottom:10,background:"#fff",borderRadius:14,boxShadow:"0 2px 10px rgba(0,0,0,0.06)",border:"1px solid #f0e8dc",flexWrap:"wrap"}}>
+                <div style={{width:44,height:44,borderRadius:"50%",background:"linear-gradient(135deg,#1e3a8a,#2d4fa8)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,fontWeight:700,color:"#fff",flexShrink:0,boxShadow:"0 4px 12px rgba(30,58,138,0.3)"}}>
+                  {cl?.name?.[0]?.toUpperCase()||"?"}
                 </div>
-                <div style={{flex:1,minWidth:120}}>
-                  <div style={{color:"#1e293b",fontSize:13,fontWeight:600}}>{cl?.name||"—"}</div>
-                  <div style={{color:"#9ca3af",fontSize:11}}>{r.roomId} · {r.checkIn} → {r.checkOut}</div>
+                <div style={{flex:1,minWidth:140}}>
+                  <div style={{color:"#1e293b",fontSize:14,fontWeight:700,fontFamily:"'Playfair Display',Georgia,serif"}}>{cl?.name||"—"}</div>
+                  <div style={{color:"#9ca3af",fontSize:11,marginTop:3}}>🛏️ {r.roomId} &nbsp;·&nbsp; 📅 {r.checkIn} → {r.checkOut} &nbsp;·&nbsp; 🌙 {r.nights}n</div>
                 </div>
-                <div style={{color:"#c9a84c",fontWeight:700,fontSize:13}}>{cur.symbol}{((r.total||0)*cur.rate).toFixed(0)}</div>
-                <Badge status={r.status}/><PayBadge status={r.paymentStatus||"unpaid"}/>
+                <div style={{textAlign:"right"}}>
+                  <div style={{color:"#c9a84c",fontWeight:700,fontSize:16,fontFamily:"'Playfair Display',Georgia,serif"}}>{cur.symbol}{((r.total||0)*cur.rate).toFixed(0)}</div>
+                  <div style={{display:"flex",gap:6,marginTop:6,justifyContent:"flex-end"}}>
+                    <Badge status={r.status}/>
+                    <PayBadge status={r.paymentStatus||"unpaid"}/>
+                  </div>
+                </div>
               </div>
             );
           })}
