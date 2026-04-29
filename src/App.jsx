@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, createContext, useContext, useRef } f
 import BookingPage from "./BookingPage";
 import LandingPage from "./LandingPage";
 import ReviewPage from "./ReviewPage";
+import CheckinPage from "./CheckinPage";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import * as XLSX from "xlsx";
 import { TRANSLATIONS, LANG_FLAGS, LANG_NAMES } from './translations';
