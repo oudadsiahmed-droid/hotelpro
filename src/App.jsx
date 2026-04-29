@@ -567,40 +567,89 @@ function Dashboard({ reservations, clients, rooms, settings }) {
     {icon:"👥",label:t.clientsCount,val:clients.length},
     {icon:"📋",label:t.activeReservations,val:reservations.filter(r=>r.status!=="cancelled").length},
   ];
+  const ICON_COLORS = ["#1e3a8a","#c9a84c","#1e3a8a","#c9a84c","#1e3a8a","#c9a84c"];
   return (
-    <div>
-      <NotifBanner reservations={reservations} clients={clients} />
-      <h2 style={{margin:"0 0 18px",color:GOLD,fontFamily:"Georgia,serif",fontSize:22}}>{t.dashboardTitle}</h2>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:10,marginBottom:24}}>
-        {stats.map((s,i)=>(
-          <div key={i} style={{background:i%2===0?"#eff6ff":"#fefce8",border:i%2===0?"1px solid #bfdbfe":"1px solid #fde68a",borderRadius:12,padding:"16px 18px",boxShadow:"0 2px 12px rgba(0,0,0,0.06)",textAlign:"center"}}>
-            <div style={{fontSize:20}}>{s.icon}</div>
-            <div style={{fontSize:22,fontWeight:700,color:i%2===0?"#1e3a8a":"#92400e",fontFamily:"Georgia,serif",margin:"4px 0 2px"}}>{s.val}</div>
-            <div style={{fontSize:11,color:"#64748b"}}>{s.label}</div>
-            {s.sub&&<div style={{fontSize:11,color:"#10b981",marginTop:2}}>{s.sub}</div>}
+    <div style={{background:"#faf5ee",minHeight:"100%",margin:"-24px -28px",padding:"0 0 40px"}}>
+      <NotifBanner reservations={reservations} clients={clients}/>
+
+      {/* Header */}
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",padding:"32px 40px 20px",borderBottom:"1px solid #e8ddd0"}}>
+        <div>
+          <h1 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:42,fontWeight:700,color:"#1e3a8a",margin:0,lineHeight:1.1}}>Dashboard</h1>
+          <div style={{display:"flex",alignItems:"center",gap:8,marginTop:8}}>
+            <div style={{height:1,width:30,background:"#c9a84c"}}/>
+            <span style={{color:"#c9a84c",fontSize:16}}>✦</span>
+            <div style={{height:1,width:30,background:"#c9a84c"}}/>
           </div>
-        ))}
+        </div>
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=80" alt="hotel" style={{width:220,height:120,objectFit:"cover",borderRadius:12,opacity:0.9}}/>
       </div>
-      <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:12,padding:20}}>
-        <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,marginBottom:14}}>{t.latestReservations}</div>
-        {recent.length===0?<div style={{color:"#6b7280",textAlign:"center",padding:30,fontSize:13}}>{t.noReservations}</div>:
-        recent.map(r=>{
-          const cl=clients.find(c=>c.id===r.clientId);
-          return (
-            <div key={r.id} style={{display:"flex",alignItems:"center",gap:10,padding:"9px 0",borderBottom:`1px solid ${BORDER}`,flexWrap:"wrap"}}>
-              <div style={{width:34,height:34,borderRadius:"50%",background:`linear-gradient(135deg,${GOLD},#b8922a)`,
-                display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,color:DARK,flexShrink:0}}>
-                {cl?.name?.[0]||"?"}
+
+      {/* Main card */}
+      <div style={{margin:"24px 40px",background:"#fff",borderRadius:20,boxShadow:"0 4px 30px rgba(0,0,0,0.07)",padding:"32px"}}>
+        {/* Title */}
+        <div style={{textAlign:"center",marginBottom:28}}>
+          <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:10,marginBottom:8}}>
+            <div style={{height:1,width:40,background:"#c9a84c"}}/>
+            <span style={{fontSize:20}}>📅</span>
+            <div style={{height:1,width:40,background:"#c9a84c"}}/>
+          </div>
+          <h2 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:22,color:"#1e3a8a",fontWeight:600,margin:0}}>Tableau de bord</h2>
+          <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:6,marginTop:6}}>
+            <div style={{height:1,width:20,background:"#c9a84c"}}/>
+            <span style={{color:"#c9a84c",fontSize:12}}>✦</span>
+            <div style={{height:1,width:20,background:"#c9a84c"}}/>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:14,marginBottom:28}}>
+          {stats.map((s,i)=>(
+            <div key={i} style={{background:"#fff",border:"1px solid #e8ddd0",borderRadius:16,padding:"20px 16px",textAlign:"center",boxShadow:"0 2px 12px rgba(0,0,0,0.05)"}}>
+              <div style={{width:52,height:52,borderRadius:"50%",background:ICON_COLORS[i],display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px",fontSize:22}}>
+                {s.icon}
               </div>
-              <div style={{flex:1,minWidth:120}}>
-                <div style={{color:"#1e293b",fontSize:13,fontWeight:600}}>{cl?.name||"—"}</div>
-                <div style={{color:"#6b7280",fontSize:11}}>{r.roomId}·{r.checkIn}→{r.checkOut}</div>
-              </div>
-              <div style={{color:GOLD,fontWeight:700,fontSize:13}}>{cur.symbol}{((r.total||0)*cur.rate).toFixed(0)}</div>
-              <Badge status={r.status}/><PayBadge status={r.paymentStatus||"unpaid"}/>
+              <div style={{fontSize:24,fontWeight:700,color:"#1e293b",fontFamily:"'Playfair Display',Georgia,serif"}}>{s.val}</div>
+              <div style={{fontSize:11,color:"#9ca3af",marginTop:4,letterSpacing:0.5}}>{s.label}</div>
+              {s.sub&&<div style={{fontSize:12,color:"#10b981",marginTop:4,fontWeight:600}}>{s.sub}</div>}
             </div>
-          );
-        })}
+          ))}
+        </div>
+
+        {/* Latest reservations */}
+        <div style={{background:"#faf5ee",borderRadius:14,padding:"24px"}}>
+          <div style={{textAlign:"center",marginBottom:20}}>
+            <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:10,marginBottom:8}}>
+              <div style={{height:1,width:40,background:"#c9a84c"}}/>
+              <span style={{fontSize:18}}>📅</span>
+              <div style={{height:1,width:40,background:"#c9a84c"}}/>
+            </div>
+            <h3 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:18,color:"#1e3a8a",fontWeight:600,margin:0}}>Dernières réservations</h3>
+            <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:6,marginTop:6}}>
+              <div style={{height:1,width:20,background:"#c9a84c"}}/>
+              <span style={{color:"#c9a84c",fontSize:11}}>✦</span>
+              <div style={{height:1,width:20,background:"#c9a84c"}}/>
+            </div>
+          </div>
+          {recent.length===0?
+            <div style={{color:"#9ca3af",textAlign:"center",padding:"20px 0",fontSize:13}}>Aucune réservation</div>:
+          recent.map(r=>{
+            const cl=clients.find(c=>c.id===r.clientId);
+            return (
+              <div key={r.id} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 0",borderBottom:"1px solid #e8ddd0",flexWrap:"wrap"}}>
+                <div style={{width:36,height:36,borderRadius:"50%",background:"#1e3a8a",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"#fff",flexShrink:0}}>
+                  {cl?.name?.[0]||"?"}
+                </div>
+                <div style={{flex:1,minWidth:120}}>
+                  <div style={{color:"#1e293b",fontSize:13,fontWeight:600}}>{cl?.name||"—"}</div>
+                  <div style={{color:"#9ca3af",fontSize:11}}>{r.roomId} · {r.checkIn} → {r.checkOut}</div>
+                </div>
+                <div style={{color:"#c9a84c",fontWeight:700,fontSize:13}}>{cur.symbol}{((r.total||0)*cur.rate).toFixed(0)}</div>
+                <Badge status={r.status}/><PayBadge status={r.paymentStatus||"unpaid"}/>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
