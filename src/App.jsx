@@ -3,6 +3,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useState, useEffect, useCallback, createContext, useContext, useRef } from "react";
 import BookingPage from "./BookingPage";
 import LandingPage from "./LandingPage";
+import ReviewPage from "./ReviewPage";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import * as XLSX from "xlsx";
 import { TRANSLATIONS, LANG_FLAGS, LANG_NAMES } from './translations';
@@ -551,6 +552,41 @@ function NotifBanner({ reservations, clients }) {
 }
 
 // ── DASHBOARD ────────────────────────────────────────────────────
+function ReviewsWidget({ hotelId }) {
+  const [reviews, setReviews] = useState([]);
+  useState(()=>{ sget(`saas:d:${hotelId}:reviews`).then(r=>{ if(r) setReviews(r); }); },[]);
+  const avg = reviews.length ? (reviews.reduce((a,r)=>a+r.rating,0)/reviews.length).toFixed(1) : null;
+  if(!reviews.length) return null;
+  return (
+    <div style={{margin:"0 40px 24px",background:"#fff",borderRadius:20,padding:"28px 32px",boxShadow:"0 4px 30px rgba(0,0,0,0.07)"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+        <div>
+          <h3 style={{fontFamily:"'Playfair Display',Georgia,serif",color:"#1e3a8a",fontSize:18,margin:0}}>⭐ Avis clients</h3>
+          <div style={{color:"#64748b",fontSize:12,marginTop:4}}>{reviews.length} avis · Moyenne: <strong style={{color:"#f59e0b"}}>{avg}/5</strong></div>
+        </div>
+        <div style={{fontSize:42,fontWeight:700,color:"#f59e0b",fontFamily:"Georgia,serif"}}>{avg} <span style={{fontSize:16,color:"#f59e0b"}}>★</span></div>
+      </div>
+      <div style={{display:"flex",flexDirection:"column",gap:10}}>
+        {reviews.slice(0,3).map((r,i)=>(
+          <div key={i} style={{background:"#faf5ee",borderRadius:12,padding:"14px 16px",display:"flex",gap:12,alignItems:"flex-start"}}>
+            <div style={{width:38,height:38,borderRadius:"50%",background:"linear-gradient(135deg,#1e3a8a,#2d4fa8)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:15,flexShrink:0}}>
+              {r.name[0].toUpperCase()}
+            </div>
+            <div style={{flex:1}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div style={{fontWeight:600,color:"#1e293b",fontSize:13}}>{r.name}</div>
+                <div style={{color:"#f59e0b",fontSize:14}}>{"★".repeat(r.rating)}{"☆".repeat(5-r.rating)}</div>
+              </div>
+              {r.comment && <div style={{color:"#64748b",fontSize:12,marginTop:4,fontStyle:"italic"}}>"{r.comment}"</div>}
+              <div style={{color:"#9ca3af",fontSize:10,marginTop:4}}>{r.date}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Dashboard({ reservations, clients, rooms, settings }) {
   const t = useLang();
   const cur   = CURRENCIES[settings.currency]||CURRENCIES.USD;
@@ -617,6 +653,7 @@ function Dashboard({ reservations, clients, rooms, settings }) {
         <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=80" alt="hotel" style={{width:220,height:120,objectFit:"cover",borderRadius:12,opacity:0.9}}/>
       </div>
 
+      <ReviewsWidget hotelId={settings.username||""} />
       {/* Main card */}
       <div style={{margin:"24px 40px",background:"#fff",borderRadius:20,boxShadow:"0 4px 30px rgba(0,0,0,0.07)",padding:"32px"}}>
         {/* Title */}
@@ -1987,7 +2024,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
 
           <div style={{flex:1,padding:"24px 28px",overflowY:"auto",animation:"fadeIn 0.25s ease"}}>
             {page==="calendar"     &&<BookingCalendar reservations={res} rooms={rooms} clients={clients} settings={settings}/>}
-            {page==="dashboard"    &&<Dashboard reservations={res} clients={clients} rooms={rooms} settings={settings}/>}
+            {page==="dashboard"    &&<Dashboard reservations={res} clients={clients} rooms={rooms} settings={{...settings,username:user.username}}/>}
             {page==="reservations" &&<ResPage reservations={res} clients={clients} rooms={rooms} settings={settings}
               onAdd={r=>{saveRes([r,...res]);toast(t.reservationAdded);}}
               onEdit={r=>{saveRes(res.map(x=>x.id===r.id?r:x));toast(t.reservationEdited,"info");}}
@@ -2284,6 +2321,10 @@ export default function App() {
   if(window.location.pathname.startsWith("/hotel/")) {
     const hotelId = window.location.pathname.split("/")[2];
     return <div style={{width:"100%",margin:0,padding:0}}><LandingPage hotelId={hotelId}/></div>;
+  }
+  if(window.location.pathname.startsWith("/review/")) {
+    const hotelId = window.location.pathname.split("/")[2];
+    return <ReviewPage hotelId={hotelId}/>;
   }
 if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
   if(user && user.expiresAt && new Date(user.expiresAt) < new Date() && user.plan==="trial") return <ExpiredPage onLogout={handleLogout}/>;
