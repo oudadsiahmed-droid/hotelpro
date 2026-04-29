@@ -91,13 +91,16 @@ export default function CheckinPage({ hotelId, resId }) {
   const submit = async () => {
     if(!form.fullName||!form.cin||!form.phone) return alert("Remplissez les champs obligatoires!");
     setLoading(true);
-    const signature = hasSig ? canvasRef.current.toDataURL() : null;
+    try {
+    const signature = hasSig ? canvasRef.current.toDataURL("image/jpeg",0.3) : null;
     const checkinData = {
       id: Date.now().toString(),
       resId, hotelId,
       ...form,
-      cinPhoto,
-      signature,
+      cinPhoto: cinPhoto ? cinPhoto.substring(0,100)+"..." : "",
+      hasCinPhoto: !!cinPhoto,
+      signature: signature ? signature.substring(0,100)+"..." : "",
+      hasSignature: !!signature,
       checkinDate: new Date().toISOString(),
       status: "completed"
     };
@@ -109,6 +112,7 @@ export default function CheckinPage({ hotelId, resId }) {
     }
     setLoading(false);
     setDone(true);
+    } catch(e) { console.error(e); alert("Erreur: "+e.message); setLoading(false); }
   };
 
   if(done) return (
