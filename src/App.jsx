@@ -573,9 +573,9 @@ function Dashboard({ reservations, clients, rooms, settings }) {
       <h2 style={{margin:"0 0 18px",color:GOLD,fontFamily:"Georgia,serif",fontSize:22}}>{t.dashboardTitle}</h2>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:10,marginBottom:24}}>
         {stats.map((s,i)=>(
-          <div key={i} style={{background:"#ffffff",border:"1px solid rgba(0,0,0,0.06)",borderRadius:12,padding:"16px 18px",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+          <div key={i} style={{background:i%2===0?"#eff6ff":"#fefce8",border:i%2===0?"1px solid #bfdbfe":"1px solid #fde68a",borderRadius:12,padding:"16px 18px",boxShadow:"0 2px 12px rgba(0,0,0,0.06)",textAlign:"center"}}>
             <div style={{fontSize:20}}>{s.icon}</div>
-            <div style={{fontSize:22,fontWeight:700,color:GOLD,fontFamily:"Georgia,serif",margin:"4px 0 2px"}}>{s.val}</div>
+            <div style={{fontSize:22,fontWeight:700,color:i%2===0?"#1e3a8a":"#92400e",fontFamily:"Georgia,serif",margin:"4px 0 2px"}}>{s.val}</div>
             <div style={{fontSize:11,color:"#64748b"}}>{s.label}</div>
             {s.sub&&<div style={{fontSize:11,color:"#10b981",marginTop:2}}>{s.sub}</div>}
           </div>
