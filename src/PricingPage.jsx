@@ -47,7 +47,7 @@ export default function PricingPage() {
             <div style={{color:"#0d1f3c",fontSize:48,fontWeight:800,marginBottom:4}}>$29</div>
             <div style={{color:"rgba(0,0,0,0.5)",fontSize:14,marginBottom:28}}>per month</div>
             <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:32}}>
-              {["✅ Everything in Free","✅ Unlimited rooms","✅ Custom domain","✅ Priority support","✅ Advanced analytics","✅ iCal sync Booking.com","✅ Smart Check-in QR Code"].map(f=>(
+              {["✅ Everything in Free","✅ Unlimited rooms","✅ Landing page pro","✅ Reviews clients ⭐","✅ Revenue & Excel export","✅ iCal sync Booking.com","✅ QR Code booking"].map(f=>(
                 <div key={f} style={{color:"rgba(0,0,0,0.8)",fontSize:14,fontWeight:500}}>{f}</div>
               ))}
             </div>
