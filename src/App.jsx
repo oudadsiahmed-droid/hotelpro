@@ -1274,6 +1274,13 @@ function SettingsPage({ settings, onSave, user, onLogout }) {
           <Btn variant="danger" onClick={onLogout} style={{width:"100%"}}>{t.logout}</Btn>
         </div>
         <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:12,padding:22}}>
+          <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,marginBottom:16}}>🏨 My Hotels</div>
+          <div style={{color:"#64748b",fontSize:13,marginBottom:16}}>Coming soon</div>
+          <div style={{background:"rgba(201,168,76,0.08)",border:"1px solid rgba(201,168,76,0.2)",borderRadius:8,padding:"10px 14px",fontSize:12,color:GOLD}}>
+            🔜 Available in Enterprise plan — <a href="/pricing" style={{color:GOLD,fontWeight:700}}>Upgrade</a>
+          </div>
+        </div>
+        <div style={{background:CARD2,border:`1px solid ${BORDER}`,borderRadius:12,padding:22}}>
           <div style={{color:GOLD,fontFamily:"Georgia,serif",fontSize:15,marginBottom:16}}>{t.changePassword}</div>
           <div style={{display:"flex",flexDirection:"column",gap:12}}>
             <Inp label={t.oldPassword} type="password" value={pwForm.old} onChange={setPw("old")} placeholder="••••••••"/>
@@ -2476,4 +2483,5 @@ if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvid
     </ToastProvider>
   );
 }
+
 
