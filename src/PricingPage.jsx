@@ -34,7 +34,7 @@ export default function PricingPage() {
                 <div key={f} style={{color:"rgba(255,255,255,0.7)",fontSize:14}}>{f}</div>
               ))}
             </div>
-            <a href="/register" style={{display:"block",background:"rgba(255,255,255,0.1)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:12,padding:"14px",color:"#fff",fontWeight:600,fontSize:15,textAlign:"center",textDecoration:"none",transition:"all 0.2s"}}>
+            <a href="/" style={{display:"block",background:"rgba(255,255,255,0.1)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:12,padding:"14px",color:"#fff",fontWeight:600,fontSize:15,textAlign:"center",textDecoration:"none",transition:"all 0.2s"}}>
               Start Free Trial →
             </a>
           </div>
