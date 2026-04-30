@@ -2380,8 +2380,13 @@ function AdminPanel() {
                     <div style={{color:"#666",fontSize:12}}>🏨 {u.hotelName}</div>
                   </div>
                 </div>
-                <div style={{background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:20,padding:"4px 12px",color:"#10b981",fontSize:11,fontWeight:600}}>
-                  ● {u.plan||"pro"}
+                <div style={{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap"}}>
+                  <div style={{background:u.plan==="pro"?"rgba(16,185,129,0.1)":"rgba(139,92,246,0.12)",border:`1px solid ${u.plan==="pro"?"rgba(16,185,129,0.3)":"rgba(139,92,246,0.3)"}`,borderRadius:20,padding:"4px 12px",color:u.plan==="pro"?"#10b981":"#8b5cf6",fontSize:11,fontWeight:600}}>
+                    ● {u.plan||"trial"}
+                  </div>
+                  <button onClick={async()=>{const all=await sget("saas:users")||[];const updated=all.map(x=>x.id===u.id?{...x,plan:"pro",expiresAt:null}:x);await sset("saas:users",updated);setUsers(updated);}} style={{background:"linear-gradient(135deg,#10b981,#059669)",border:"none",borderRadius:8,padding:"4px 12px",color:"#fff",fontSize:11,fontWeight:600,cursor:"pointer"}}>✅ Pro</button>
+                  <button onClick={async()=>{const all=await sget("saas:users")||[];const exp=new Date(Date.now()+14*24*60*60*1000).toISOString();const updated=all.map(x=>x.id===u.id?{...x,plan:"trial",expiresAt:exp}:x);await sset("saas:users",updated);setUsers(updated);}} style={{background:"linear-gradient(135deg,#8b5cf6,#7c3aed)",border:"none",borderRadius:8,padding:"4px 12px",color:"#fff",fontSize:11,fontWeight:600,cursor:"pointer"}}>🔄 Trial 14j</button>
+                  <button onClick={async()=>{const all=await sget("saas:users")||[];const updated=all.map(x=>x.id===u.id?{...x,plan:"trial",expiresAt:new Date(Date.now()-1000).toISOString()}:x);await sset("saas:users",updated);setUsers(updated);}} style={{background:"linear-gradient(135deg,#ef4444,#dc2626)",border:"none",borderRadius:8,padding:"4px 12px",color:"#fff",fontSize:11,fontWeight:600,cursor:"pointer"}}>🔒 Bloquer</button>
                 </div>
               </div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,fontSize:12}}>
