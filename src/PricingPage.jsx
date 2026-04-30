@@ -63,7 +63,7 @@ export default function PricingPage() {
             <div style={{color:"#fff",fontSize:48,fontWeight:800,marginBottom:4}}>$99</div>
             <div style={{color:"rgba(255,255,255,0.4)",fontSize:14,marginBottom:28}}>per month</div>
             <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:32}}>
-              {["✅ Everything in Pro","✅ Multi-hotel management","✅ Custom branding","✅ API access","✅ Dedicated support","✅ Custom integrations"].map(f=>(
+              {["✅ Everything in Pro","🔜 Multi-hotel management","✅ Custom branding","✅ API access","✅ Dedicated support","✅ Custom integrations"].map(f=>(
                 <div key={f} style={{color:"rgba(255,255,255,0.7)",fontSize:14}}>{f}</div>
               ))}
             </div>
