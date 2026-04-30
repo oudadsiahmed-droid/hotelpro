@@ -664,7 +664,7 @@ function Dashboard({ reservations, clients, rooms, settings }) {
             <span style={{fontSize:20}}>📅</span>
             <div style={{height:1,width:40,background:"#c9a84c"}}/>
           </div>
-          <h2 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:22,color:"#1e3a8a",fontWeight:600,margin:0}}>Tableau de bord</h2>
+          <h2 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:22,color:"#1e3a8a",fontWeight:600,margin:0}}>{t.dashboardTitle||"Tableau de bord"}</h2>
           <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:6,marginTop:6}}>
             <div style={{height:1,width:20,background:"#c9a84c"}}/>
             <span style={{color:"#c9a84c",fontSize:12}}>✦</span>
@@ -725,7 +725,7 @@ function Dashboard({ reservations, clients, rooms, settings }) {
               <span style={{fontSize:18}}>📅</span>
               <div style={{height:1,width:40,background:"#c9a84c"}}/>
             </div>
-            <h3 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:18,color:"#1e3a8a",fontWeight:600,margin:0}}>Dernières réservations</h3>
+            <h3 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:18,color:"#1e3a8a",fontWeight:600,margin:0}}>{t.latestReservations||"Dernières réservations"}</h3>
             <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:6,marginTop:6}}>
               <div style={{height:1,width:20,background:"#c9a84c"}}/>
               <span style={{color:"#c9a84c",fontSize:11}}>✦</span>
