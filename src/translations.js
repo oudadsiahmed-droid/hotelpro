@@ -1,4 +1,4 @@
-// ── TRANSLATIONS ─────────────────────────────────────────────────
+﻿// ── TRANSLATIONS ─────────────────────────────────────────────────
 export const TRANSLATIONS = {
   en: {
     // NAV
@@ -241,7 +241,7 @@ export const TRANSLATIONS = {
     employeeAdded: "✅ Employee added",
     employeeEdited: "Employee edited",
     employeeDeleted: "Employee deleted",
-    language: "Language",
+    language: "Language", myHotels:"My Hotels", comingSoon:"Coming soon", enterprisePlan:"Available in Enterprise plan", upgrade:"Upgrade", myHotels:"My Hotels", comingSoon:"Coming soon", enterprisePlan:"Available in Enterprise plan", upgrade:"Upgrade",
     clientReviews:"Client Reviews", reviews:"reviews", average:"Average",
     amenities: ["Air Conditioning","Wi-Fi","Pool View","Garden View","Bathtub","Kitchenette","Mountain View","Parking"],
     icalDesc: "Sync reservations automatically",
@@ -992,7 +992,7 @@ export const TRANSLATIONS = {
     employeeAdded: "✅ Empleado añadido",
     employeeEdited: "Empleado editado",
     employeeDeleted: "Empleado eliminado",
-    language: "Idioma",
+    language: "Idioma", myHotels:"Mis Hoteles", comingSoon:"Proximamente", enterprisePlan:"Disponible en plan Enterprise", upgrade:"Actualizar",
     clientReviews:"Reseñas", reviews:"reseñas", average:"Promedio",
     amenities: ["Aire acondicionado","Wi-Fi","Vista a la piscina","Vista al jardín","Bañera","Cocina pequeña","Vista a la montaña","Parking"],
     icalDesc: "Sincronizar reservas automáticamente",
