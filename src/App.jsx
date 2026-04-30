@@ -555,6 +555,7 @@ function NotifBanner({ reservations, clients }) {
 // ── DASHBOARD ────────────────────────────────────────────────────
 function ReviewsWidget({ hotelId }) {
   const [reviews, setReviews] = useState([]);
+  const t = useLang();
   useState(()=>{ sget(`saas:d:${hotelId}:reviews`).then(r=>{ if(r) setReviews(r); }); },[]);
   const avg = reviews.length ? (reviews.reduce((a,r)=>a+r.rating,0)/reviews.length).toFixed(1) : null;
   if(!reviews.length) return null;
