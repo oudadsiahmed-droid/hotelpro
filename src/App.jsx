@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, createContext, useContext, useRef } f
 import BookingPage from "./BookingPage";
 import LandingPage from "./LandingPage";
 import ReviewPage from "./ReviewPage";
+import PricingPage from "./PricingPage";
 import CheckinPage from "./CheckinPage";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import * as XLSX from "xlsx";
@@ -2447,6 +2448,9 @@ export default function App() {
   if(window.location.pathname.startsWith("/hotel/")) {
     const hotelId = window.location.pathname.split("/")[2];
     return <div style={{width:"100%",margin:0,padding:0}}><LandingPage hotelId={hotelId}/></div>;
+  }
+  if(window.location.pathname === "/pricing") {
+    return <PricingPage/>;
   }
   if(window.location.pathname.startsWith("/review/")) {
     const hotelId = window.location.pathname.split("/")[2];
