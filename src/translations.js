@@ -491,7 +491,7 @@ export const TRANSLATIONS = {
     employeeAdded: "✅ Employé ajouté",
     employeeEdited: "Employé modifié",
     employeeDeleted: "Employé supprimé",
-    language: "Langue",
+    language: "Langue", myHotels:"Mes Hôtels", comingSoon:"Bientôt disponible", enterprisePlan:"Disponible dans le plan Enterprise", upgrade:"Mettre à niveau",
     clientReviews:"Avis clients", reviews:"avis", average:"Moyenne",
     amenities: ["Climatisation","Wi-Fi","Vue piscine","Vue jardin","Baignoire","Kitchenette","Vue montagne","Parking"],
     icalDesc: "Synchroniser les réservations automatiquement",
