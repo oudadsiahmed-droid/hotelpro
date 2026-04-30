@@ -562,8 +562,8 @@ function ReviewsWidget({ hotelId }) {
     <div style={{margin:"0 40px 24px",background:"#fff",borderRadius:20,padding:"28px 32px",boxShadow:"0 4px 30px rgba(0,0,0,0.07)"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
         <div>
-          <h3 style={{fontFamily:"'Playfair Display',Georgia,serif",color:"#1e3a8a",fontSize:18,margin:0}}>⭐ Avis clients</h3>
-          <div style={{color:"#64748b",fontSize:12,marginTop:4}}>{reviews.length} avis · Moyenne: <strong style={{color:"#f59e0b"}}>{avg}/5</strong></div>
+          <h3 style={{fontFamily:"'Playfair Display',Georgia,serif",color:"#1e3a8a",fontSize:18,margin:0}}>⭐ {t.clientReviews||"Avis clients"}</h3>
+          <div style={{color:"#64748b",fontSize:12,marginTop:4}}>{reviews.length} {t.reviews||"avis"} · {t.average||"Moyenne"}: <strong style={{color:"#f59e0b"}}>{avg}/5</strong></div>
         </div>
         <div style={{fontSize:42,fontWeight:700,color:"#f59e0b",fontFamily:"Georgia,serif"}}>{avg} <span style={{fontSize:16,color:"#f59e0b"}}>★</span></div>
       </div>
