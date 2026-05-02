@@ -241,7 +241,7 @@ function Modal({ title, onClose, children, maxWidth=500 }) {
 
 // ── AUTH SCREEN ──────────────────────────────────────────────────
 function AuthScreen({ onLogin }) {
-  const [tab, setTab] = useState("login");
+  const [tab, setTab] = useState(window.location.hash === '#register' ? 'register' : 'login');
   const [form, setForm] = useState({ username:"", email:"", password:"", hotelName:"" });
   const [err, setErr] = useState({});
   const [loading, setLoading] = useState(false);
