@@ -1884,6 +1884,8 @@ function HotelApp({ user, onLogout, lang, setLang }) {
   const uid=user.id;
   const t = TRANSLATIONS[lang] || TRANSLATIONS.fr;
   const [page,setPage]=useState("dashboard");
+  const [sidebarOpen,setSidebarOpen]=useState(false);
+  const isMobile = window.innerWidth <= 768;
   const [res,setRes]=useState([]);
   const [clients,setClients]=useState([]);
   const [rooms,setRooms]=useState(INIT_ROOMS);
@@ -1966,7 +1968,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
         `}</style>
 
         {/* ── SIDEBAR ── */}
-        <div style={{width:260,background:"#0d1f3c",borderRight:"1px solid rgba(255,255,255,0.08)",display:"flex",flexDirection:"column",flexShrink:0,boxShadow:"2px 0 12px rgba(0,0,0,0.06)"}}>
+        <div style={{width:260,background:"#0d1f3c",borderRight:"1px solid rgba(255,255,255,0.08)",display:"flex",flexDirection:"column",flexShrink:0,boxShadow:"2px 0 12px rgba(0,0,0,0.06)",position:isMobile?"fixed":"relative",zIndex:isMobile?1000:"auto",transform:isMobile&&!sidebarOpen?"translateX(-260px)":"translateX(0)",transition:"transform 0.3s ease",height:"100vh",position:isMobile?"fixed":"relative",zIndex:isMobile?1000:"auto",transform:isMobile&&!sidebarOpen?"translateX(-260px)":"translateX(0)",transition:"transform 0.3s ease",height:"100vh"}}>
 
           {/* Logo */}
           <div style={{padding:"28px 20px 20px",borderBottom:"1px solid #e8e0d5",textAlign:"center"}}>
@@ -2483,5 +2485,6 @@ if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvid
     </ToastProvider>
   );
 }
+
 
 
