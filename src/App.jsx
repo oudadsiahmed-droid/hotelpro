@@ -1968,7 +1968,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
         `}</style>
 
         {/* ── SIDEBAR ── */}
-        <div style={{width:260,background:"#0d1f3c",borderRight:"1px solid rgba(255,255,255,0.08)",display:"flex",flexDirection:"column",flexShrink:0,boxShadow:"2px 0 12px rgba(0,0,0,0.06)",position:isMobile?"fixed":"relative",zIndex:isMobile?1000:"auto",transform:isMobile&&!sidebarOpen?"translateX(-260px)":"translateX(0)",transition:"transform 0.3s ease",height:"100vh",position:isMobile?"fixed":"relative",zIndex:isMobile?1000:"auto",transform:isMobile&&!sidebarOpen?"translateX(-260px)":"translateX(0)",transition:"transform 0.3s ease",height:"100vh"}}>
+        <div style={{width:260,background:"#0d1f3c",borderRight:"1px solid rgba(255,255,255,0.08)",display:"flex",flexDirection:"column",flexShrink:0,boxShadow:"2px 0 12px rgba(0,0,0,0.06)",position:isMobile?"fixed":"relative",zIndex:isMobile?1000:"auto",transform:isMobile&&!sidebarOpen?"translateX(-260px)":"translateX(0)",transition:"transform 0.3s ease",height:"100vh"}}>
 
           {/* Logo */}
           <div style={{padding:"28px 20px 20px",borderBottom:"1px solid #e8e0d5",textAlign:"center"}}>
@@ -2031,7 +2031,9 @@ function HotelApp({ user, onLogout, lang, setLang }) {
         {/* ── MAIN CONTENT ── */}
         <div style={{flex:1,overflowY:"scroll",background:"linear-gradient(135deg,#fafbff 0%,#f0f4ff 50%,#faf0ff 100%)",display:"flex",flexDirection:"column",width:"100%"}}>
           <div style={{flexShrink:0}}>
-            {notifCount>0 && (
+            {isMobile&&<button onClick={()=>setSidebarOpen(o=>!o)} style={{position:"fixed",top:12,left:12,zIndex:1001,background:"#0d1f3c",border:"none",borderRadius:8,padding:"8px 12px",color:"#c9a84c",fontSize:22,cursor:"pointer"}}>☰</button>}
+{isMobile&&sidebarOpen&&<div onClick={()=>setSidebarOpen(false)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",zIndex:999}}/>}
+{notifCount>0 && (
               <div style={{background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.2)",borderRadius:8,padding:"5px 16px",fontSize:11,color:"#ef4444",fontWeight:600,margin:"10px 28px 0",display:"inline-block"}}>
                 🔔 {notifCount} alerte{notifCount>1?"s":""}
               </div>
@@ -2485,6 +2487,7 @@ if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvid
     </ToastProvider>
   );
 }
+
 
 
 
