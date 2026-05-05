@@ -44,7 +44,7 @@ export default function PricingPage() {
             <div style={{position:"absolute",top:16,right:16,background:"rgba(0,0,0,0.2)",borderRadius:20,padding:"4px 12px",fontSize:11,color:"#fff",fontWeight:700}}>MOST POPULAR</div>
             <div style={{fontSize:36,marginBottom:16}}>⭐</div>
             <div style={{color:"rgba(0,0,0,0.5)",fontSize:12,letterSpacing:3,fontWeight:600,marginBottom:8}}>PRO PLAN</div>
-            <div style={{color:"#0d1f3c",fontSize:48,fontWeight:800,marginBottom:4}}>$29</div>
+            <div style={{color:"#0d1f3c",fontSize:48,fontWeight:800,marginBottom:4}}>$99</div>
             <div style={{color:"rgba(0,0,0,0.5)",fontSize:14,marginBottom:28}}>per month</div>
             <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:32}}>
               {["✅ Everything in Free","✅ Unlimited rooms","✅ Landing page pro","✅ Reviews clients ⭐","✅ Revenue & Excel export","✅ iCal sync Booking.com","✅ QR Code booking"].map(f=>(
@@ -60,7 +60,7 @@ export default function PricingPage() {
           <div className="plan-card" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:24,padding:36,transition:"all 0.3s"}}>
             <div style={{fontSize:36,marginBottom:16}}>🏢</div>
             <div style={{color:"rgba(255,255,255,0.5)",fontSize:12,letterSpacing:3,fontWeight:600,marginBottom:8}}>ENTERPRISE</div>
-            <div style={{color:"#fff",fontSize:48,fontWeight:800,marginBottom:4}}>$99</div>
+            <div style={{color:"#fff",fontSize:48,fontWeight:800,marginBottom:4}}>$299</div>
             <div style={{color:"rgba(255,255,255,0.4)",fontSize:14,marginBottom:28}}>per month</div>
             <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:32}}>
               {["✅ Everything in Pro","🔜 Multi-hotel management","✅ Custom branding","✅ API access","✅ Dedicated support","✅ Custom integrations"].map(f=>(
