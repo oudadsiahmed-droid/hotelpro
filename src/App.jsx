@@ -1992,7 +1992,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
               </div>
               <div style={{minWidth:0}}>
                 <div style={{color:"#1a2e1a",fontSize:13,fontWeight:600,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user.username}</div>
-                <div style={{color:"#c9a84c",fontSize:10,fontWeight:500}}>Hotel Manager</div>
+                <div style={{color:"#c9a84c",fontSize:10,fontWeight:500}}>{t.hotelManager||"Hotel Manager"}</div>
               </div>
             </div>
           </div>
