@@ -1931,7 +1931,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
     {id:"integrations",icon:"🔗", label:t.integrations||"Intégrations"},
     
     {id:"settings",    icon:"⚙️", label:t.settings},
-    {id:"landing",     icon:"🌐", label:"Ma Page Hôtel"},
+    {id:"landing",     icon:"🌐", label:"t.myHotelPage||"My Hotel Page"},
   ];
 
   if(!ready) return (
