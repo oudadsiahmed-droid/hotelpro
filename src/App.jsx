@@ -1696,7 +1696,7 @@ function BookingCalendar({ reservations, rooms, clients, settings }) {
 }
 
 // ── AI ASSISTANT ─────────────────────────────────────────────────
-const QUICK_PROMPTS = [
+const QUICK_PROMPTS_FR = [
   { icon:"💰", text:"Quel est le chiffre d'affaires de ce mois ?" },
   { icon:"🛏️", text:"Combien de chambres sont occupées aujourd'hui ?" },
   { icon:"📋", text:"Quelles sont les réservations non payées ?" },
@@ -1705,6 +1705,36 @@ const QUICK_PROMPTS = [
   { icon:"📈", text:"Quelle est la chambre la plus rentable ?" },
   { icon:"🔔", text:"Y a-t-il des arrivées ou départs aujourd'hui ?" },
   { icon:"💡", text:"Donne-moi des conseils pour améliorer le taux d'occupation." },
+];
+const QUICK_PROMPTS_EN = [
+  { icon:"💰", text:"What is this month's revenue?" },
+  { icon:"🛏️", text:"How many rooms are occupied today?" },
+  { icon:"📋", text:"Which reservations are unpaid?" },
+  { icon:"👥", text:"How many clients do we have in total?" },
+  { icon:"🧑‍💼", text:"How many staff are currently active?" },
+  { icon:"📈", text:"Which is the most profitable room?" },
+  { icon:"🔔", text:"Are there any arrivals or departures today?" },
+  { icon:"💡", text:"Give me tips to improve occupancy rate." },
+];
+const QUICK_PROMPTS_AR = [
+  { icon:"💰", text:"ما هو رقم أعمال هذا الشهر؟" },
+  { icon:"🛏️", text:"كم عدد الغرف المشغولة اليوم؟" },
+  { icon:"📋", text:"ما هي الحجوزات غير المدفوعة؟" },
+  { icon:"👥", text:"كم عدد العملاء لدينا؟" },
+  { icon:"🧑‍💼", text:"كم عدد الموظفين النشطين؟" },
+  { icon:"📈", text:"ما هي الغرفة الأكثر ربحية؟" },
+  { icon:"🔔", text:"هل هناك وصول أو مغادرة اليوم؟" },
+  { icon:"💡", text:"أعطني نصائح لتحسين نسبة الإشغال." },
+];
+const QUICK_PROMPTS_ES = [
+  { icon:"💰", text:"¿Cuál es el ingreso de este mes?" },
+  { icon:"🛏️", text:"¿Cuántas habitaciones están ocupadas hoy?" },
+  { icon:"📋", text:"¿Cuáles reservas están sin pagar?" },
+  { icon:"👥", text:"¿Cuántos clientes tenemos en total?" },
+  { icon:"🧑‍💼", text:"¿Cuántos empleados están activos?" },
+  { icon:"📈", text:"¿Cuál es la habitación más rentable?" },
+  { icon:"🔔", text:"¿Hay llegadas o salidas hoy?" },
+  { icon:"💡", text:"Dame consejos para mejorar la ocupación." },
 ];
 
 function buildContext(data) {
@@ -1834,7 +1864,7 @@ function AIAssistant({ reservations, clients, rooms, staff, settings }) {
       </div>
 
       <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:10}}>
-        {QUICK_PROMPTS.map((p,i)=>(
+        {(lang==="ar"?QUICK_PROMPTS_AR:lang==="es"?QUICK_PROMPTS_ES:lang==="en"?QUICK_PROMPTS_EN:QUICK_PROMPTS_FR).map((p,i)=>(
           <button key={i} onClick={()=>send(p.text)} disabled={loading}
             style={{background:"#f8fafc",border:`1px solid #cbd5e1`,borderRadius:20,padding:"5px 12px",color:"#64748b",fontSize:11,cursor:"pointer",fontFamily:FONT_BODY,transition:"all 0.15s",display:"flex",alignItems:"center",gap:4}}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=BORDER;e.currentTarget.style.color=GOLD;}}
