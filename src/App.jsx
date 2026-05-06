@@ -1864,7 +1864,7 @@ function AIAssistant({ reservations, clients, rooms, staff, settings }) {
       </div>
 
       <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:10}}>
-        {(lang==="ar"?QUICK_PROMPTS_AR:lang==="es"?QUICK_PROMPTS_ES:lang==="en"?QUICK_PROMPTS_EN:QUICK_PROMPTS_FR).map((p,i)=>(
+        {(useLangCode()==="ar"?QUICK_PROMPTS_AR:useLangCode()==="es"?QUICK_PROMPTS_ES:useLangCode()==="en"?QUICK_PROMPTS_EN:QUICK_PROMPTS_FR).map((p,i)=>(
           <button key={i} onClick={()=>send(p.text)} disabled={loading}
             style={{background:"#f8fafc",border:`1px solid #cbd5e1`,borderRadius:20,padding:"5px 12px",color:"#64748b",fontSize:11,cursor:"pointer",fontFamily:FONT_BODY,transition:"all 0.15s",display:"flex",alignItems:"center",gap:4}}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=BORDER;e.currentTarget.style.color=GOLD;}}
