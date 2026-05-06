@@ -307,7 +307,7 @@ function AuthScreen({ onLogin }) {
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.2) 100%)"}}/>
         <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg,transparent,${GOLD},transparent)`}}/>
         <div style={{position:"relative",padding:"0 48px 52px"}}>
-          <div style={{fontSize:9,color:GOLD,letterSpacing:6,marginBottom:14,opacity:0.8}}>HOTEL MANAGEMENT SAAS</div>
+          <div style={{fontSize:9,color:GOLD,letterSpacing:6,marginBottom:14,opacity:0.8}}> SAAS</div>
           <h1 style={{margin:"0 0 12px",fontFamily:"Georgia,serif",fontSize:54,fontWeight:400,color:"#fff",lineHeight:1.1,textShadow:"0 2px 20px rgba(0,0,0,0.5)"}}>
             🏨 HotelPro
           </h1>
@@ -1979,7 +1979,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
               </div>
             </div>
             <div style={{color:"#ffffff",fontFamily:"Georgia,serif",fontSize:16,fontWeight:700,letterSpacing:2}}>{settings.hotelName?.toUpperCase()}</div>
-            <div style={{color:"#c9a84c",fontSize:9,letterSpacing:4,marginTop:3,fontWeight:500}}>HOTEL MANAGEMENT</div>
+            <div style={{color:"#c9a84c",fontSize:9,letterSpacing:4,marginTop:3,fontWeight:500}}></div>
             <div style={{width:40,height:1,background:"linear-gradient(90deg,transparent,#c9a84c,transparent)",margin:"10px auto 0"}}/>
           </div>
 
