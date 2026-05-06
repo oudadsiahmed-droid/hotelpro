@@ -1979,7 +1979,7 @@ function HotelApp({ user, onLogout, lang, setLang }) {
               </div>
             </div>
             <div style={{color:"#ffffff",fontFamily:"Georgia,serif",fontSize:16,fontWeight:700,letterSpacing:2}}>{settings.hotelName?.toUpperCase()}</div>
-            <div style={{color:"#c9a84c",fontSize:9,letterSpacing:4,marginTop:3,fontWeight:500}}>BOUTIQUE HOTEL</div>
+            <div style={{color:"#c9a84c",fontSize:9,letterSpacing:4,marginTop:3,fontWeight:500}}>HOTEL MANAGEMENT</div>
             <div style={{width:40,height:1,background:"linear-gradient(90deg,transparent,#c9a84c,transparent)",margin:"10px auto 0"}}/>
           </div>
 
