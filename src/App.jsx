@@ -1800,10 +1800,10 @@ function AIAssistant({ reservations, clients, rooms, staff, settings }) {
     try {
       const systemCtx = buildContext({ reservations, clients, rooms, staff, settings, today });
       const apiMessages = history.filter(m => m.role === "user" || m.role === "assistant").map(m => ({ role: m.role, content: m.content }));
-      const res = await fetch("http://localhost:3001/api/chat", {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemCtx, messages: apiMessages }),
+        headers: { "Content-Type": "application/json", "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+        body: JSON.stringify({ model: "claude-haiku-4-5-20251001", max_tokens: 1000, system: systemCtx, messages: apiMessages }),
       });
       const data = await res.json();
       const reply = data.content?.map(b=>b.text||"").join("") || "Désolé, erreur.";
