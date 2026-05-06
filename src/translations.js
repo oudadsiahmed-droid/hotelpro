@@ -741,7 +741,7 @@ export const TRANSLATIONS = {
     employeeAdded: "✅ تمت إضافة الموظف",
     employeeEdited: "تم تعديل الموظف",
     employeeDeleted: "تم حذف الموظف",
-    language: "اللغة",
+    language: "اللغة", myHotelPage:"صفحة فندقي",
     clientReviews:"آراء العملاء", reviews:"آراء", average:"المتوسط",
     amenities: ["تكييف","واي فاي","إطلالة على المسبح","إطلالة على الحديقة","حوض استحمام","مطبخ صغير","إطلالة على الجبل","موقف سيارات"],
     copyLink:"نسخ الرابط", copyIframe:"نسخ الإطار", copyBtn:"نسخ زر HTML",
