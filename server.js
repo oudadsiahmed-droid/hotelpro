@@ -16,21 +16,20 @@ app.post('/api/chat', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': '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',
+        'x-api-key': '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',
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 1000,
+        max_tokens: 4000,
         system: req.body.system,
         messages: messages
       })
     });
 
     const data = await response.json();
-    res.json({
-      content: [{text: data.content[0].text}]
-    });
+    if (data.error) { res.status(500).json({error: data.error.message}); return; }
+    res.json({ content: [{text: data.content[0].text}] });
   } catch(e) {
     res.status(500).json({error: e.message});
   }

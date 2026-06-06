@@ -1,3 +1,4 @@
+import BlogPage from "./BlogPage.jsx";
 ﻿import { db } from "./firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useState, useEffect, useCallback, createContext, useContext, useRef } from "react";
@@ -2485,6 +2486,11 @@ export default function App() {
   if(window.location.pathname.startsWith("/book/")) {
     const hotelId = window.location.pathname.split("/")[2];
     return <BookingPage hotelId={hotelId}/>;
+  }
+  if(window.location.pathname.startsWith("/hotel/") && window.location.pathname.includes("/blog")) {
+    const parts = window.location.pathname.split("/");
+    const hotelId = parts[2];
+    return <BlogPage hotelId={hotelId}/>;
   }
   if(window.location.pathname.startsWith("/hotel/")) {
     const hotelId = window.location.pathname.split("/")[2];
