@@ -1,3 +1,5 @@
+import MarketingBlog from "./MarketingBlog";
+import HomePage from "./HomePage";
 import BlogPage from "./BlogPage.jsx";
 ﻿import { db } from "./firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -2515,7 +2517,10 @@ export default function App() {
     const resId = parts[3]||"";
     return <CheckinPage hotelId={hotelId} resId={resId}/>;
   }
-if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
+if(window.location.pathname.startsWith("/blog/")) { const slug = window.location.pathname.split("/")[2]; return <MarketingBlog slug={slug}/>; }
+  if(window.location.pathname === "/blog") return <MarketingBlog/>;
+  if(window.location.pathname === "/" && !user) return <HomePage/>;
+  if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
   if(user && user.expiresAt && new Date(user.expiresAt) < new Date() && user.plan==="trial") return <ExpiredPage onLogout={handleLogout}/>;
   return (
     <ToastProvider>
