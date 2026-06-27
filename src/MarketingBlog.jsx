@@ -53,12 +53,28 @@ function CTABox() {
   );
 }
 
+// ── CATEGORY → ICON + COLOR MAPPING ────────────────────────────
+const CATEGORY_STYLE = {
+  "Gestion hôtelière": { icon: "🏨", bg: "#fff4e0", fg: "#92611a" },
+  "Réservations": { icon: "📅", bg: "#e6f1fb", fg: "#0c447c" },
+  "PMS hôtelier": { icon: "🖥️", bg: "#eeedfe", fg: "#3c3489" },
+  "Revenus hôtel": { icon: "📈", bg: "#eaf3de", fg: "#27500a" },
+  "Marketing hôtel": { icon: "📣", bg: "#fbeaf0", fg: "#72243e" },
+  "Petits hôtels & riads": { icon: "🕌", bg: "#faece7", fg: "#712b13" },
+  "Digitalisation hôtel": { icon: "💡", bg: "#e1f5ee", fg: "#085041" },
+};
+function categoryStyle(cat) {
+  return CATEGORY_STYLE[cat] || { icon: "📰", bg: "#f1efe8", fg: "#444441" };
+}
+
+// ── BLOG LIST PAGE (/blog) ──────────────────────────────────────
 function BlogListPage() {
   return (
     <div style={{ fontFamily: FONT, background: "#fafbff", color: "#0f172a", minHeight: "100vh" }}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-        .blog-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(13,31,60,0.1)}
-        .blog-card{transition:all .2s;text-decoration:none}
+        .blog-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(13,31,60,0.12)}
+        .blog-card{transition:all .25s;text-decoration:none}
+        @media (max-width:640px){.blog-grid{grid-template-columns:1fr!important}}
       `}</style>
       <Nav />
       <section style={{ background: `linear-gradient(160deg,${DARK} 0%,${DARK2} 100%)`, padding: "60px 24px 50px", textAlign: "center" }}>
@@ -70,16 +86,24 @@ function BlogListPage() {
           Guides pratiques pour gérer votre hôtel, riad ou maison d'hôtes plus efficacement.
         </p>
       </section>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "60px 24px" }}>
-        <div style={{ display: "grid", gap: 20 }}>
-          {BLOG_POSTS.map((p) => (
-            <a key={p.slug} href={`/blog/${p.slug}`} className="blog-card" style={{ background: "#fff", border: "1px solid #eef1f6", borderRadius: 16, padding: 28, color: "inherit" }}>
-              <div style={{ color: GOLD, fontSize: 12, fontWeight: 700, letterSpacing: 1, marginBottom: 10 }}>{p.category.toUpperCase()}</div>
-              <h2 style={{ fontFamily: FONT_DISPLAY, fontSize: 22, fontWeight: 700, color: DARK, marginBottom: 10 }}>{p.title}</h2>
-              <p style={{ color: "#64748b", fontSize: 14, lineHeight: 1.6, marginBottom: 12 }}>{p.intro.slice(0, 140)}…</p>
-              <div style={{ color: "#94a3b8", fontSize: 12 }}>{p.readTime} de lecture</div>
-            </a>
-          ))}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 24px" }}>
+        <div className="blog-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: 24 }}>
+          {BLOG_POSTS.map((p) => {
+            const cs = categoryStyle(p.category);
+            return (
+              <a key={p.slug} href={`/blog/${p.slug}`} className="blog-card" style={{ background: "#fff", border: "1px solid #eef1f6", borderRadius: 16, overflow: "hidden", color: "inherit", display: "flex", flexDirection: "column" }}>
+                <div style={{ background: cs.bg, height: 140, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ fontSize: 56 }}>{cs.icon}</span>
+                </div>
+                <div style={{ padding: 22, flex: 1, display: "flex", flexDirection: "column" }}>
+                  <div style={{ color: cs.fg, fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 10 }}>{p.category.toUpperCase()}</div>
+                  <h2 style={{ fontFamily: FONT_DISPLAY, fontSize: 19, fontWeight: 700, color: DARK, marginBottom: 10, lineHeight: 1.3 }}>{p.title}</h2>
+                  <p style={{ color: "#64748b", fontSize: 13.5, lineHeight: 1.6, marginBottom: 14, flex: 1 }}>{p.intro.slice(0, 100)}…</p>
+                  <div style={{ color: "#94a3b8", fontSize: 12, borderTop: "1px solid #f1f3f7", paddingTop: 12 }}>{p.readTime} de lecture</div>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
       <Footer />
@@ -87,6 +111,7 @@ function BlogListPage() {
   );
 }
 
+// ── SINGLE ARTICLE PAGE (/blog/:slug) ──────────────────────────
 function BlogPostPage({ slug }) {
   const post = BLOG_POSTS.find((p) => p.slug === slug);
 
@@ -149,8 +174,8 @@ function BlogPostPage({ slug }) {
   );
 }
 
+// ── MAIN EXPORT: routes between list and single article ───────
 export default function MarketingBlog({ slug }) {
   if (slug) return <BlogPostPage slug={slug} />;
   return <BlogListPage />;
 }
-
