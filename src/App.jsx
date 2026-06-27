@@ -1,3 +1,4 @@
+import MarketingBlogEN from "./MarketingBlogEN";
 import MarketingBlog from "./MarketingBlog";
 import HomePage from "./HomePage";
 import BlogPage from "./BlogPage.jsx";
@@ -2518,6 +2519,8 @@ export default function App() {
     return <CheckinPage hotelId={hotelId} resId={resId}/>;
   }
 if(window.location.pathname.startsWith("/blog/")) { const slug = window.location.pathname.split("/")[2]; return <MarketingBlog slug={slug}/>; }
+  if(window.location.pathname.startsWith("/blog-en/")) { const slug = window.location.pathname.split("/")[2]; return <MarketingBlogEN slug={slug}/>; }
+  if(window.location.pathname === "/blog-en") return <MarketingBlogEN/>;
   if(window.location.pathname === "/blog") return <MarketingBlog/>;
   if(window.location.pathname === "/" && !user) return <HomePage/>;
   if(!user) return <ToastProvider><AuthScreen onLogin={handleLogin}/></ToastProvider>;
